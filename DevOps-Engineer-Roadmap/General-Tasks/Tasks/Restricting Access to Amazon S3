@@ -1,0 +1,5 @@
+Restricting Access to Amazon S3 Content by Using an Origin Access Identity.
+Create a special CloudFront user called an origin access identity (OAI) and associate it with your distribution.
+
+Configure your S3 bucket permissions so that CloudFront can use the OAI to access the files in your
+bucket and serve them to your users. Make sure that users can’t use a direct URL to the S3 bucket to access a file there.

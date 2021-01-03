@@ -1,0 +1,30 @@
+Container Networking issues:
+
+1. Container to container communication: communicate over localhost
+2. Pod to Pod communication: each pod has own IP address.
+3. Pod to Service communication:
+4. External to Services
+
+2 The Kubernetes Networking Model
+Kubernetes makes opinionated choices about how Pods are networked. In particular, Kubernetes dictates the following requirements on any networking implementation:
+
+all Pods can communicate with all other Pods without using network address translation (NAT).
+all Nodes can communicate with all Pods without NAT.
+the IP that a Pod sees itself as is the same IP that others see it as.
+Given these constraints, we are left with four distinct networking problems to solve:
+
+Container-to-Container networking
+Pod-to-Pod networking
+Pod-to-Service networking
+Internet-to-Service networking
+The rest of this guide will discuss each of these problems and their solutions in turn.
+
+Container Network Interface plugin
+
+CNI plugins:
+cilium
+flannel
+callocole
+
+AWS VPC CNI
+Kubernetes Cluster Managment:

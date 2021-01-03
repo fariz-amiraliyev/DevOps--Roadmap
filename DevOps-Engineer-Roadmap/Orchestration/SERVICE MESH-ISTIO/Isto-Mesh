@@ -1,0 +1,14 @@
+Envoy Proxy
+Processes the inbound/outbound traffic from inter-service and service-to-external-service transparently.
+
+Pilot
+Pilot provides service discovery for the Envoy sidecars, traffic management capabilities for intelligent routing
+(e.g., A/B tests, canary deployments, etc.), and resiliency (timeouts, retries, circuit breakers, etc.)
+
+Citadel
+Citadel enables strong service-to-service and end-user authentication with built-in identity and credential management.
+
+Galley
+Galley is Istio’s configuration validation, ingestion, processing and distribution component. It is responsible
+for insulating the rest of the Istio components from the details of obtaining user configuration from
+the underlying platform (e.g. Kubernetes).

@@ -1,0 +1,21 @@
+- name: Install EPEL repo.
+10 yum: name=epel-release state=present
+11
+12 - name: Import Remi GPG key.
+13 rpm_key:
+14 key: "https://rpms.remirepo.net/RPM-GPG-KEY-remi"
+15 state: present
+16
+17 - name: Install Remi repo.
+18 yum:
+19 name: "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+20 state: present
+21
+22 - name: Ensure firewalld is stopped (since this is for testing).
+23 service: name=firewalld state=stopped
+24
+25 - name: Install Node.js and npm.
+26 yum: name=npm state=present enablerepo=epel
+27
+28 - name: Install Forever (to run our Node.js app).
+29 npm: name=forever global=yes state=present

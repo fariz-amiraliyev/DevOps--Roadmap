@@ -1,0 +1,51 @@
+How work DHCP ?
+
+Dynamic Host Configuration Protocol
+Client>>>Discover>>Server>>OFFER>>Client>>>Request>>>Server>>Acknowledge
+
+D (Discover), O (Offer), R (Request), and A (Acknowledgment)
+
+DHCP Address Allocation Methods:
+
+Static allocation
+In this method, the administrator configures an allocation table on the DHCP server.
+In this table, the administrator fills the MAC addresses of all clients and assigns an IP configuration to each client.
+
+The DHCP server uses the allocation table to provide an IP configuration.
+When a client requests an IP configuration, the DHCP server checks the table and finds a match.
+If the DHCP server finds a match, the DHCP server offers the IP configuration that is associated with
+the MAC address of the client in the match.
+
+
+Dynamic allocation
+In this method, the administrator configures a range of IP addresses on the DHCP server.
+The DHCP server assigns an IP configuration from the configured range to each client that
+requests an IP configuration.
+
+In this method, the DHCP offers the IP configuration only for a specific time.
+This specific time is known as a lease. The IP configuration remains valid until
+the lease duration is over. Once the lease period is over, the client is required
+to obtain a new IP configuration from the server.
+
+
+Automatic allocation
+Same as the dynamic method, in this method, the administrator also configures a
+range of IP addresses on the DHCP server and the DHCP server assigns an IP configuration
+from the configured range to each client that requests an IP configuration.
+
+Unlike the dynamic method, in this method, the DHCP server assigns IP configuration permanently.
+To assigns an IP configuration permanently, the DHCP server sets the lease duration to infinite.
+ As a result, once the DHCP server chooses an IP configuration from the pool and assigns the IP
+ configuration to a client, the IP configuration remains with that same client indefinitely.
+
+The DHCP employs a connectionless service model, using the User Datagram Protocol (UDP).
+It is implemented with two UDP port numbers for its operations which are the same as for
+the bootstrap protocol (BOOTP). UDP port number 67 is the destination port of a server,
+and UDP port number 68 is used by the client.
+
+Reserved addresses:
+0 Network address
+1 VPC router
+2 Reserved for DNS
+3 Future use
+255 Broadcast address

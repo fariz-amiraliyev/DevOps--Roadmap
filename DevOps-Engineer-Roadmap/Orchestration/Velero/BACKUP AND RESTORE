@@ -1,0 +1,28 @@
+Let’s backup the staging namespace using velero:
+
+velero backup create staging-backup --include-namespaces staging
+
+
+Check the status of backup:
+
+velero backup describe staging-backup
+
+
+Let’s delelte the ‘staging’ namespace to simulate a disaster
+
+kubectl delete namespace staging
+
+kubectl get all -n staging
+
+
+Restore staging namespace
+Run the velero restore command from the backup created. It may take a couple of minutes to restore the namespace:
+
+velero restore create --from-backup staging-backup
+
+You can check the restore status using the command below:
+
+velero restore get
+
+
+kubectl get all -n staging

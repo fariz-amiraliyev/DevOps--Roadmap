@@ -1,0 +1,5 @@
+Finally Let’s log into Kibana to visualize our logs.
+
+echo "Kibana URL: https://${ES_ENDPOINT}/_plugin/kibana/
+Kibana user: ${ES_DOMAIN_USER}
+Kibana password: ${ES_DOMAIN_PASSWORD}"

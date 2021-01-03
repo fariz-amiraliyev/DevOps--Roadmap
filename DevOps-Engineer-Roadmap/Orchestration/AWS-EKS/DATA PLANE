@@ -1,0 +1,3 @@
+Made up of worker nodes
+kubelet: Acts as a conduit between the API server and the node
+kube-proxy: Manages IP translation and routing

@@ -1,0 +1,22 @@
+THE ACID Model for Database Management:
+
+Defining the ACID Model
+
+Here are more specifics on the characteristics of the ACID model.
+
+Atomicity. Transactions are made up of multiple statements. Atomicity ensures that each transaction
+           is treated as a single unit that either succeeds or fails. So, if any of the statements within a
+           transaction fail, the whole transaction fails and the database is left unchanged.
+
+
+Consistency. Consistency ensures that only valid data is included in the database.
+             If a transaction violates the database’s consistency rules,
+             it will be stopped and the database will be unchanged.
+             This prevents illegal transactions from taking place.
+
+Isolation. Isolation means that multiple transactions happening at the same time will
+           not impact each other. Isolation supports concurrency control and prevents
+           transactions from interfering with each other.
+
+Durability. Once a transaction is complete, it will remain that way, even if there is a system failure.
+            Durability is ensured through database backups, transaction logs and other security measures.

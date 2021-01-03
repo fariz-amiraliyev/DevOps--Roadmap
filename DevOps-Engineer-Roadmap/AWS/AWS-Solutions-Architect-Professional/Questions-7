@@ -1,0 +1,120 @@
+51.You are working as a Solutions Architect for a global IT services company
+which has over a hundred data centers all around the globe. Due to financial
+constraints, one of its data centers located in Detroit will be decommissioned
+soon and they require its entire data to be moved to their cloud infrastructure
+in AWS. They need to migrate a total of 80 TB of data strictly in 1 week to avoid
+further system downtime. In addition, they only have a limited 25 Mbps Internet
+line in their data center to do the migration. In this scenario, what is the fastest
+and most cost-effective solution to use to migrate all of the data to AWS?
+
+AWS Snowball Edge is a data migration and edge computing device that supports
+computing tasks via Amazon EC2 applications or AWS Lambda functions. Customers
+use these devices to collect, process, and store data in environments with
+intermittent connectivity (such as manufacturing, industrial, and transportation)
+ or in extremely remote locations (such as military or maritime operations) before
+  shipping it back to AWS. These devices may also be rack mounted and clustered
+  together to build larger, temporary installations.
+  Since the total amount of data that need to be migrated is 80 TB, you cannot use the regular AWS Snowball.
+  Instead, use the Snowball Edge which has an 80 TB of usable capacity. Hence, the correct answer here is Option 3.
+
+Option 1 is incorrect because Snowmobile is used if you need to transfer up to 100PB of data.
+This will be transported on a 45-foot long ruggedized shipping container, pulled by a semi-trailer truck.
+Take note that you only need to migrate 80 TB of data, hence, this is not the most suitable and cost-effective solution.
+
+Option 2 is incorrect because you will be using the limited 25 Mbps Internet line in their data center to
+transfer the whole 80 TB, which may take more than a week. Hence, this is not the best solution as this
+carries the risk of not completing the task within a week.
+
+Option 4 is incorrect since the total amount of data that need to be migrated is 80 TB which is over the
+72 TB usable capacity limit of Snowball. Take note that although Snowball has two types of device model:
+ 50 TB and 80 TB, you can only store a total of 42 TB and 72 TB respectively based on their usable capacity limits.
+ You have to use AWS Snowball Edge instead.
+
+
+52. You are working as a Solutions Architect for a telecommunications company.
+As per instruction, you are to design a data leak prevention solution for your VPC environment.
+You want your EC2 instances that are launched on public subnet to be able to access product
+updates and patches from the Internet. The packages are accessible through the third party via
+their URLs. You want to explicitly deny any other outbound connections from your VPC instances
+to hosts on the Internet. Which of the following options would you consider?
+A forward proxy server acts as an intermediary for requests from internal users and servers, often
+caching content to speed up subsequent requests. Companies usually implement proxy solutions to provide
+URL and web content filtering, IDS/IPS, data loss prevention, monitoring, and advanced threat protection.
+ AWS customers often use a VPN or AWS Direct Connect connection to leverage existing corporate proxy server
+ infrastructure, or build a forward proxy farm on AWS using software such as Squid proxy servers with internal
+ Elastic Load Balancing (ELB).
+
+Option 1 is incorrect because even though moving the instances in a private subnet is a good idea, the routing
+ table does not have the filtering logic, it only connects the subnets with Internet gateway.
+Option 2 is incorrect because NACLs cannot filter requests based on URLs.
+Option 3 is incorrect because a security group cannot filter requests based on URLs.
+Option 4 is correct because a proxy server filters requests from the client, and allows only those that
+are related to the product updates, and in this case helps filter all other requests except the ones for
+the product updates.
+
+
+
+
+53. You are working as a Systems Engineer for a leading ISP. The provider has 2 Virtual Private Clouds
+in the same region. How can you connect the two VPC's so that the EC2 instances in one VPC can
+communicate with the other VPC?
+
+Explanation
+A VPC peering connection is a networking connection between two VPCs that enables you to route
+traffic between them privately. Instances in either VPC can communicate with each other as if
+they are within the same network. You can create a VPC peering connection between your own VPCs,
+with a VPC in another AWS account, or with a VPC in a different AWS Region. AWS uses the existing
+infrastructure of a VPC to create a VPC peering connection; it is neither a gateway nor a VPN connection,
+and does not rely on a separate piece of physical hardware. There is no single point of failure for
+communication or a bandwidth bottleneck.
+Option 1 is correct because VPC peering is the best way of connecting the EC2 instances in two VPCs in the same region.
+
+Option 2 is incorrect because you cannot create Direct Connection between VPCs.
+
+Option 3 is incorrect because you cannot create IPSec tunnel between VPCs.
+
+Option 4 is incorrect because migration of the resources is unnecessary in this case.
+
+54. You are working as a Solutions Architect for a multinational software provider
+in Philadelphia and you are tasked to host both of your development and test environments in AWS.
+Your CTO decided to use separate AWS accounts in hosting each environment.
+You enabled Consolidated Billing to link each of the accounts' bill to a Master AWS account.
+To make sure you keep within the budget, you are to provide a way for administrators in the
+master account to have access to stop, delete and/or terminate resources in both development
+and test environment accounts. Which of the following is the best option to implement for this scenario?
+Explanation
+You share resources in one account with users in a different account. By setting up
+cross-account access in this way, you don't need to create individual IAM users in each account.
+In addition, users don't have to sign out of one account and sign into another in order to access
+resources that are in different AWS accounts.
+Option 1 is incorrect because a cross-account role should be created in Dev and Test accounts, not Master account.
+Option 2 is correct because the cross-account role is created in Dev and Test accounts, and the
+users are created in the Master account that are given that role.
+Option 3 is incorrect because the permissions cannot be inherited from one AWS account to another.
+Option 4 is incorrect because consolidated billing does not give access to resources in this fashion.
+
+
+55. You, a Solutions Architect for a BPO company, are working on a multitiered,
+java-based content management system (CMS) hosted on an on-premises data centre.
+The CMS has a JBoss Application server present in the application tier.
+The database tier consists of an Oracle database which is regularly backed up to S3 using the
+Oracle RMAN backup utility. The application's static files and content are kept on a
+512 GB Storage Gateway volume which is attached to the application server via an iSCSI interface.
+
+Which AWS based disaster recovery strategy will give you the best RTO?
+
+Explanation
+Recovery Manager (RMAN) is an Oracle Database client that performs backup and recovery tasks on your
+databases and automates administration of your backup strategies. It greatly simplifies backing up,
+restoring, and recovering database files.
+
+Option 1 is incorrect because restoring the backups from the Amazon Glacier will be slower thatn S3 and will not meet the RTO.
+
+Option 2 is correct because it deploys the Oracle database on an EC2 instance by restoring the backups
+from S3 which can provide a faster recovery time, and it generates the EBS volume of static content from Storage Gateway.
+
+Option 3 is incorrect because there is no need to attach the Storage Gateway as an iSCSI volume; you can
+just easily and quickly create an EBS volume from the Storage Gateway. Then, you can generate snapshots
+from the EBS volumes for better recovery time.
+
+Option 4 is incorrect as restoring the content from Virtual Tape Library will not fit into the RTO.

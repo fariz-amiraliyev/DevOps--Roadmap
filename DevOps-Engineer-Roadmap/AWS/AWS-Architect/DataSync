@@ -1,0 +1,14 @@
+AWS DataSync
+Simplifies, automates, and accelerates moving data
+AWS DataSync simplifies, automates, and accelerates moving and replicating data between
+on-premises storage and AWS services over the network.
+
+
+How it works ?
+Deploy an agent
+Deploy a DataSync agent and associate it to your AWS account.
+Create a task
+Create a task by specifying the location of your data source and destination, and any
+options you want to use to configure the transfer.
+Start the transfer
+Start the task and monitor data movement in the console or with Amazon CloudWatch.

@@ -1,0 +1,20 @@
+Why Backup Kubernetes ?
+To Recover from Disasters such as Someone accidentally deleted a namespace
+Kubernetes API upgrade failed and you need to revert back
+Network went down.
+Cluster goes into an unrecoverable state
+Latest application push introduced a critical bug that wiped a persistent volume and you lost the data.
+Rare case of a natural disaster making your cluster inaccessible.
+Replicate the environment for debugging, development, staging or before a major upgrade.
+Migration of Kubernetes cluster from one environment to another.
+
+
+What to Backup ?
+Two things you need to backup :
+
+Kubernetes stores its state in etcd , so to restore the master, etcd and relevant
+certificates must be backed up. This post wont talk about about backing up etcd as
+its quite well documented here
+
+Application data i.e persistent volumes, because lets face it you will be having
+stateful applications running on your cluster. We cover this point in this post.

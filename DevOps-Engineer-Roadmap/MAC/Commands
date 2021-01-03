@@ -1,0 +1,9 @@
+1. ps aux | grep 'ssh'
+2. sudo launchctl unload  /System/Library/LaunchDaemons/ssh.plist
+3. sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+4. sudo launchctl stop com.openssh.sshd
+5.You need to sudo since that is how it is launched. Compare the running
+
+daemons/agents launchctl list | grep -i openssh vs
+
+sudo launchctl list | grep -i openssh.

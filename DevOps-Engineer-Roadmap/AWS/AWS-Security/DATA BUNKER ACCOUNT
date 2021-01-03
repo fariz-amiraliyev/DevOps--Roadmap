@@ -1,0 +1,42 @@
+In this lab we will create a secure data bunker. A data bunker is a secure account
+which will hold important security data in a secure location. Ensure that only members
+ of your security team have access to this account. In this lab we will create a new security
+ account, create a secure S3 bucket in that account and then turn on CloudTrail for our
+ organisation to send these logs to the bucket in the secure data account. You may want
+ to also think about what other data you need in there such as secure backups.
+
+
+1. (Highly recommended) Create a logging account from the organizations master account.
+  Best practice is to have a separate logging account for your data bunker. This account
+  should only be accessible by folks in your security group with a read only role.
+  How you create this account will depend on your organization’s policies, the
+  instructions below are guidance on how to do this.
+
+2. Create the S3 bucket for CloudTrail logs
+
+3. (Highly recommended) Ensure cross account access is read-only
+
+4. These instructions outline how to modify the cross account access created in step 1 is read-only. As with step 1, this will depend on how your organization’s policies. The key is that our security team are not able to modify data in our data bunker. Human access should only be in a break-glass emergency situation.
+
+Note: Following these steps will prevent OrganizationAccountAccessRole from making further changes to this account. Ensure other services such as Amazon Guard Duty and AWS Security Hub are configured before proceeding. If further changes are needed you will have to reset the root credentials for the security account.
+
+Navigate to IAM and select Roles
+Select the organizations account access role for your organization: Note: the default is OrganizationAccountAccessRole
+Press Attach Policy and attach the AWS managed ReadOnlyAccess Policy
+Navigate back to the OrganizationAccountAccessRole and press the X to remove the AdministratorAccess policy
+
+
+5. 4. Turn on CloudTrail from the root account
+Switch back to the root account
+Navigate to CloudTrail
+Select Trails from the menu on the left
+Press Create Trail
+Enter a name for the trail such as OrganizationTrail
+Select Yes next to Apply trail to my organization
+Under Storage location, select No for Create new S3 bucket and enter the bucket name of the bucket created in step 2
+
+
+Verification
+Switch back to the Security account
+Navigate to the S3 bucket previously created
+(Optional) You can start to explore the logs using CloudTrail

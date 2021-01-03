@@ -1,0 +1,12 @@
+CloudWatch Logs
+
+CloudWatch Logs automatically collects logs from many AWS services.
+You can also use the unified CloudWatch agent to collect and store logs
+from your custom applications and services.
+
+You can use metric filters to publish log-based metrics or to create alarms
+that notify you about potential operational issues.
+
+
+You can export log data from your log groups to an Amazon S3 bucket and use
+this data in custom processing and analysis, or to load onto other systems.

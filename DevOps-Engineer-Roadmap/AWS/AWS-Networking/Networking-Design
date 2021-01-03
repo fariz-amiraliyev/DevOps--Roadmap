@@ -1,0 +1,42 @@
+Amazon VPC concepts
+https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ug.pdf#what-is-amazon-vpc
+The following are the key concepts for VPCs:
+
+Virtual private cloud (VPC) — A virtual network dedicated to your AWS account.
+
+Subnet — A range of IP addresses in your VPC.
+
+Route table — A set of rules, called routes, that are used to determine where network traffic is directed.
+
+Internet gateway — A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.
+
+VPC endpoint — Enables you to privately connect your VPC to supported AWS services
+and VPC endpoint services powered by PrivateLink without requiring an internet gateway,
+ NAT device, VPN connection, or AWS Direct Connect connection. Instances in your VPC do
+ not require public IP addresses to communicate with resources in the service.
+ Traffic between your VPC and the other service does not leave the Amazon network.
+
+ A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. It is logically isolated
+ from other virtual networks in the AWS Cloud. You can launch your AWS resources, such as Amazon EC2
+ instances, into your VPC. You can specify an IP address range for the VPC, add subnets, associate security
+ groups, and configure route tables.
+ A subnet is a range of IP addresses in your VPC. You can launch AWS resources into a specified subnet.
+ Use a public subnet for resources that must be connected to the internet, and a private subnet for
+ resources that won't be connected to the internet .
+ To protect the AWS resources in each subnet, you can use multiple layers of security, including security
+ groups and network access control lists (ACL).
+
+ 
+VPC networking components:
+ Elastic network interfaces
+ Route tables
+ Managed prefix lists
+ Internet gateways
+ Egress-only internet gateways
+ Carrier gateways
+ NAT
+ DHCP options sets
+ Using DNS with your VPC
+ VPC peering
+ Elastic IP addresses
+ ClassicLink

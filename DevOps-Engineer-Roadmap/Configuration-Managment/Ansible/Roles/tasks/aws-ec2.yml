@@ -1,0 +1,38 @@
+---
+# volume_size
+# Doesn't work yet, will be hardcoding this to 100Gb for all instances
+# See
+#   - https://github.com/ansible/ansible/issues/30366
+#   - https://github.com/ansible/ansible/pull/32738
+#   - https://github.com/ansible/ansible/pull/23943
+#
+# encrypted
+# Cannot encrypt volumes when using pre-declared ami
+# commenting it out
+#
+- ec2_instance:
+    name: "{{ item.name }}"
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    state: present
+    image_id: "{{ item.image_id }}"
+    instance_type: "{{ item.instance_type }}"
+    key_name: "{{ item.key_name }}"
+    purge_tags: "{{ item.purge_tags | bool }}"
+    security_group: "{{ item.security_group }}"
+    tags: "{{ item.tags }}"
+    termination_protection: "{{ item.termination_protection }}"
+    vpc_subnet_id: "{{ item.vpc_subnet_id }}"
+    detailed_monitoring: yes
+    volumes:
+      - device_name: /dev/sda1
+        ebs:
+          volume_type: gp2
+          volume_size: 100
+          # encrypted: yes
+          # kms_key_id: "{{ aws_kms_key_id.ebs }}"
+  with_items: "{{ ec2 }}"
+
+
+
+  

@@ -1,0 +1,12 @@
+An AWS Config rule represents your desired configuration settings for
+specific AWS resources or for an entire AWS account. AWS Config provides
+customizable, predefined rules to help you get started. If a resource violates
+a rule, AWS Config flags the resource and the rule as noncompliant, and AWS Config
+notifies you through Amazon SNS.
+
+After you activate a rule, AWS Config compares your resources to the conditions of
+the rule. After this initial evaluation, AWS Config continues to run evaluations each
+time one is triggered. The evaluation triggers are defined as part of the rule,
+and they can include the following types:
+Configuration changes
+Periodic

@@ -1,0 +1,8 @@
+Host and Service Dependencies
+Nagios Core provides mechanisms to intelligently handle upstream provider
+failure. By defining host and service dependencies, we can prevent Contacts
+from be deluged by repetitive notifications. This "trims down" the information
+being delivered to Contacts so they may respond more quickly and effectively.
+
+Parent-Child
+Master-Dependent

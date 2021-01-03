@@ -1,0 +1,51 @@
+1. What are some reasons you might want to use a NAT Instance over a NAT Gateway?
+   NAT Instances allow you to detach and attach EIPs while NAT Gateways do not allow you to detach.
+   NAT Instances can use security groups as they are just EC2 instances. NAT Instances also can be
+   configured to support port forwarding while NAT Gateways do not support this.
+   You want to allow public Internet initiated connections to your private instances.
+
+2. You are building an application hosted on AWS for a customer. The customer
+   has a very old firewall that can only whitelist external destinations via IP
+   address only. Which solution could you use?
+
+3. You have the app currently hosted in three regions around the globe and you have defined
+   Route 53 Geolocation routing to route people to the nearest region. Some customers
+   complain that they are not able to access the service. What could be the cause?
+   You need to ensure that you have a default route in addition to other geolocation routes.
+   For geolocation routing, you need to be sure you have a default route in the case that the location cannot be determined.
+
+4. In an effort to increase security, you have updated the NACLs for your VPC subnets to only
+  allow inbound port 22 from the public Internet and deny all outbound traffic. Now,
+  you are unable to SSH into your instance from the internet where you could before.
+  Assuming nothing else has changed, What is the reason?
+  You need to allow outbound traffic for TCP ports between 1025 to 65535.
+  Ephemeral ports are required to allow the server to communicate back to the client. You would change the NACL since nothing else changed.
+
+
+5. What networking components will allow IPv6 data to communicate between a VPC and the Internet?
+   Only two components allow VPC to Internet communication using IPv6 addresses and those are "Internet Gateways"
+   (inbound) and "Egress-Only Internet Gateways" (outbound). "NAT Instances" and "NAT Gateways" explicitly do not
+   support IPv6 traffic and a "Direct Connection" carries data between a Data Centre and an AWS VPC, but does not travel over the Internet.
+
+
+6. Which of these statements on Direct Connect are False ?
+   Direct Connect connections consist of a single connection between your network and AWS with no inherent redundancy.
+   Additionally, traffic coming from on-prem via a Direct Connect connect is restricted from internet access.
+
+7. You notice that you cannot ping an EC2 instance that you recently started in a public subnet. What could be the problem?
+   The security group does not allow inbound ICMP traffic.
+
+8. What is the purpose of an Egress-Only Internet Gateway?
+   Allows VPC based IPv6 traffic to communicate to the Internet
+   Prevents IPv6 based Internet resources initiating a connection into a VPC
+
+9. Which of the following DNS record types does Route 53 not support?
+
+
+10. What might I consider to decrease the likelihood that multiple EC2 instances are impacted by some sort of underlying hardware failure in AWS?
+    Spread Placement Groups
+
+
+
+11.You want to allow your VPC instances to resolve using on-prem DNS. Can you do this and how/why?
+   Yes, by configuring a DHCP Option Set to issue your on-prem DNS IP to VPC clients.

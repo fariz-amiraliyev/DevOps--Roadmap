@@ -1,0 +1,58 @@
+We will use gp2 EBS volumes for simplicity and demonstration purpose. When deploying in production,
+you would use io1 volumes with desired IOPS and increase the default storage size in the manifests to get
+better performance. Run the following command:
+
+helm install prometheus stable/prometheus \
+    --namespace prometheus \
+    --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
+
+
+Check if Prometheus components deployed as expected:
+kubectl get all -n prometheus
+
+In order to access the Prometheus server URL, we are going to use the kubectl port-forward command to access the application:
+
+kubectl port-forward -n prometheus deploy/prometheus-server 8080:9090
+
+Deploy Grafana:
+
+We are now going to install Grafana. For this example, we are primarily using the Grafana defaults,
+but we are overriding several parameters. As with Prometheus, we are setting the storage class to gp2,
+admin password, configuring the datasource to point to Prometheus and creating an external load balancer for the service.
+
+Create YAML file called grafana.yaml with following values:
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server.prometheus.svc.cluster.local
+      access: proxy
+      isDefault: true
+
+
+kubectl create namespace grafana
+
+helm install grafana stable/grafana \
+    --namespace grafana \
+    --set persistence.storageClassName="gp2" \
+    --set persistence.enabled=true \
+    --set adminPassword='EKS!sAWSome' \
+    --values grafana.yaml \
+    --set service.type=LoadBalancer
+
+kubectl get all -n grafana
+
+
+You can get Grafana ELB URL using this command. Copy & Paste the value into browser to access Grafana web UI:
+export ELB=$(kubectl get svc -n grafana grafana -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+echo "http://$ELB"
+kubectl get secret --namespace grafana grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+Uninstall Prometheus and Grafana:
+helm uninstall prometheus --namespace prometheus
+helm uninstall grafana --namespace grafana

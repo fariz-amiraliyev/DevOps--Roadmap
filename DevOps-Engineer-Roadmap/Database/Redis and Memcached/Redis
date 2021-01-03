@@ -1,0 +1,21 @@
+Choose Redis with a version of ElastiCache for Redis if the following apply for you:
+
+ElastiCache for Redis version 5.0.0 (Enhanced)
+
+You want to use Redis streams, a log data structure that allows producers to
+append new items in real time and also allows consumers to consume messages
+either in a blocking or non-blocking fashion.
+
+For more information, see Redis Version 5.0.0 (Enhanced).
+
+ElastiCache for Redis version 4.0.10 (Enhanced)
+
+Supports both encryption and dynamically adding or removing shards from your
+Redis (cluster mode enabled) cluster.
+
+For more information, see Redis Version 4.0.10 (Enhanced).
+
+ElastiCache for Redis version 3.2.10 (Enhanced)
+
+Supports the ability to dynamically add or remove shards from your Redis
+(cluster mode enabled) cluster.

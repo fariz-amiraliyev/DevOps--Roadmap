@@ -1,0 +1,15 @@
+1. The awk is most useful when handling text files that are formatted in a
+   predictable way. For instance, it is excellent at parsing and manipulating tabular
+   data. It operates on a line-by-line basis and iterates through the entire file.
+
+2. awk '{print}' /etc/fstab
+3. awk '/UUID/' /etc/fstab
+4. awk '/^UUID/' /etc/fstab
+5. awk '/^UUID/ {print $1;}' /etc/fstab
+6. ps -ef | awk '{print $1}' | sort | uniq | wc -l
+7. echo [PID]  [MEM]  [PATH] &&  ps aux | awk '{print $2, $4, $11}' | sort -k2rn | head -n 20
+8. How to get "192.168.*.*" from the output of "ifconfig" command?
+  ifconfig |grep inet |egrep -v '172|127' | awk '{print $2}'
+
+9. ifconfig | grep 'inet ' | egrep -v '172|127' | awk '{print $2}' | awk -F':' '{print $2}'
+10. 

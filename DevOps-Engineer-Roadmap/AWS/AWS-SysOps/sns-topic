@@ -1,0 +1,44 @@
+
+Amazon SNS is a web service that coordinates and manages the delivery or sending
+of messages to subscribing endpoints or clients.
+
+There are two types of clients—publishers and subscribers—also referred to as producers and consumers.
+Publishers communicate asynchronously with subscribers by producing and sending a message
+to a topic, which is a logical access point and communication channel.
+
+Subscribers (that is, web servers, email addresses, Amazon SQS queues,
+AWS Lambda functions) consume or receive the message or notification over one of
+the supported protocols (that is, Amazon SQS, HTTP/S, email, SMS, Lambda) when
+they are subscribed to the topic.
+
+When using Amazon SNS, you create a topic and control access to it
+by defining policies that determine which publishers and subscribers can communicate
+with the topic. A publisher sends messages to topics that they have created or to
+topics they have permission to publish to. Instead of including a specific
+destination address in each message, a publisher sends a message to the topic.
+
+
+Common Amazon SNS scenarios:
+1. The "fanout" scenario is when an Amazon SNS message is sent to a topic
+and then replicated and pushed to multiple Amazon SQS queues, HTTP endpoints, or email addresses.
+Another way to use "fanout" is to replicate data sent to your production environment with your test environment.
+
+2. Application and system alerts
+3. Push email and text messaging
+4. Mobile push notifications
+5. Message durability
+
+
+Amazon SNS provides support to log the delivery status of notification messages
+sent to topics with the following Amazon SNS endpoints:
+
+Application
+
+HTTP
+
+Lambda
+
+SQS
+
+
+Amazon SNS dead-letter queues: 

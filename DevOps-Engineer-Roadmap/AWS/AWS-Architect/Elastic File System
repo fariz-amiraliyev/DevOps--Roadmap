@@ -1,0 +1,23 @@
+Amazon Elastic File System (Amazon EFS) provides a simple, scalable, fully managed elastic NFS file system
+for use with AWS Cloud services and on-premises resources.
+
+
+Amazon EFS offers two storage classes: the Standard storage class, and the Infrequent Access storage class (EFS IA).
+
+Amazon EFS is designed to provide massively parallel shared access to thousands of Amazon EC2 instances, enabling your
+applications to achieve high levels of aggregate throughput and IOPS with consistent low latencies.
+
+
+Recently, AWS announced Amazon EFS support for AWS Lambda. It enables customers to easily share data across function invocations.
+It also allows you to read large reference data files, and write function output to a persistent and shared data store. Customers
+can now use Lambda to build data-intensive applications, and load larger libraries and models. They can process larger amounts of
+data in a highly distributed manner, and share data across functions, containers, and instances.
+
+
+Using EFS and Lambda for deep learning inference requires to execute two steps:
+
+Storing the deep learning libraries and model on EFS
+Creating a Lambda function for inference, which loads the libraries and model from the EFS file system
+
+
+https://aws.amazon.com/blogs/aws/new-a-shared-file-system-for-your-lambda-functions/

@@ -1,0 +1,4 @@
+Symptoms
+
+Significant Increases in HTTP 503 Responses to Requests to Buckets with Versioning Enabled
+Unexpected Behavior When Accessing Buckets Set with CORS

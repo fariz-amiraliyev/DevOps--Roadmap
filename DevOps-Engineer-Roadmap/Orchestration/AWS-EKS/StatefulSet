@@ -1,0 +1,53 @@
+STATEFUL CONTAINERS USING STATEFULSETS
+MySQL database using StatefulSet and Amazon Elastic Block Store (EBS) as PersistentVolume.
+
+AMAZON EBS CSI DRIVER
+
+
+The CSI driver is deployed as set of Kubernetes Pods. These Pods must have permission
+to perform EBS API operations, such as creating and deleting volumes, and attaching
+volumes to the EC2 worker nodes that comprise the cluster.
+
+mkdir ~/environment/ebs_csi_driver
+cd ~/environment/ebs_csi_driver
+curl -sSL -o ebs-cni-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-ebs-csi-driver/v0.4.0/docs/example-iam-policy.json
+
+export EBS_CNI_POLICY_NAME="Amazon_EBS_CSI_Driver"
+
+aws iam create-policy \
+  --region ${AWS_REGION} \
+  --policy-name ${EBS_CNI_POLICY_NAME} \
+  --policy-document file://ebs-cni-policy.json
+
+export EBS_CNI_POLICY_ARN=$(aws --region ${AWS_REGION} iam list-policies --query 'Policies[?PolicyName==`'$EBS_CNI_POLICY_NAME'`].Arn' --output text)
+
+
+Configure IAM Role for Service Account
+
+eksctl utils associate-iam-oidc-provider --region=$AWS_REGION --cluster=eksworkshop-eksctl --approve
+
+eksctl create iamserviceaccount --cluster eksworkshop-eksctl \
+  --name ebs-csi-controller-irsa \
+  --namespace kube-system \
+  --attach-policy-arn $EBS_CNI_POLICY_ARN \
+  --override-existing-serviceaccounts \
+  --approve
+
+
+  Deploy EBS CSI Driver:
+  cd ~/environment/ebs_csi_driver
+for file in kustomization.yml deployment.yml attacher-binding.yml provisioner-binding.yml; do
+  curl -sSLO https://raw.githubusercontent.com/aws-samples/eks-workshop/main/content/beginner/170_statefulset/ebs_csi_driver.files/$file
+done
+
+
+kubectl apply -k ~/environment/ebs_csi_driver
+
+
+DEFINE STORAGECLASS:
+
+
+Define Storage Class
+mkdir ~/environment/templates
+cd ~/environment/templates
+wget https://eksworkshop.com/beginner/170_statefulset/storageclass.files/mysql-storageclass.yml

@@ -1,0 +1,16 @@
+Control Plane:
+Sheduler
+Controller manager
+ETCD
+API Server - kubectl
+
+Worker Node:
+Kubelet
+Kube-proxy
+container
+
+
+Crerate HA Control Plane
+IAM integration
+Certificate managment
+Set up LB

@@ -1,0 +1,163 @@
+AWS Fargate is a technology that provides on-demand, right-sized compute capacity for containers.
+
+With AWS Fargate, you no longer have to provision, configure, or scale groups of virtual machines to run containers.
+
+This removes the need to choose server types, decide when to scale your node groups, or optimize cluster packing.
+You can control which pods start on Fargate and how they run with Fargate profiles, which are defined as part of your Amazon EKS cluster.
+
+
+Run this command to verify if AWS Fargate with Amazon EKS is available in the Region you choose to deploy your Amazon EKS cluster.
+
+if [[ $AWS_REGION =~ ^(us-east-1|us-east-2|us-west-2|eu-west-1|eu-central-1|ap-southeast-1|ap-southeast-2|ap-northeast-1)$ ]]
+then
+  echo -e "\033[0;32mAWS Fargate with Amazon EKS is available in your Region."
+  echo "You can continue this lab."
+else
+  echo -e "\033[0;31mAWS Fargate with Amazon EKS is not yet available in your Region ($AWS_REGION)."
+  echo "Deploy your cluster in one of the Regions mentioned above."
+fi
+
+
+CREATING A FARGATE PROFILE:
+eksctl create fargateprofile \
+  --cluster eksworkshop-eksctl \
+  --name 2048-game \
+  --namespace 2048-game
+
+
+  When your EKS cluster schedules pods on Fargate, the pods will need to make calls to AWS
+  APIs on your behalf to do things like pull container images from Amazon ECR. The Fargate
+  Pod Execution Role provides the IAM permissions to do this. This IAM role is automatically
+  created for you by the above command.
+
+
+  eksctl get fargateprofile \
+  --cluster eksworkshop-eksctl \
+  -o yaml
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-service.yaml
+
+
+You can check if a Deployment has completed
+
+kubectl -n 2048-game rollout status deployment 2048-deployment
+
+
+
+Create an OIDC Provider
+First, we will have to set up an OIDC provider with the cluster and create the IAM policy to be used by the ALB Ingress Controller. This step is required to give IAM permissions to a Fargate pod running in the cluster using the IAM for Service Accounts feature.
+
+eksctl utils associate-iam-oidc-provider \
+  --cluster eksworkshop-eksctl \
+  --region=$AWS_REGION \
+  --approve
+
+
+  Create an IAM Policy for ALB Ingress
+The next step is to create the IAM policy that will be used by the ALB Ingress Controller deployment. This policy will be later associated to the Kubernetes Service Account and will allow the ALB Ingress Controller pods to create and manage the ALB’s resources in your AWS account for you.
+
+aws iam create-policy \
+  --policy-name ALBIngressControllerIAMPolicy \
+  --policy-document https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/iam-policy.json
+
+
+  Creating Service Account
+We need the policy’s Amazon Resource Name (ARN) to create the Service Account with the proper permissions.
+
+export FARGATE_POLICY_ARN=$(aws iam list-policies --query 'Policies[?PolicyName==`ALBIngressControllerIAMPolicy`].Arn' --output text)
+
+
+Next, create a Kubernetes Service Account by executing the following command
+
+eksctl create iamserviceaccount \
+  --name alb-ingress-controller \
+  --namespace 2048-game \
+  --cluster eksworkshop-eksctl \
+  --attach-policy-arn ${FARGATE_POLICY_ARN} \
+  --approve \
+  --override-existing-serviceaccounts
+
+
+
+  kubectl get sa alb-ingress-controller -n 2048-game -o yaml
+
+  curl -sS  https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/rbac-role.yaml \
+  | sed 's/namespace: kube-system/namespace: 2048-game/g' \
+  | kubectl apply -f -
+
+
+  Add helm incubator repository
+
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+# Get the VPC ID
+export VPC_ID=$(aws eks describe-cluster --name eksworkshop-eksctl --query "cluster.resourcesVpcConfig.vpcId" --output text)
+
+
+helm --namespace 2048-game install 2048-game \
+  incubator/aws-alb-ingress-controller \
+  --set image.tag=${ALB_INGRESS_VERSION} \
+  --set awsRegion=${AWS_REGION} \
+  --set awsVpcID=${VPC_ID} \
+  --set rbac.create=false \
+  --set rbac.serviceAccount.name=alb-ingress-controller \
+  --set clusterName=eksworkshop-eksctl
+
+
+
+  kubectl -n 2048-game rollout status \
+  deployment 2048-game-aws-alb-ingress-controller
+
+
+  kubectl get pods -n 2048-game
+
+  curl -s https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-ingress.yaml \
+    | yq w  - 'metadata.annotations."alb.ingress.kubernetes.io/target-type"' ip \
+    | kubectl apply -f -
+
+
+    export ALB_ADDRESS=$(kubectl get ingress -n 2048-game -o json | jq -r '.items[].status.loadBalancer.ingress[].hostname')
+
+echo "http://${ALB_ADDRESS}"
+
+
+Cleaning up
+To delete the resources used in this chapter:
+
+
+# Delete ingress
+kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-ingress.yaml
+
+# Delete service
+kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-service.yaml
+
+# Delete deployment
+kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-deployment.yaml
+
+# Delete alb-ingress-gateway
+helm -n 2048-game delete 2048-game
+
+# Delete service account
+eksctl delete iamserviceaccount \
+  --name alb-ingress-controller \
+  --namespace 2048-game \
+  --cluster eksworkshop-eksctl \
+  --wait
+
+# Delete Kubernetes RBAC
+curl -sS  https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/rbac-role.yaml \
+  | sed 's/namespace: kube-system/namespace: 2048-game/g' \
+  | kubectl delete -f -
+
+# Delete Fargate profile
+eksctl delete fargateprofile \
+  --name 2048-game \
+  --cluster eksworkshop-eksctl
+
+# Delete namespace
+kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/${ALB_INGRESS_VERSION}/docs/examples/2048/2048-namespace.yaml
+
+# Delete IAM policy
+aws iam delete-policy --policy-arn $FARGATE_POLICY_ARN

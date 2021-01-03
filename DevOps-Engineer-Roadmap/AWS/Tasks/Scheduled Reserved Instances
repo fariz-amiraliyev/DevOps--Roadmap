@@ -1,0 +1,43 @@
+1.Amazon EC2 sets aside pools of EC2 instances in each Availability Zone for use as
+Scheduled Instances. Each pool supports a specific combination of instance
+type, operating system, and network.
+
+2. You must launch your Scheduled Instances during their scheduled time periods,
+using a launch configuration that matches the following attributes of the schedule
+that you purchased: instance type, Availability Zone, network, and platform. When you do so,
+Amazon EC2 launches EC2 instances on your behalf, based on the specified launch specification.
+Amazon EC2 must ensure that the EC2 instances have terminated by the end of the current scheduled
+time period so that the capacity is available for any other Scheduled Instances it is reserved for.
+Therefore, Amazon EC2 terminates the EC2 instances three minutes before the end of
+the current scheduled time period.
+
+3. Scheduled Instance limits
+Scheduled Instances are subject to the following limits:
+
+The following are the only supported instance types: C3, C4, M4, and R3.
+
+The required term is 365 days (one year).
+
+The minimum required utilization is 1,200 hours per year.
+
+You can purchase a Scheduled Instance up to three months in advance.
+
+They are available in the following Regions: US East (N. Virginia), US West (Oregon), and Europe (Ireland).
+
+4. How Scheduled Instances work
+Amazon EC2 sets aside pools of EC2 instances in each Availability Zone for use as Scheduled Instances.
+Each pool supports a specific combination of instance type, operating system, and network.
+
+To get started, you must search for an available schedule. You can search across multiple pools or a single pool.
+After you locate a suitable schedule, purchase it.
+
+You must launch your Scheduled Instances during their scheduled time periods, using a launch configuration that
+matches the following attributes of the schedule that you purchased: instance type, Availability Zone, network,
+and platform. When you do so, Amazon EC2 launches EC2 instances on your behalf, based on the specified launch
+specification. Amazon EC2 must ensure that the EC2 instances have terminated by the end of the current scheduled
+time period so that the capacity is available for any other Scheduled Instances it is reserved for.
+Therefore, Amazon EC2 terminates the EC2 instances three minutes before the end of the current scheduled time period.
+
+You can't stop or reboot Scheduled Instances, but you can terminate them manually as needed.
+If you terminate a Scheduled Instance before its current scheduled time period ends, you can launch
+it again after a few minutes. Otherwise, you must wait until the next scheduled time period.

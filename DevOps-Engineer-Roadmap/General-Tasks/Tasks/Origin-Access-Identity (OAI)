@@ -1,0 +1,17 @@
+Overview of OAI Setup
+When you first set up an Amazon S3 bucket as the origin for a
+CloudFront distribution, you grant everyone permission to read the files in your bucket.
+This allows anyone to access your files either through CloudFront or using the Amazon S3 URL.
+
+If you use CloudFront signed URLs or signed cookies to restrict access to files
+in your Amazon S3 bucket, you probably also want to prevent users from accessing
+your Amazon S3 files by using Amazon S3 URLs. If users access your files directly in
+Amazon S3, they bypass the controls provided by CloudFront signed URLs or signed cookies.
+This includes control over the date and time that a user can no longer access your content,
+nd control over which IP addresses can be used to access content. In addition, if users access
+files both through CloudFront and directly by using Amazon S3 URLs, CloudFront access logs
+ are less useful because they're incomplete.
+
+Important 2 steps:
+ 1. Creating a CloudFront OAI and Adding it to Your Distribution
+ 2. Granting the OAI Permission to Read Files in Your Amazon S3 Bucket

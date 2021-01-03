@@ -1,0 +1,15 @@
+AWS CLI v2 Preview Installers Now Available
+https://aws.amazon.com/blogs/developer/aws-cli-v2-installers/
+
+curl 'https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-macos.zip' -o 'awscli-exe.zip'
+
+unzip awscli-exe.zip
+sudo ./aws/install
+
+/usr/local/bin/aws2 --version
+
+
+aws --version
+
+for MAC
+https://docs.aws.amazon.com/cli/latest/userguide/install-macos.html

@@ -1,0 +1,68 @@
+75. You are working as a Cloud Security Engineer in your company, and they asked you
+to ensure that all confidential files shared via S3 cannot be accessed directly;
+only through CloudFront. Which of these options could satisfy this requirement?
+
+To restrict access to content that you serve from Amazon S3 buckets, you create CloudFront
+signed URLs or signed cookies to limit access to files in your Amazon S3 bucket, and then
+you create a special CloudFront user called an origin access identity (OAI) and associate
+it with your distribution. Then you configure permissions so that CloudFront can use the OAI
+to access and serve files to your users, but users can't use a direct URL to the S3 bucket
+to access a file there. Taking these steps helps you maintain secure access to the files
+that you serve through CloudFront.
+
+In general, if you're using an Amazon S3 bucket as the origin for a CloudFront distribution,
+you can either allow everyone to have access to the files there, or you can restrict access.
+If you limit access by using, for example, CloudFront signed URLs or signed cookies,
+you also won't want people to be able to view files by simply using the direct URL for
+the file. Instead, you want them to only access the files by using the CloudFront URL,
+so your protections work.
+Typically, if you're using an Amazon S3 bucket as the origin for a CloudFront distribution,
+you grant everyone permission to read the objects in your bucket. This allows anyone to access
+your objects either through CloudFront or using the Amazon S3 URL. CloudFront doesn't expose
+Amazon S3 URLs, but your users might have those URLs if your application serves any objects
+directly from Amazon S3 or if anyone gives out direct links to specific objects in Amazon S3.
+
+The option that says: Create an Origin Access Identity (OAI) and associate it with your
+CloudFront distribution. Change the permissions on your Amazon S3 bucket so that only
+the origin access identity has read permission is correct because it gives CloudFront
+the exclusive access to S3 bucket, and prevents other users from accessing the public
+content of S3 directly via S3 URL.
+Writing an S3 bucket policy that assigns the CloudFront distribution ID as the Principal
+and the target bucket as the Amazon Resource Name (ARN) is incorrect because creating a
+bucket policy is unnecessary and it does not prevent other users from accessing the public
+content of S3 directly via S3 URL.
+Assigning an IAM user that is granted access to objects in the S3 bucket to CloudFront is
+incorrect because it does not give CloudFront exclusive access to the S3 bucket.
+Writing individual polices for each S3 bucket containing the confidential documents that
+would grant CloudFront access is incorrect because you do not need to create any individual
+policies for each bucket.
+
+
+74. You are working for a shipping firm that has web applications running on their
+data center. Their servers have a dependency on non-x86 hardware and they plan
+to use AWS to scale their on-premises data storage. However, your backup application
+is only able to write to POSIX-compatible block-based storage. There are a total of
+1,000 TB of data files that need to be mounted to a single folder on your file server.
+Existing users must also be able to access portions of this data while the backups are taking place.
+
+In this scenario, what backup solution would be most appropriate?
+Explanation
+AWS Storage Gateway connects an on-premises software appliance with cloud-based
+storage to provide seamless integration with data security features between your
+ on-premises IT environment and the AWS storage infrastructure. You can use the
+ service to store data in the AWS Cloud for scalable and cost-effective storage
+ that helps maintain data security. Gateway-Cached volumes can support volumes of
+ 1,024TB in size, whereas Gateway-stored volume supports volumes of 512 TB size.
+Provisioning Gateway Cached Volumes from AWS Storage Gateway is correct because it
+supports volumes of up to 1,024 TB in size, and the frequently accessed data is
+stored on the on-premises server while the entire data is backed up over AWS.
+Using Amazon Glacier as the target for your data backups is incorrect because the
+data stored in Amazon Glacier is not available immediately. Retrieval jobs typically
+require 3-5 hours to complete.
+Provisioning Gateway Stored Volumes from AWS Storage Gateway is incorrect
+because gateway stored volumes can only store only 512 TB worth of data.
+Using Amazon S3 as the target for your data backups is incorrect because
+S3 is not ideal for POSIX compliant data.
+
+
+73. 

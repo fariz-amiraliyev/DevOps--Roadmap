@@ -1,0 +1,45 @@
+https://eksctl.io/usage/autoscaling/
+
+
+eksctl get cluster [--name=<name>][--region=<region>]
+eksctl create cluster --name=cluster-1 --nodes=4
+
+Config-based creation:
+
+eksctl create cluster --config-file=<path>
+eksctl create cluster --config-file=<path> --without-nodegroup
+
+
+eksctl create nodegroup --config-file=dev-cluster.yaml
+
+
+Cluster credentials:
+ eksctl create cluster --name=cluster-2 --nodes=4 --kubeconfig=./kubeconfig.cluster-2.yaml
+
+ To let eksctl manage cluster credentials under ~/.kube/eksctl/clusters directory, run:
+
+
+eksctl create cluster --name=cluster-3 --nodes=4 --auto-kubeconfig
+
+
+Autoscaling
+To use a 3-5 node Auto Scaling Group, run:
+eksctl create cluster --name=cluster-5 --nodes-min=3 --nodes-max=5
+
+SSH access:
+
+eksctl create cluster --ssh-access --ssh-public-key=my_eks_node_id.pub
+
+
+
+Tagging
+To add custom tags for all resources, use --tags.
+
+
+eksctl create cluster --tags environment=staging --region=us-east-1
+
+
+To configure node root volume, use the --node-volume-size (and optionally --node-volume-type), e.g.:
+
+
+eksctl create cluster --node-volume-size=50 --node-volume-type=io1

@@ -1,0 +1,56 @@
+The initial root token is a privileged user that can perform any operation at any path.
+The web application only requires the ability to read secrets defined at a single path.
+This application should authenticate and be granted a token with limited access.
+
+Best practice: We recommend that root tokens are used only for initial setup of an
+authentication method and policies. Afterwards they should be revoked. This tutorial
+does not show you how to revoke the root token.
+
+Vault provides a Kubernetes authentication method that enables clients to authenticate
+with a Kubernetes Service Account Token.
+
+First, start an interactive shell session on the vault-0 pod.
+
+$ kubectl exec -it vault-0 -- /bin/sh
+
+
+
+
+vault auth enable kubernetes
+
+Success! Enabled kubernetes auth method at: kubernetes/
+Copy
+Vault accepts this service token from any client within the Kubernetes cluster.
+During authentication, Vault verifies that the service account token is valid
+by querying a configured Kubernetes endpoint.
+
+Configure the Kubernetes authentication method to use the service account token,
+the location of the Kubernetes host, and its certificate.
+
+$ vault write auth/kubernetes/config \
+        token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+        kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+        kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+Success! Data written to: auth/kubernetes/config
+
+
+
+vault policy write webapp - <<EOF
+path "secret/data/webapp/config" {
+  capabilities = ["read"]
+}
+EOF
+Success! Uploaded policy: webapp
+Copy
+To apply this policy requires the authentication engine to define a role. A role binds
+policies and environment parameters together to create a login for the web application.
+
+Create a Kubernetes authentication role, named webapp, that connects the Kubernetes service
+account name and webapp policy.
+
+$ vault write auth/kubernetes/role/webapp \
+        bound_service_account_names=vault \
+        bound_service_account_namespaces=default \
+        policies=webapp \
+        ttl=24h
+Success! Data written to: auth/kubernetes/role/webapp

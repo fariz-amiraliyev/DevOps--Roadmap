@@ -1,0 +1,5 @@
+Attaching a load balancer to your Auto Scaling group:
+
+Amazon EC2 Auto Scaling integrates with Elastic Load Balancing to enable you to
+insert one or more Classic Load Balancers or a single Application Load Balancer
+or Network Load Balancer with multiple target groups in front of your Auto Scaling group.

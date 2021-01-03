@@ -1,0 +1,17 @@
+Automate provisioning of Amazon WorkSpaces using AWS Lambda:
+
+By creating a Lambda function with VPC access, we can use the Python library
+LDAP3 to connect to directory services. Using a simple LDAPS search, we can get a
+list of members in a directory group. Then using the Python Boto3 library to
+access the WorkSpaces API, we can compare the directory group members to current
+WorkSpaces users. Finally, we create WorkSpaces for group members who do not have one,
+and terminate WorkSpaces for users no longer in the group.
+
+In this walkthrough you will complete the following tasks:
+
+Store domain service account password in AWS Secrets Manager.
+Create an IAM Policy and Role for the AWS Lambda function.
+Create an AWS Security Group to allow the Lambda function to connect to LDAPS.
+Create zip file with Lambda code and dependencies.
+Create a Lambda function.
+Create CloudWatch Events Rule to run the Lambda function on a schedule.

@@ -1,0 +1,11 @@
+Fluent Bit: an open source and multi-platform Log Processor and Forwarder which allows you to collect
+data/logs from different sources, unify and send them to multiple destinations. It’s fully compatible
+with Docker and Kubernetes environments.
+
+Amazon Elasticsearch Service: a fully managed service that makes it easy for you to deploy, secure,
+and run Elasticsearch cost effectively at scale.
+Kibana: an open source frontend application that sits on top of the Elasticsearch, providing
+search and data visualization capabilities for data indexed in Elasticsearch.
+Together, Fluent Bit, Elasticsearch and Kibana is also known as “EFK stack”.
+Fluent Bit will forward logs from the individual instances in the cluster to a centralized
+logging backend where they are combined for higher-level reporting using ElasticSearch and Kibana.

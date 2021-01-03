@@ -1,0 +1,27 @@
+Netcat is a Unix utility which reads and writes data across network connections using TCP or UDP protocol.
+
+Following tasks can be done easily with Netcat:
+
+Connect to a port of a target host.
+Listen to a certain port for any inbound connections.
+Send data across client and server once the connection is established.
+Transfer files across the network once the connection is established.
+Can execute programs and scripts of the client on the server and vice versa.
+Can Provide remote shell access of server to a client where shell commands can be executed.
+
+
+A simple client-server connection:
+nc -l -p 1234
+nc 127.0.0.1 1234
+
+Verbose, prints additional information about the connection:
+nc -vlp 1234
+nc -v 127.0.0.1 1234
+
+
+After data transfer wait w seconds before terminating the connection:
+nc -w 20 -lp 1234
+nc -w 2 127.0.0.1 1234
+
+ To perform file transfer:
+nc -v -w 30 -l -p 1234 >manav.txt

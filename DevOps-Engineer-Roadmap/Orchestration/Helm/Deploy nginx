@@ -1,0 +1,11 @@
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo update
+helm search repo
+helm search repo nginx
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo bitnami
+helm search repo nginx
+helm search repo bitnami/nginx
+helm install  bitnami/nginx
+helm list
+helm uninstall mywebserver

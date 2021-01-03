@@ -1,0 +1,21 @@
+ AWS WAF web access control lists (web ACLs) helps  minimize the effects of a distributed
+denial of service (DDoS) attack.
+For additional protection against DDoS attacks, AWS also provides AWS
+Shield Standard and AWS Shield Advanced. AWS Shield Standard is automatically included at no extra
+cost beyond what you already pay for AWS WAF and your other AWS services.
+
+AWS Shield Advanced
+provides expanded DDoS attack protection for your Amazon EC2 instances, Elastic Load Balancing load
+balancers, CloudFront distributions, Route 53 hosted zones, and AWS Global Accelerator accelerators.
+AWS Shield Advanced incurs additional charges.
+https://aws.amazon.com/blogs/security/now-you-can-use-aws-shield-advanced-to-protect-your-amazon-ec2-instances-and-network-load-balancers/
+
+
+Now You Can Monitor DDoS Attack Trends with AWS Shield Advanced
+https://aws.amazon.com/blogs/security/now-you-can-monitor-ddos-attack-trends-with-aws-shield-advanced/
+
+
+How to Help Protect Dynamic Web Applications Against DDoS Attacks by Using
+Amazon CloudFront and Amazon Route 5
+
+https://aws.amazon.com/blogs/security/how-to-protect-dynamic-web-applications-against-ddos-attacks-by-using-amazon-cloudfront-and-amazon-route-53/

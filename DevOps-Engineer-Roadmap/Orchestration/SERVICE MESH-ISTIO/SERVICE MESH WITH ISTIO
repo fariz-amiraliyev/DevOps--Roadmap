@@ -1,0 +1,27 @@
+A service mesh is a dedicated infrastructure layer for handling service-to-service communication.
+It’s responsible for the reliable delivery of requests through the complex topology of services
+that comprise a modern, cloud native application.
+
+Service mesh solutions have two distinct components that behave somewhat differently:
+
+The data plane is composed of a set of intelligent proxies (Envoy) deployed as sidecars.
+These proxies mediate and control all network communication between microservices along with Mixer,
+a general-purpose policy and telemetry hub.
+The control plane manages and configures the proxies to route traffic. Additionally, the control
+plane configures Mixers to enforce policies and collect telemetry.
+
+
+Istio is a completely open source service mesh that layers transparently onto existing
+distributed applications. It’s also a platform, including APIs, that let it integrate into
+any logging platform, or telemetry or policy system.
+
+Istio works by having a small network proxy sit alongside each microservice called “sidecar”.
+It’s role is to intercept all of the service’s traffic, and handles it more intelligently
+than a simple layer 3 network can. Envoy proxy is used as the sidecar and was originally
+written at Lyft and is now a CNCF project.
+
+
+The data plane is composed of a set of intelligent proxies (Envoy) deployed as sidecars.
+These proxies mediate and control all network communication between microservices.
+They also collect and report telemetry on all mesh traffic.
+The control plane manages and configures the proxies to route traffic.

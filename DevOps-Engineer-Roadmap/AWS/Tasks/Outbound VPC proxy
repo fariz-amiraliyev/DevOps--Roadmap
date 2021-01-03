@@ -1,0 +1,35 @@
+1. https://aws.amazon.com/blogs/security/how-to-set-up-an-outbound-vpc-proxy-with-domain-whitelisting-and-content-filtering/
+
+Controlling outbound communication from your Amazon Virtual Private Cloud (Amazon VPC) to
+the internet is an important part of your overall preventive security controls.
+By limiting outbound traffic to certain trusted domains (called “whitelisting”)
+you help prevent instances from downloading malware, communicating with bot networks,
+or attacking internet hosts. It’s not practical to prevent all outbound web traffic, though.
+
+2. how to limit outbound web connections from your VPC to the internet,
+   using a web proxy with custom domain whitelists or DNS content filtering services ?
+   This solution is based on the open source HTTP proxy Squid. The proxy can be used
+   for all workloads running in the VPC
+
+3. An outbound proxy that permit connections to whitelisted domains that you define,
+
+4. Optional domain content filtering based on DNS, delivered by external services
+  like OpenDNS, Quad9, CleanBrowsing, Yandex.DNS or others.
+
+5. One Elastic IP address per proxy instance for internet communication.
+   Sometimes the web sites that you’re communicating want to know your
+   IP address so they can accept traffic from you. Giving the proxies’
+   elastic IP addresses allows you to know what IP addresses your
+   web connections will come from.
+
+6. The solution is deployed automatically via an AWS CloudFormation template.
+CloudWatch Logs stores the Squid access log so that you can search and analyze it.
+The list of allowed (whitelisted) domains is stored in AWS Secrets Manager.
+The Amazon EC2 instance retrieves the domain list every 5 minutes via cronjob and
+updates the proxy configuration if the list has changed. The values in Secrets
+Manager are provisioned by CloudFormation and can be read only by the proxy EC2 instances.
+The client running on the EC2 instance must have proxy settings pointing toward
+the Network Load Balancer. The load balancer will forward the request to the
+fleet of proxies in the target group.
+
+7. 

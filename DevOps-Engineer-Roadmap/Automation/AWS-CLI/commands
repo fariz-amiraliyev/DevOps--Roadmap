@@ -1,0 +1,20 @@
+1. AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+
+2. OIDC_PROVIDER=$(aws eks describe-cluster --name <cluster-name> --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
+
+3. aws iam create-role --role-name webserver-secrets-role --assume-role-policy-document file://trust.json --description "IAM Role to access webserver secret"
+
+4. aws ssm send-command --document-name "AWS-RunShellScript" --comment "listing services" --instance-ids "Instance-ID" --parameters commands="service --status-all" --region us-west-2 --output text
+
+5.  run commands over ssh
+    Get remote server date and time:
+
+   ssh user1@server1 date
+   Find out remote server disk space usage:
+
+   ssh user1@server1 'df -H'
+   Find out remote server kernel version and Linux distro names:
+
+   ssh root@nas01 uname -mrs
+
+  6. 

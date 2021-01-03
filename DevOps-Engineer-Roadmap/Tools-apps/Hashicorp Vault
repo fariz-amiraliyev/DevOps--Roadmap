@@ -1,0 +1,52 @@
+We use Hashicorp Vault to securely store application and database secrets.
+We maintain and update these secrets configurations via Ansible in our meetearnest/ansible Github
+repo under the vault-populate role. Here you’ll find that a secrets file exists for
+every microservice, in addition to the database secrets and access policies that are
+required for pgauth. All secrets files are encrypted via ansible-vault before being
+uploaded to Github. Instructions for how to run the vault-populate role are located
+in the meetearnest/ansible/roles/vault-populate/README.md file.
+
+
+Pre-requisites:
+
+Install the vault binary version 0.7.0:
+
+curl -JLo vault.zip https://releases.hashicorp.com/vault/0.7.0/vault_0.7.0_linux_amd64.zip
+
+unzip -o vault.zip
+
+Move the binary to your bin and make it executable:
+
+mv vault /usr/local/bin/
+
+chmod +x /usr/local/bin/vault
+
+Make sure that you are connected to the VPN
+
+
+To authenticate to Vault:
+
+Export your vault address:
+
+export VAULT_ADDR=https://vault.slo-dev.earnest.com
+
+Authenticate to Vault:
+
+vault auth
+
+You will be prompted for the authentication token:
+
+These tokens can be found in the 1Password System Operations vault filed under either…
+
+vault-consul-cluster-slo-dev(root token)
+
+vault-consul-cluster-slo-dev - READONLY (read only) ← use this one unless otherwise required
+
+To read secrets:
+
+vault read secret/{SERVICE}
+
+the SERVICE name should match the spelling of the associated ansible secrets file name
+
+ex. if the service secrets are stored under ansible/roles/vault-populate/files/secret/slo-service.yml
+then to read those secrets directly in vault you’d run vault read secret/slo-service

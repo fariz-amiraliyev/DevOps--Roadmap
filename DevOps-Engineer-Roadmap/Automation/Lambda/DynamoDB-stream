@@ -1,0 +1,28 @@
+Amazon DynamoDB is integrated with AWS Lambda so that can create triggers—pieces
+of code that automatically respond to events in DynamoDB Streams. With triggers,
+can build applications that react to data modifications in DynamoDB tables.
+
+If you enable DynamoDB Streams on a table, you can associate the stream Amazon Resource
+Name (ARN) with an AWS Lambda function that you write. Immediately after an item in the
+table is modified, a new record appears in the table's stream. AWS Lambda polls the
+stream and invokes your Lambda function synchronously when it detects new stream records.
+
+Step 1: Create a DynamoDB Table with a Stream Enabled
+Step 2: Create a Lambda Execution Role
+Step 3: Create an Amazon SNS Topic
+Step 4: Create and Test a Lambda Function
+Step 5: Create and Test a Trigger
+
+How it works ?
+1. A user writes an item to a DynamoDB table (BarkTable). Each item in the table represents a bark.
+
+2. A new stream record is written to reflect that a new item has been added to BarkTable.
+
+3. The new stream record triggers an AWS Lambda function (publishNewBark).
+
+4. If the stream record indicates that a new item was added to BarkTable,
+   the Lambda function reads the data from the stream record and publishes a
+    message to a topic in Amazon Simple Notification Service (Amazon SNS).
+
+5. The message is received by subscribers to the Amazon SNS topic. (In this tutorial,
+   the only subscriber is an email address.)

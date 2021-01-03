@@ -1,0 +1,42 @@
+AWS Config provides a detailed view of the configuration of AWS
+resources in your AWS account. This includes how the resources are related to
+one another and how they were configured in the past so that you can see how the
+configurations and relationships change over time.
+
+AWS Config supports the following AWS resources types and resource relationships:
+1. Amazon API Gateway
+2. Amazon CloudFront
+3. Amazon CloudWatch
+4. Amazon DynamoDB
+5. Amazon Elastic Block Store
+6. Amazon Elastic Compute Cloud
+7. Amazon Elasticsearch Service
+8. Amazon Redshift
+9. Amazon Relational Database Service
+10. Amazon S3 Bucket Attributes
+11. Amazon Virtual Private Cloud
+12. AWS Auto Scaling
+13. AWS Certificate Manager
+14. AWS CloudFormation
+15. AWS CloudTrail
+etc.
+
+With AWS Config, you can do the following:
+
+1. Evaluate your AWS resource configurations for desired settings.
+2. Get a snapshot of the current configurations of the supported resources
+    that are associated with your AWS account.
+3. Retrieve configurations of one or more resources that exist in your account.
+4. Retrieve historical configurations of one or more resources.
+5. Receive a notification whenever a resource is created, modified, or deleted.
+6. View relationships between resources. For example, you might want to find all
+    resources that use a particular security group.
+
+
+Ways to Use AWS Config:
+1. Resource Administration
+2. Auditing and Compliance
+3. Managing and Troubleshooting Configuration Changes
+4. Security Analysis
+
+https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html

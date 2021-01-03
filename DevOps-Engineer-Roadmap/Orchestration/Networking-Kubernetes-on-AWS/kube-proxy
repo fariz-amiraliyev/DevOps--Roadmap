@@ -1,0 +1,5 @@
+3 mode of kube-proxy
+
+1. userspace
+2. IPtables
+3. IPVS

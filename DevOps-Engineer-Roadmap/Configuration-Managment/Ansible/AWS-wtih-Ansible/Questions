@@ -1,0 +1,5 @@
+1. how to Gathering Facts on EC2 Instances ?
+2. what is ansible debug module ?
+3. what is ec2_metadata_facts module ?
+4. how to change instances state by tag ?
+5. how to create ami for ec2 ?

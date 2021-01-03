@@ -1,0 +1,27 @@
+This exercise entails adding a new Host configuration file and
+object for the server on which we've just installed the NRPE.
+
+Log in to the Nagios Core Host.
+Change to the /opt/nagios/etc/objects/hosts directory.
+Edit the new file: host-mylabserver-com.cfg, where host is
+the unqualified hostname of your Linux Academy Lab Server.
+Use the defaults defined in the "linux-server" template.
+Use the "24x7" time period for the check period.
+Set the maximum number of check attempts to 10.
+Use the "check_ping" command, with 2000.00 milliseconds and 80% for
+ the warning threshold.
+Use 5000.00 milliseconds and 100% for the critical threshold.
+Make sure the "admins" contact groups is associated with the host.
+
+
+define host{
+    name                            glscott4.mylabserver.com
+    host_name                       glscott4.mylabserver.com
+    use                             linux-server
+    alias                           glscott4.mylabserver.com
+    check_period                    24x7
+    display_name                    glscott4.mylabserver.com
+    max_check_attempts              10
+    check_command                   check_ping!2000.00,80%!5000.00,100%
+    contact_groups                  admins
+}

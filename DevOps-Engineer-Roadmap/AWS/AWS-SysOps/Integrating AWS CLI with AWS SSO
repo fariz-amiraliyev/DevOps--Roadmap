@@ -1,0 +1,17 @@
+Integrating AWS CLI with AWS SSO
+
+https://docs.aws.amazon.com/singlesignon/latest/userguide/integrating-aws-cli.html
+
+AWS Command Line Interface (CLI) 2.0 preview integration with AWS Single Sign-On
+(AWS SSO) enables developers to sign in directly to the CLI using the same
+Active Directory or AWS SSO credentials that they normally use to sign in to
+AWS SSO, and access their assigned accounts and roles. For example, an administrator
+configures AWS SSO to use Active Directory for authentication, a developer can
+then sign into the CLI directly using their Active Directory credentials.
+
+
+How to integrate AWS CLI with AWS SSO
+To use the AWS CLI integration with AWS SSO, you will need to download the
+AWS CLI preview version 2.0 of the CLI. For detailed steps on how to download and
+integrate the CLI with AWS SSO, see Configuring the AWS CLI to use AWS Single
+Sign-On (AWS SSO) in the AWS Command Line Interface User Guide.

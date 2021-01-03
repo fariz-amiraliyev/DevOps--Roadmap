@@ -1,0 +1,13 @@
+The bastion hosts provide secure access to Linux instances located in
+the private and public subnets of your virtual private cloud (VPC).
+
+An Auto Scaling group ensures that the number of bastion host instances always matches the capacity you specify.
+The Quick Start also sets up Amazon CloudWatch Logs for remote storage of shell history logs, for added security.
+
+A bastion host is a server whose purpose is to provide access to a private network from an
+external network, such as the Internet.
+
+Because of its exposure to potential attack, a bastion host must minimize the chances of penetration.
+
+For example, you can use a bastion host to mitigate the risk of allowing SSH connections from an external
+network to the Linux instances launched in a private subnet of your Amazon Virtual Private Cloud (VPC).

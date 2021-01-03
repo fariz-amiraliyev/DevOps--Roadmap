@@ -1,0 +1,18 @@
+An Auto Scaling group contains a collection of Amazon EC2 instances that are treated as a logical
+grouping for the purposes of automatic scaling and management. In the context of a highly available
+solution, using an Auto Scaling group ensures that an EC2 fleet provides the required capacity. The
+continuous monitoring of the fleet instance health metrics allows for failures to be automatically
+detected and for replacement instances to be launched when required.
+The requirements of your application and high availability (HA) strategy determines the number of Auto
+Scaling groups needed.
+For an application that uses EC2 capacity spread across one or more Availability
+Zones (AZ) then a single Auto Scaling group suffices.
+
+Capacity launches where available and the Auto Scaling group replaces instances as
+required; but the placement within selected AZs is arbitrary.
+
+If the HA strategy requires more precise control of the distribution of EC2 capacity deployments, then using an
+Auto Scaling group per AZ is the appropriate solution. An example is an application with two instances
+—production and fail-over—that needs to be deployed in separate Availability Zones. Using two Auto
+Scaling groups to manage the capacity of each application instance separately ensures that they do not
+both have capacity in the same Availability Zone.

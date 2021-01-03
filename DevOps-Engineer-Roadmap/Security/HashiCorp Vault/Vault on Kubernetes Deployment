@@ -1,0 +1,77 @@
+Install Vault on a dedicated Kubernetes cluster when possible
+If a dedicated cluster is unavailable use correct node anti-affinity and
+taints/tolerances set for workload isolation
+Use Consul or Integrated Storage for the High Availability (HA) and storage backend.
+
+
+Create Kubernetes Namespace
+Set Up HashiCorp Helm Repo
+Configure Vault Helm Chart
+Install Vault
+Initialize and Unseal Vault
+Next Steps
+
+
+The Vault Helm chart is the recommended way to install and configure Vault on Kubernetes.
+In addition to running Vault itself, the Helm chart is the primary method for installing
+and configuring Vault to integrate with other services such as Consul for High Availability
+(HA) deployments.
+
+While the Helm chart automatically sets up complex resources and exposes the
+configuration to meet your requirements, it does not automatically operate Vault.
+You are still responsible for learning how to initialize, monitor, backup, upgrade,
+etc. the Vault cluster.
+
+
+Create a K8s namespace.
+
+$ kubectl create namespace vault
+Copy
+View your new K8s objects.
+
+$ kubectl -n vault get all
+
+
+Run helm install dry-run.
+
+$ helm install vault hashicorp/vault --namespace vault --dry-run
+Copy
+List available releases.
+
+$ helm search repo hashicorp/vault -l
+
+
+
+
+Install version 0.5.0.
+
+$ helm install vault hashicorp/vault --namespace vault --version 0.5.0
+Copy
+Note: See the Vault Helm chart Changelog for the difference between versions.
+
+Override default settings.
+
+$ helm install vault hashicorp/vault \
+    --namespace vault \
+    --set "server.ha.enabled=true" \
+    --set "server.ha.replicas=5" \
+    --dry-run
+
+
+
+    Alternatively, specify the desired configuration in a file, override-values.yml.
+
+$ cat << EOF > ./override-values.yml
+server:
+  ha:
+    enabled: true
+    replicas: 5
+
+EOF
+Copy
+Override the default configuration with the values read from the override-values.yml file.
+
+$ helm install vault hashicorp/vault \
+    --namespace vault \
+    --f override-values.yml \
+    --dry-run

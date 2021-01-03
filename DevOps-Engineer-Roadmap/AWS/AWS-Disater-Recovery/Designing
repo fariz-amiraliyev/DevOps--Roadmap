@@ -1,0 +1,7 @@
+Designing High Availability, Fault Tolerance, and DR with AWS Services
+
+https://docs.aws.amazon.com/whitepapers/latest/fault-tolerant-components/fault-tolerant-components.pdf
+Fault-tolerance is the ability for a system to remain in operation even
+if some of the components used to build the system fail.
+The AWS platform enables you to build fault-tolerant systems that operate with a
+minimal amount of human interaction and up-front financial investment.

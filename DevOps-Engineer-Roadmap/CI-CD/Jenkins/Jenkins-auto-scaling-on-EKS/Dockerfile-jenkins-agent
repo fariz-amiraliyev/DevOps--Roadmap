@@ -1,0 +1,28 @@
+FROM ubuntu:18.04
+
+# Setup JNLP for jenkins slave
+RUN apt-get update && \
+    apt-get install -y apt-transport-https curl init openssh-server openssh-client openjdk-8-jdk sudo
+
+RUN groupadd -g 10000 jenkins && \
+    useradd -d $HOME -u 10000 -g jenkins jenkins && \
+    adduser jenkins sudo
+
+RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/3.40/remoting-3.40.jar && \
+    chmod 755 /usr/share/jenkins && \
+    chmod 644 /usr/share/jenkins/slave.jar
+
+COPY jenkins-slave /usr/local/bin/jenkins-slave
+RUN chmod 755 /usr/local/bin/jenkins-slave && \
+    chown jenkins:jenkins /usr/local/bin/jenkins-slave
+
+RUN mkdir -p /home/jenkins/.jenkins && \
+    mkdir -p /home/jenkins/agent && \
+    chown -R jenkins:jenkins /home/jenkins
+
+VOLUME /home/jenkins/.jenkins
+VOLUME /home/jenkins/agent
+
+WORKDIR /home/jenkins
+
+ENTRYPOINT ["/usr/local/bin/jenkins-slave"]

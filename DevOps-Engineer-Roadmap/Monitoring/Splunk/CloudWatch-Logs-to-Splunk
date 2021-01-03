@@ -1,0 +1,41 @@
+https://www.splunk.com/en_us/blog/cloud/how-to-easily-stream-aws-cloudwatch-logs-to-splunk.html#:~:text=Alternatively%2C%20you%20can%20navigate%20to,%2Dlogs%2Dprocessor%20Lambda%20blueprint.
+
+Splunk supports numerous ways to get data in, from monitoring local files or streaming wire data,
+to pulling data from remote 3rd-party APIs, to receiving data over syslog, tcp/udp, or http.
+
+One example of pulling data from remote sources is the widely popular Splunk Add-on for AWS which
+reliably collects data from various AWS services.
+One example of pushing data is via AWS Lambda function which is used to stream events over HTTPS
+to Splunk HTTP Event Collector (HEC).
+
+These two pull and push models apply to different use cases and have different considerations.
+This post pertains to the push model which is particularly applicable for microservice architectures
+and event-driven computing such as AWS Lambda. Since there are no dedicated pollers to manage and
+orchestrate, the ‘push’ model generally offers the following benefits:
+
+Lower operational complexity & costs
+Easier to scale
+Low friction
+Low latency
+
+
+Step-by-step walkthrough to stream AWS CloudWatch Logs
+Step 1: Enable CloudWatch Logs stream
+Step 2: Configure Splunk HEC input
+Step 3: Configure Lambda function
+
+
+2. Configure Splunk HEC input
+Now that you have flow logs being recorded, we’ll start setting up the data pipeline from the end,
+that is Splunk, working our way backward.
+
+2a. Install Splunk Add-on for AWS. Note that since we’ll be using Splunk HEC,
+we will *not* be relying on any modular input from the Add-on to collect from
+CloudWatch Logs or VPC Flow Logs. However, we will leverage the data parsing logic
+(i.e. sourcetypes) that already exist in the Add-on to automatically parse the VPC
+Flow logs records and extract the fields.
+
+2b. Create an HEC token from Splunk Enterprise. Refer to Splunk HEC docs for detailed instructions.
+When configuring the input settings, make sure to specify “aws:cloudwatchlogs:vpcflow” as sourcetype.
+This is important to enable automatic fields extractions. Make sure to take note of your new HEC token value.
+Note: For Splunk Cloud deployments, HEC must be enabled by Splunk Support.

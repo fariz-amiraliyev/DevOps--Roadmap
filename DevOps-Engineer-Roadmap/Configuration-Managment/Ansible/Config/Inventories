@@ -1,0 +1,3 @@
+ansible -i env remote -m setup
+ansible -i env remote -m setup -a "filter=dist_ansible"
+ansible -i env remote -m setup --tree facts  (create facts dir for system confs)

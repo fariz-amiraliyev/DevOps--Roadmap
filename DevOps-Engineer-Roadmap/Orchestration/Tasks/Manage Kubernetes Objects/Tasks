@@ -1,0 +1,7 @@
+Manage Kubernetes Objects
+Declarative Management of Kubernetes Objects Using Configuration Files
+Declarative Management of Kubernetes Objects Using Kustomize
+Managing Kubernetes Objects Using Imperative Commands
+Imperative Management of Kubernetes Objects Using Configuration Files
+Update API Objects in Place Using kubectl patch
+Use kubectl patch to update Kubernetes API objects in place. Do a strategic merge patch or a JSON merge patch.

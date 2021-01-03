@@ -1,0 +1,9 @@
+Choose Memcached if the following apply for you:
+
+You need the simplest model possible.
+
+You need to run large nodes with multiple cores or threads.
+
+You need the ability to scale out and in, adding and removing nodes as demand on your system increases and decreases.
+
+You need to cache objects, such as a database.

@@ -1,0 +1,6 @@
+Hadoop Distributed File System (HDFS)
+Hadoop Distributed File System (HDFS) is a distributed, scalable file system for Hadoop.
+HDFS distributes the data it stores across instances in the cluster, storing multiple copies
+of data on different instances to ensure that no data is lost if an individual instance fails.
+HDFS is ephemeral storage that is reclaimed when you terminate a cluster. HDFS is useful for
+caching intermediate results during MapReduce processing or for workloads that have significant random I/O.

@@ -1,0 +1,23 @@
+Launching an instance from a launch template.
+Launch templates enable you to store launch parameters so that you do not have to specify
+them every time you launch an instance. For example, a launch template can contain the AMI ID,
+instance type, and network settings that you typically use to launch instances.
+
+For each launch template, you can create one or more numbered launch template versions.
+ Each version can have different launch parameters. When you launch an instance from a
+ launch template, you can use any version of the launch template. If you do not specify a
+ version, the default version is used. You can set any version of the launch template as
+ the default version—by default, it's the first version of the launch template.
+
+ Launch template parameters are not fully validated when you create the launch template.
+ If you specify incorrect values for parameters, or if you do not use supported parameter
+ combinations, no instances can launch using this launch template. Ensure that you specify
+ the correct values for the parameters and that you use supported parameter combinations.
+ For example, to launch an instance in a placement group, you must specify a supported instance type.
+
+ A launch template can contain all or some of the parameters to launch an instance.
+ When you launch an instance using a launch template, you can override parameters that
+ are specified in the launch template. Or, you can specify additional parameters
+ that are not in the launch template.
+
+ 

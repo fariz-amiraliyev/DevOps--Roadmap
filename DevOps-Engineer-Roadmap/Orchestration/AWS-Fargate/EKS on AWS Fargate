@@ -1,0 +1,19 @@
+EKS and Fargate make it straightforward to run Kubernetes-based applications on
+AWS by removing the need to provision and manage infrastructure for pods.
+
+Customers no longer have to worry about patching, scaling, or securing a cluster of
+EC2 instances to run Kubernetes applications in the cloud. Using Fargate, customers
+define and pay for resources at the pod-level. This makes it easy to right-size resource
+utilization for each application and allow customers to clearly see the cost of each pod.
+
+
+Build a Cluster:
+
+eksctl create cluster --name demo-newsblog --region eu-west-1 --fargate
+
+This single command did quite a lot under the hood. Not only did it create a cluster for me,
+amongst other things, it also created a Fargate profile.
+
+ I also want everything to run on Fargate, including the CoreDNS pods that are part of Kubernetes. To get them running on
+ Fargate, I will add a second Fargate profile for everything in the kube-system namespace. This time, to add a bit of variety
+ to the demo, I will use the command line to create my profile.

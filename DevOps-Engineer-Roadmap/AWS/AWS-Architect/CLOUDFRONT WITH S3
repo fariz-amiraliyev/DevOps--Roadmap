@@ -1,0 +1,17 @@
+CLOUDFRONT WITH S3 BUCKET ORIGIN
+
+
+1.CREATE S3 BUCKET
+2. UPLOAD EXAMPLE INDEX.HTML FILE
+3. CONFIGURE AMAZON CLOUDFRONT
+In the Origin Domain Name field Select the S3 bucket you created previously.
+In Restrict Bucket Access click the Yes radio then click Create a New Identity.
+Click the Yes, Update Bucket Policy Button.
+
+4. Scroll down to the Distribution Settings section, in the Default Root Object field enter index.html
+Click Create Distribution.
+To return to the main CloudFront page click Distributions from the left navigation menu.
+For more information on the other configuration options, see Values That You Specify
+When You Create or Update a Web Distribution in the CloudFront documentation.
+After CloudFront creates your distribution which may take approximately 10 minutes,
+the value of the Status column for your distribution will change from In Progress to Deployed.

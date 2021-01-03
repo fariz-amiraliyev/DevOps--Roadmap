@@ -1,0 +1,6 @@
+Apache Spark
+Spark is a cluster framework and programming model for processing big data workloads.
+Like Hadoop MapReduce, Spark is an open-source, distributed processing system but
+uses directed acyclic graphs for execution plans and in-memory caching for datasets.
+When you run Spark on Amazon EMR, you can use EMRFS to directly access your data in Amazon S3.
+Spark supports multiple interactive query modules such as SparkSQL.

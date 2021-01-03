@@ -1,0 +1,37 @@
+Deploy the Metrics Server
+Metrics Server is a scalable, efficient source of container resource metrics for
+Kubernetes built-in autoscaling pipelines.
+
+These metrics will drive the scaling behavior of the deployments.
+
+We will deploy the metrics server using Helm configured in a previous module
+
+# create the metrics-service namespace
+kubectl create namespace metrics
+
+# deploy the metrics-server
+helm install metrics-server stable/metrics-server --version 2.11.1 --namespace metrics
+
+
+kubectl describe hpa
+
+kubectl create deployment php-apache --image=us.gcr.io/k8s-artifacts-prod/hpa-example
+kubectl set resources deploy php-apache --requests=cpu=200m
+kubectl expose deploy php-apache --port 80
+
+kubectl get pod -l app=php-apache
+
+Create an HPA resource
+
+kubectl autoscale deployment php-apache `#The target average CPU utilization` \
+    --cpu-percent=50 \
+    --min=1 `#The lower limit for the number of pods that can be set by the autoscaler` \
+    --max=10 `#The upper limit for the number of pods that can be set by the autoscaler`
+
+
+    kubectl get hpa
+
+
+    kubectl --generator=run-pod/v1 run -i --tty load-generator --image=busybox /bin/sh
+
+    kubectl get hpa -w

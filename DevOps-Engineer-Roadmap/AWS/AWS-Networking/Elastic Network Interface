@@ -1,0 +1,6 @@
+1. MAC address
+2. Internal IP addresses
+3. Auto-assigned external IP
+4. sourse/dest check
+5. Securtiy groups
+6. ENI works in AZ.

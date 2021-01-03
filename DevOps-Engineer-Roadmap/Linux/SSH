@@ -1,0 +1,18 @@
+ssh-agent $SHELL
+ssh-add -L
+ssh-add
+3 steps:
+ ssh-keygen -t rsa
+ ssh-copy-id localhost
+ sudo /usr/sbin/sshd -Dd
+ I found it was not able to read the auth_key
+ netstat -tan | grep LIST
+/usr/sbin/sshd -d -f /etc/ssh/sshd_config
+How to ssh to localhost without password?
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+netstat -tan | grep LIST
+which ssh
+
+
+
+How works SSH ?

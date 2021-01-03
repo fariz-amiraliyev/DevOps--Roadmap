@@ -1,0 +1,42 @@
+If you've followed along in this course using the Cloud Servers, you will have noticed that we've put off handling certain errors. One of these may be errors thrown by active checks on a remote host. In this exercise, we will troubleshoot those errors.
+
+We need to obtain some information about the problems before we continue. If you ARE NOT experiencing this particular error, it's likely you've already fixed it. In that case, complete this exercise and skip the steps below.
+
+Investigating the Problem
+At this point, we know a couple of things:
+
+Active checks are failing
+The Event Log reports that connections are being refused on port 5666
+Let's gather some information from the WebUI about these errors.
+
+Log in to the WebUI
+If you've followed the course *EXACTLY*, one of your remote hosts will be throwing errors such as: "No output on stdout) stderr: connect to address..."
+Open the Event Log in the WebUI to confirm the host and the errors being thrown
+Verify the host status using the "Host" view.
+A refused connection is usually indicative of a lack of connectivity. This could be because of a firewall rule or perhaps a daemon not running. We know NRPE runs on TCP/5666. If the host is up, and Nagios Core's connections to TCP/5666 are being refused, the issue is likely either connectivity to the NRPE service or the NRPE service itself. Follow the steps below to examine the NRPE service.
+
+Look for NRPE processes with the following command: ps aux | grep nagios. You should see several processes running under the "nagios" user:
+
+nagios   19438  0.0  0.1  21400  1740 ?        Ss   16:38   0:00 /opt/nagios/bin/nagios -d /opt/nagios/etc/nagios.cfg
+nagios   19440  0.0  0.0  10144   720 ?        S    16:38   0:00 /opt/nagios/bin/nagios --worker /opt/nagios/var/rw/nagios.qh
+nagios   19441  0.0  0.0  10144   720 ?        S    16:38   0:00 /opt/nagios/bin/nagios --worker /opt/nagios/var/rw/nagios.qh
+nagios   19442  0.0  0.0  10144   716 ?        S    16:38   0:00 /opt/nagios/bin/nagios --worker /opt/nagios/var/rw/nagios.qh
+nagios   19443  0.0  0.0  10796   964 ?        S    16:38   0:00 /opt/nagios/bin/nagios --worker /opt/nagios/var/rw/nagios.qh
+nagios   19444  0.0  0.0  20948   628 ?        S    16:38   0:00 /opt/nagios/bin/nagios -d /opt/nagios/etc/nagios.cfg
+ If you don't see a process list similar to this, the service may not be running, or may be misconfigured.
+
+Check with systemd as to the status of the NRPE service with this command: systemctl status nrpe.service. It should be enabled and running.
+
+Let's ensure the service is enabled by running systemctl list-unit-files | grep nrpe. If the service isn't enabled, enable it.
+
+Start the service using the systemctl command.
+
+Re-check for processes as mentioned above, and re-check the service status with systemd.
+
+Look for open TCP port 5666 by issuing netstat -a | grep 5666 on the command line. This will verify the port is and being listened to for incoming connections.
+
+
+systemctl enable nrpe.service
+The service will most likely need to be started:
+
+systemctl start nrpe.service

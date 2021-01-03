@@ -1,0 +1,10 @@
+Amazon EBS volumes are highly reliable, but to further mitigate the possibility of a failure, backups of
+these volumes can be created using a feature called snapshots. A robust backup strategy will include an
+interval (time between backups, generally daily but perhaps more frequently for certain applications),
+a retention period (dependent on the application and the business requirements for rollback), and a
+recovery plan. To ensure high durability for backups of EBS volumes, snapshots are stored in Amazon
+Simple Storage Service (Amazon S3).
+EBS snapshots are used to create new Amazon EBS volumes, which are an exact replica of the original
+volume at the time the snapshot was taken.
+EBS snapshots are created and managed using the API, AWS Management Console, Amazon Data
+Lifecycle Manager (DLM), or AWS Backup.

@@ -1,0 +1,16 @@
+---
+- name: Create/Update unified-log dynamo table
+  dynamodb_table:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.name }}"
+    hash_key_name: "{{ item.hash_key_name }}"
+    hash_key_type: "{{ item.hash_key_type }}"
+    range_key_name: "{{ item.range_key_name }}"
+    range_key_type: "{{ item.range_key_type }}"
+    read_capacity: "{{ item.read_capacity }}"
+    write_capacity: "{{ item.write_capacity }}"
+  with_items: "dynamodb_table"
+
+
+  

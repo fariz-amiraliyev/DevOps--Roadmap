@@ -1,0 +1,113 @@
+1. The company policy says that they must maintain a centralized logging repository but localized security
+    management. For economic efficiency, they also require all sub-account charges to roll up under one invoice.
+    Which of the following solutions most efficiently addresses these requirements?
+
+    Service Control Policies are an effective way to broadly restrict access to certain features of sub-accounts.
+    Use of a single separate logging account is an effective way to create a secure logging repository
+
+    Create a stand-alone consolidated logging account and configure all sub-account CloudWatch and CloudTrail activity
+    to route to that account. Use an SCP to restrict sub-accounts from changing CloudWatch and CloudTrail configuration.
+    Configure consolidated billing under a single account and register all sub-accounts to that billing account.
+    Create localized IAM Admin accounts for each sub-account.
+
+
+2. A food service business has begun an initiative to migrate all applications and data to the AWS cloud.
+   Governance needs to be established before any migrations can occur. Business units such as sales, marketing,
+   and product management have fluctuating infrastructure capacity and security requirements, while other business
+   units like finance, operations, and human resources have more static demand. Security policies and compliance
+   needs vary by project group within each business units. Each business unit is responsible for it's own cost
+   center, and the finance group would like cost reporting to be as streamlined as possible. Which AWS account
+   structure will best satisfy the company's governance needs?
+
+   Use AWS Organizations to create a core Organizational Unit that contains a billing account, a shared services account,
+   and a log archive account. Create an Organizational Unit for each business unit that contains accounts for each project
+   group within the business unit. Establish standard tags to sort the AWS Detailed Billing report by cost center
+
+   Leveraging AWS Organizations to manage an account structure with a core Organizational Unit and Organizational Units
+   for each business unit provides flexibility for future organizational changes. Creating an account for each project
+   group facilitates security policy differences within business units, and limits the exposure of a single security event.
+   Managing differing security requirements by project group in a single account will require more governance maintenance.
+   Creating billing, shared services, and log archive accounts in multiple Organizational Units will result in duplication
+   of services, and can be done at the core level.
+
+
+
+3. AWS Cost Management encompasses a number of services to help you to organize, control and optimize your AWS costs and usage.
+  Which of the following Cost Management related tools gives you the ability to set alerts when costs or usage are exceeded?
+
+  AWS Budgets
+
+  The correct answer is AWS Budgets. AWS Cost Explorer lets you visualize, understand, and manage your AWS costs and usage over time.
+  AWS Cost & Usage Report lists AWS usage for each service category used by an account and its IAM users and finally, Reserved
+  Instance Reporting provides a number of RI-specific cost management solutions to help you better understand and manage RI Utilization
+  and Coverage. AWS Budgets
+
+
+  4. You notice that there are several existing roles called role-engineer, role-manager, role-qa, role-dba, role-data-scientist, etc.
+   When a new person joins the company, the new IAM user simply assumes the right role while using AWS - this allows central management
+   of permissions and eliminates the need to manage permissions on a per-user basis. A new QA hire joins the company a few days later.
+   You create an IAM User for her. You attach a Policy to the new IAM User that allows Action STS AssumeRole on any Resource. However,
+   when this employee logs in the same day and tries to switch roles to role-qa, she is denied and is unable to assume the role-qa Role.
+   What could be one reason why this is happening and how can it be best fixed?
+
+   You have not modified the Trust Policy of the IAM Role role-qa to allow the new IAM User to assume the Role. To fix this, add the arn of
+   the new IAM User to the Principal element of the Trust Policy of the Role
+
+   In order to allow an IAM User to successfully assume an IAM Role, two things must happen. First, the Policy attached to the User must allow
+   the action STS AssumeRole. This is already true according to the question. Second, the Trust Policy of the Role itself must allow the User
+   in question to assume the Role. This second condition can be met if we specify the arn of the User in the Principal element of the Trust
+   Policy. In general, this question can be answered if the candidate is familiar with the concept of Principal in a Role, see link - A
+   Principal within an Amazon IAM Role specifies the user (IAM user, federated user, or assumed-role user), AWS account, AWS service, or
+   other principal entity that is allowed or denied to assume or impersonate that Role. Trust Policy is different than the Policy permissions
+   - think of Policy Permissions as [what can be accessed] and Trust Policy as [who can access]. Trust Policy cannot belong to an IAM User,
+   hence the choice that claims the problem to be an unmodified User Trust Policy is incorrect. IAM changes are instantly effective, so the
+   choice that points at the need of a time delay is also incorrect. Among the other two choices, the knowledge needed to pick the right one
+   is an awareness of the Principal element. AWS JSON Policy Elements - Principal IAM Roles
+
+
+   5. A company owns multiple AWS accounts managed in an AWS Organization. You need to generate daily cost and usage reports that include the
+      activities of all the member accounts. The reports should track the AWS usage for each resource type and provide estimated charges.
+      The report files also need to be delivered to an Amazon S3 bucket for storage. How would you create the required reports?
+
+      In the master account of the AWS Organization, generate the AWS Cost and Usage Reports and save the reports in an S3 bucket.
+      Modify the bucket policy to allow the billing reports service to put objects.
+
+      The consolidated billing feature in AWS Organization does not generate billing reports automatically. You need to configure the AWS
+      Cost and Usage Reports in the master account and use an S3 bucket to store the reports. The generated reports include activities for
+      all the member accounts and it is not required to create a report in each member's account. The option of CloudWatch Event rule and
+      Lambda function may work however it is not a straightforward solution. AWS Cost and Usage Report
+
+
+
+  7. You are helping a client design their AWS network for the first time. They have a fleet of servers that
+      run a very precise and proprietary data analysis program. It is highly dependent on keeping the system time across the
+      servers in sync. As a result, the company has invested in a high-precision stratum-0 atomic clock and network appliance which
+      all servers sync to using NTP. They would like any new AWS-based EC2 instances to also be in sync as close as possible to the
+      on-prem atomic clock as well. What is the most cost-effective, lowest maintenance way to design for this requirement?
+
+      Configure a DHCP Option Set with the on-prem NTP server address and assign it to each VPC. Ensure NTP (UDP port 123) is allowed
+      between AWS and your on-prem network.
+
+      8. For large organizationally complex AWS landscapes, it is considered a best practice to combine a tagging strategy with lifecycle
+         tracking of various projects to identify orphaned resources that are no longer generating value for the organization and should be
+         decommissioned. With which AWS Well-Architected Framework Pillar is this best practice most aligned?
+
+         Tagging has many uses but one strong use-case is in being able to tie resources that incur costs with cost centers or projects to create a direct
+          line of sight to actual AWS expenses. If this visibility does not exist, costs tend to increase because "someone else is paying."
+           A Best Practice of the Cost Optimization Pillar is to maintain expenditure awareness. AWS Well-Architected - Build secure, efficient,
+           cloud enabled applications
+
+
+    9. A client has asked you to help troubleshoot a Service Control Policy. Upon reviewing the policy, you notice that they have used multiple
+       "Statement" elements for each Effect/Action/Resource object but the policy is not working. What would you suggest next?
+         Change the policy to combine the multiple Statement elements into one element with an object array.
+
+      10. You work for a genetics company that has extremely large datasets stored in S3. You need to minimize storage costs,
+         while maintaining mandated restore times that depend on the age of the data. Data 30-59 days old must be available immediately,
+         and data ≥ 60 days old must be available within 12 hours. Which of the following options below should you consider?
+
+         You should use S3 - IA for the data that needs to be accessed immediately, and you should use Glacier for the data that must be
+         recovered within 12 hours. S3 - RRS and 1Zone-IA would not be suitable solution for irreplaceable data or data that required
+         immediate access (reduced Durability or Availability), and CloudFront is a CDN service, not a storage solution. The use of absolute
+         words like 'Must' is an important clue as it will eliminate options where the case may not be possible such as with OneZone-IA. S3 -
+          Infrequent Access About Glacier

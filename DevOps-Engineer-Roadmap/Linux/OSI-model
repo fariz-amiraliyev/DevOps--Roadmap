@@ -1,0 +1,10 @@
+OSI model means
+Open Sources Interconnections model:
+
+7. Application   Data             Web-browser
+6. Presentation  Data             Encrypt-decrypt, load balancing,
+5. Session       Data             Recieving-sending data Session
+4. Transport     Data Segments    TCP/UDP Protocols, 3 way-handshake: SYN, SYN-ACK, ACK, Established connection, sockets
+3. Network       Data Packets     Internet Protocols, IP addresses,
+2. DataLink      Data Frames      Host to host connections, MAC addresses,
+1. Physical      Bits             Physical devices, signals, electric, radio signals, cables and etc.

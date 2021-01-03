@@ -1,0 +1,49 @@
+
+Amazon Elastic Container Service for Kubernetes (Amazon EKS) is a fully managed
+service that makes it easy for you to use Kubernetes on AWS without having to be
+an expert in managing Kubernetes clusters.
+
+You have to install and operate the Kubernetes master and configure a cluster
+of Kubernetes workers. In order to achieve high availability in you Kubernetes
+clusters, you have to run at least three Kubernetes masters across different AZs.
+Each master needs to be configured to talk to each, reliably share information,
+load balance, and failover to the other masters if one experiences a failure.
+Then once you have it all set up and running you still have to deal with upgrades
+and patches of the masters and workers software. This all requires a good deal of
+operational expertise and effort, and customers asked us to make this easier.
+
+Amazon EKS runs the upstream version of the open-source Kubernetes software,
+so you can use all the existing plugins and tooling from the Kubernetes community.
+Applications running on Amazon EKS are fully compatible with applications running
+on any standard Kubernetes environment, whether running in on-premises datacenters or
+public clouds. This means that you can easily migrate your Kubernetes application to
+Amazon EKS with zero code changes. Second, Amazon EKS automatically runs K8s with three
+masters across three AZs to protect against a single point of failure. This multi-AZ
+architecture delivers resiliency against the loss of an AWS Availability Zone.
+
+Third, Amazon EKS also automatically detects and replaces unhealthy masters, and it
+provides automated version upgrades and patching for the masters. Last, Amazon EKS is
+integrated with a number of key AWS features such as Elastic Load Balancing for
+load distribution, IAM for authentication, Amazon VPC for isolation, AWS PrivateLink
+for private network access, and AWS CloudTrail for logging.
+
+
+Amazon EKS integrates IAM authentication with Kubernetes RBAC (the native role based access control
+system for Kubernetes) through a collaboration with Heptio.
+
+
+You can assign RBAC roles directly to each IAM entity allowing you to granularly
+control access permissions to your Kubernetes masters. This allows you to easily
+manage your Kubernetes clusters using standard Kubernetes tools, such as kubectl.
+
+
+You can also use PrivateLink if you want to access your Kubernetes masters directly
+from your own Amazon VPC. With PrivateLink, your Kubernetes masters and the Amazon
+EKS service endpoint appear as an elastic network interface with private IP addresses
+in your Amazon VPC.
+This allows you to access the Kubernetes masters and the Amazon EKS service directly
+from within your own Amazon VPC, without using public IP addresses or requiring the
+traffic to traverse the internet.
+Finally, we also built an open source CNI plugin that anyone can use with their
+Kubernetes clusters on AWS. This allows you to natively use Amazon VPC networking
+with your Kubernetes pods.

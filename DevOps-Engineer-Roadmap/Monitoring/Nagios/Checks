@@ -1,0 +1,4 @@
+Nagios Core undertakes monitoring by performing actions known as
+     "checks."
+But before checks are actually executed, Nagios does quite a bit of
+behind-the-scenes work to determine what needs to be checked, when, and how.

@@ -1,0 +1,70 @@
+1. You have decided to migrate your on-prem legacy Informix database to Amazon Aurora.
+   How might this be facilitated most efficiently?
+
+   Manually create the target schema on Aurora then use Data Pipeline with JDBC to move the data.
+
+2. Which of the following native AWS services does not support a VPC endpoint connection?
+   Amazon MQ
+   A VPC endpoint enables you to connect to certain AWS services without the data travelling over the Internet.
+   This is done by routing the traffic within the Amazon VPC network. "API Gateway", "Kinesis Data Streams" and
+   "DynamoDB" are all services that can be connected to via VPC endpoints, however the "Amazon MQ" service is
+   currently only available by using an Internet Gateway.
+
+3. You just completed setup of your Direct Connect connection to AWS and want to transition over
+   from your VPN but leave the VPN as a backup. What are some tasks to be done for minimal disruption?
+
+   Configure both the VPN and Direct Connect with the same BGP prefix.
+   Update BGP weighting on your customer-side router to a higher weight than the VPN connection.
+
+   Both the VPN and Direct Connect paths have to have the same BGP prefix to dynamically route among themselves.
+   Using BGP you should also configure route priorities from on-prem to AWS to make use of Direct
+   Connect as primary and VPN as secondary.
+
+
+4. Given a VPC CIDR of 10.0.0.0/16 and subnet CIDR block of 10.0.0.0/24, what would you expect the DNS address to be for DHCP clients in that
+   subnet given default settings?
+   10.0.0.2
+   The IP address of the DNS in a VPC is always the base of the subnet range plus two.
+
+
+5. Which is not part of a component of the Cloud Adoption Framework?
+   Reinvent business processes to take advantage of new capabilities.
+   The Cloud Adoption Framework focuses on the early stages of cloud adoption.
+   Therefore, any reinvention of business processes is not inherently considered part of the CAF.
+
+6. You are evaluating a technical migration plan for a customer. Which of the following project assumptions is incorrect?
+   We can replicate our Linux, Windows and Solaris VMs, syncing volumes and creating periodic AMIs.
+
+10. You are migrating from an Oracle on-prem database to an Oracle RDS database. Which of these describes this migration properly?
+     Homogenous migration
+    A homogeneous migration is when we migrate between the same databases.
+20. Your client is contemplating migration to a hybrid architecture over the next year.
+    What preparation tasks would you suggest that would be directly tied to supporting this migration?
+    While all these might contribute to a high-performing IT organization, accurate inventory, loosely couple patterns
+    and accurate TCO all will help contribute to evaluating a cloud migration.
+
+21. Which of the following options allows users to have secure access to private files located in S3?
+    CloudFront Signed Cookies
+    CloudFront Origin Access Identity
+    CloudFront Signed URLs
+
+    There are three options in the question which can be used to secure access to files stored in S3 and
+    therefore can be considered correct. Signed URLs and Signed Cookies are different ways to ensure that
+    users attempting access to files in an S3 bucket can be authorized. One method generates URLs and the
+    other generates special cookies but they both require the creation of an application and policy to
+    generate and control these items. An Origin Access Identity on the other hand, is a virtual user identity
+    that is used to give the CloudFront distribution permission to fetch a private object from an S3 bucket.
+    Public S3 buckets should never be used unless you are using the bucket to host a public website and therefore
+    this is an incorrect option.
+
+    22. Which migration strategy generally has the least cost for an enterprise?
+       Retire
+       Retiring, or sunsetting, an asset usually is the least-cost option. The Do-Nothing option, or
+       Retain, still incurs holding and operational costs. There are exceptions to this where exit costs
+       are present such as penalties for breaking a contract or disposal costs. However, the soft cost
+        savings often offsets the hard retirement costs.
+23. You want to gradually migrate data directly from an on-prem RAID10 file server to S3 without moving
+     it to other storage first. Which of these would you use?
+     You can use AWS CLI and the S3 sync or cp commands to move data from an existing share to S3. However,
+     using Storage Gateway would require you to first move the data over from the RAID10 volume to the volumes
+     hosted under Storage Gateway.

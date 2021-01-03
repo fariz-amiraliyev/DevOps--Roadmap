@@ -1,0 +1,45 @@
+1.Because of regulatory requirements, certain areas of your organization can only use certain regions. Which is the BEST way to implement this control?
+
+2.Your client recently failed a security audit because they had username and passwords hard-coded in a script which runs on an EC2 instance.
+  Which of the following is a way to remediate?
+
+3. What are the main uses of Kinesis Data Streams?
+They can accept data as soon as it has been produced, without the need for batching
+They can enable real-time reporting and analysis of streamed data
+
+4. When developing a Amazon Kinesis Data Stream application, what is the recommended method to read data from a shard?
+ KCl
+
+ 5. We are building an application to facilitate the processing of real estate contracts. This process requires several manual and automated steps that can span over weeks. What service would you select for this use case?
+    Simple Workflow Service
+     AWS SWF is a workflow framework well suited for distributed asynchronous processes involving lead/lag times and human-enabled processes.
+
+6. After an EMR cluster is terminated, what happens to the data stored as HDFS?
+   It is deleted.
+7.We are designing an application where we need to accept a steady stream of large binary objects up to 1GB each. We want our architecture to allow for scaling out. What would you select as the best option for intake of the BLOBs?
+  Simple Queue Service
+8. What is the main benefit of loosely coupled architectures for scalability?
+   More atomic functional units.
+
+9. Based on past statistics of our web traffic, we observe that we sometimes get traffic spikes on Monday morning. What is the most cost-effective type of scaling should we use for this scenario?
+   Dynamic
+   You might be tempted to use Scheduled given the traffic patterns but this might scale needlessly if we do not get that traffic spike. The most efficient way would be Dynamic based on some metric like connections, CPU or network I/O.
+
+
+10. In CloudFront, Behaviors permit which of the following scenarios?
+    Delivery of different origins based on URL path.
+    Behaviors allow us to define different origins depending on the URL path. This is useful when we want to serve up static content from S3 and dynamic content from an EC2 fleet for example for the same website.
+
+11. We decide we need to re-provision our RDS instances from db.m5.large to db.m5.4xlarge. What type of scaling is this?
+    Scale Up
+
+12. You are designing a DynamoDB datastore to record electric meter readings from millions of homes once a week. We share on our website weekly live electric consumption charts based of this data so the week must be part of the primary key. How might we design our datastore for optimal efficiency?
+    Use a table per week to store the data.
+    If we put all the time series data in one big table, the last partition is the one that gets all the read and write activity, limiting the throughput. If we create a new table for each period, we can maximize the RCU and WCU efficiency against a smaller number of partitions.
+
+13. We have setup an autoscaling group using Dynamic scaling based on CPU utilization. During times of heavy spikes in demand, our fleet is unable to keep up with demand initially but eventually settles in. What how might we address this most cost effectively?
+    Reduce the cooldown time to allow scaling to be more dramatic and responsive.
+    If your scaling is not picking up the load fast enough to maintain a good service level, reducing the cooldown can make scaling more dramatic and responsive.
+
+
+    

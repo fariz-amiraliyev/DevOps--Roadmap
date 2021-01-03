@@ -1,0 +1,40 @@
+SSH tunneling or SSH port forwarding is a method of creating an encrypted SSH
+connection between a client and a server machine through which services ports
+can be relayed.
+
+There are three types of SSH port forwarding:
+
+Local Port Forwarding. - Forwards a connection from the client host to the SSH server host and then to the destination host port.
+Remote Port Forwarding. - Forwards a port from the server host to the client host and then to the destination host port.
+Dynamic Port Forwarding. - Creates SOCKS proxy server which allows communication across a range of ports.
+
+Local port forwarding allows you to forward a port on the local (ssh client) machine to a port on the
+remote (ssh server) machine, which is then forwarded to a port on the destination machine.
+
+Local port forwarding is mostly used to connect to a remote service on an internal network such as a database or VNC server.
+
+ssh -L [LOCAL_IP:]LOCAL_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
+
+You can use any port number greater than 1024 as a LOCAL_PORT. Ports numbers less than 1024 are privileged
+ports and can be used only by root. If your SSH server is listening on a port other than 22 (the default) use the -p
+[PORT_NUMBER] option.
+
+Let’s say you have a MySQL database server running on machine db001.host on an internal (private) network,
+on port 3306 which is accessible from the machine pub001.host and you want to connect using your local
+machine mysql client to the database server. To do so you can forward the connection like so:
+
+ssh -L 3336:db001.host:3306 user@pub001.host
+ssh -L 3336:db001.host:3306 3337:db002.host:3306 user@pub001.host
+
+
+Remote Port Forwarding
+Remote port forwarding is the opposite of local port forwarding. It allows you to
+forward a port on the remote (ssh server) machine to a port on the local (ssh client) machine,
+which is then forwarded to a port on the destination machine.
+ssh -R [REMOTE:]REMOTE_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
+
+Let’s say you are developing a web application on your local machine and you want to show a preview to
+your fellow developer. You do not have a public IP so the other developer can’t access the application via the Internet.
+If you have access to a remote SSH server you can set up a remote port forwarding as follows:
+
+ssh -R 8080:127.0.0.1:3000 -N -f user@remote.host

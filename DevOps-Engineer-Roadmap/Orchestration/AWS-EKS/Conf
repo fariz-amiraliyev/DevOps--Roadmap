@@ -1,0 +1,10 @@
+
+Modify the min/max sizes of the Autoscaling group.
+
+Configure the Cluster Autoscaler.
+
+Apply the IAM policy to the worker node group role.
+
+Deploy the Cluster Autoscaler.
+
+Deploy and scale out the nginx deployment.

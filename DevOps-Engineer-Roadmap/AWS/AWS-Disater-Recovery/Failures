@@ -1,0 +1,5 @@
+Software systems degrade over time. This is due in part to:
+• Software leaking memory and/or resources, including software that you wrote and software that you
+depend on (such as application frameworks, operating systems, and device drivers).
+• File systems fragmenting over time which impacts performance.
+• Hardware (particularly storage) devices physically degrading over time.

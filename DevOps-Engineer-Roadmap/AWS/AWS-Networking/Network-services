@@ -1,0 +1,30 @@
+AWS Networking and Content Delivery services
+Network architecture
+Amazon VPC
+Load balancing
+Elastic Load Balancing
+
+Global performance and delivery
+AWS Global Accelerator
+Scale network design
+ AWS Transit Gateway
+
+Network connectivity
+Domain name system
+Amazon Route 53
+Private connectivity
+AWS PrivateLink
+Direct connection to AWS
+AWS Direct Connect
+Encryption
+AWS Virtual Private Network (VPN)
+
+Application delivery
+Content delivery
+Amazon CloudFront
+Monitor microservices
+AWS App Mesh
+Service discovery
+AWS Cloud Map
+Build, deploy, and manage APIs
+Amazon API Gateway

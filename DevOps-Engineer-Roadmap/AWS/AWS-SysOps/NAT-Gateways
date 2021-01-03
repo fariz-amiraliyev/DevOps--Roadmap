@@ -1,0 +1,3 @@
+In the event of an Availability Zone (AZ) failure, instances will still need
+access to the internet for updates. If multiple NAT gateways are deployed,
+we can allow for this. Bastion hosts also need to be available when an AZ fails.

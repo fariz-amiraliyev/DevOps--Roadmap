@@ -1,0 +1,12 @@
+Helm must be installed and configured on your machine. For help installing Helm, please refer to the Helm documentation or the Vault Installation to Minikube via Helm tutorial.
+
+To access the Vault Helm chart, add the Hashicorp Helm repository.
+
+$ helm repo add hashicorp https://helm.releases.hashicorp.com
+"hashicorp" has been added to your repositories
+Copy
+Check that you have access to the chart.
+
+$ helm search repo hashicorp/vault
+NAME            CHART VERSION APP VERSION DESCRIPTION
+hashicorp/vault 0.6.0         1.4.3       Install and configure Vault on Kubernetes.

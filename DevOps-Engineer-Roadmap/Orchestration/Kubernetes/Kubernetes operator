@@ -1,0 +1,7 @@
+A Kubernetes operator is a method of packaging, deploying, and managing a Kubernetes application.
+ A Kubernetes application is both deployed on Kubernetes and managed using the Kubernetes
+ API (application programming interface) and kubectl tooling.
+
+A Kubernetes operator is an application-specific controller that extends the functionality
+of the Kubernetes API to create, configure, and manage instances of complex applications
+on behalf of a Kubernetes user.

@@ -1,0 +1,10 @@
+AWS Backup
+centrally manages and automates backups across AWS services
+Define Backup plans, schedule backups, automate backup retention management, centrally monitor backup activity, and restore backups.
+
+
+Centrally manage backups
+Simplify backup management from a centralized console to protect your storage volumes, databases, and file systems.
+The AWS Backup console enables you to manage all backup activity with a consolidated view for monitoring and alerts.
+Use the console, APIs, or CLI as a consistent method to backup, restore, and set retention across AWS services in the
+cloud and on-premises.

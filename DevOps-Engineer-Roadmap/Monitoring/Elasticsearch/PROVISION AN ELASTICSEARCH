@@ -1,0 +1,35 @@
+PROVISION AN ELASTICSEARCH CLUSTER
+This example creates an one instance Amazon Elasticsearch cluster named eksworkshop-logging. This cluster will be
+created in the same region as the EKS Kubernetes cluster.
+
+The Elasticsearch cluster will have Fine-Grained Access Control enabled.
+
+Fine-grained access control offers two forms of authentication and authorization:
+
+A built-in user database, which makes it easy to configure usernames and passwords inside of Elasticsearch.
+AWS Identity and Access Management (IAM) integration, which lets you map IAM principals to permissions.
+We will create a public access domain with fine-grained access control enabled, an access policy that doesn’t use
+IAM principals, and a master user in the internal user database.
+
+First let’s create some variables
+
+# name of our elasticsearch cluster
+export ES_DOMAIN_NAME="eksworkshop-logging"
+
+# Elasticsearch version
+export ES_VERSION="7.4"
+
+# kibana admin user
+export ES_DOMAIN_USER="eksworkshop"
+
+# kibana admin password
+export ES_DOMAIN_PASSWORD="$(openssl rand -base64 12)_Ek1$"
+We are ready to create the Elasticsearch cluster
+
+# Download and update the template using the variables created previously
+curl -sS https://www.eksworkshop.com/intermediate/230_logging/deploy.files/es_domain.json \
+  | envsubst > ~/environment/logging/es_domain.json
+
+# Create the cluster
+aws es create-elasticsearch-domain \
+  --cli-input-json  file://~/environment/logging/es_domain.json

@@ -1,0 +1,63 @@
+
+We can optionally add subnets in a Local Zone, which is an AWS infrastructure
+deployment that places compute, storage, database, and other select services closer to end users.
+
+Each subnet must reside entirely within one Availability Zone and cannot span zones.
+Availability Zones are distinct locations that are engineered to be isolated
+from failures in other Availability Zones. By launching instances in separate
+Availability Zones, you can protect your applications from the failure of a single location.
+If a subnet's traffic is routed to an internet gateway, the subnet is known as a public subnet.
+If a subnet doesn't have a route to the internet gateway, the subnet is known as a private subnet.
+If a subnet doesn't have a route to the internet gateway, but has its traffic
+routed to a virtual private gateway for a Site-to-Site VPN connection, the subnet is known as a VPN-only subnet.
+
+VPC  10.0.0.0/16
+
+and 3 availibility zones:
+1. 10.0.0.0/18      /21
+2. 10.0.64.0/18     /21
+3. 10.0.128.0/18    /21
+
+Subnet addressing:
+1. Define AZs
+2. Determine CIDR range
+3. AWS reserved addresses
+
+ https://cidr.xyz/
+refion-1
+172.19.0.0/16 VPC-1
+   172.19.0.0/24 Subnet1-pr
+   172.19.1.0/24 Subnet2-pb
+   172.19.2.0/24 Subnet3-pr
+   172.19.3.0/24 Subnet4-pb
+   172.19.4.0/24 Subnet5-pr
+10.0.0.0/16   VPC-2
+   10.0.0.0/24 Subnet1-pr
+   10.0.1.0/24 Subnet2-pb
+   10.0.2.0/24 Subnet3-pr
+   10.0.3.0/24 Subnet4-pb
+   10.0.4.0/24 Subnet5-pr
+   10.0.5.0/24 Subnet6-pb
+   10.0.7.0/24 Subnet7-pr
+172.25.4.0/22 VPC-3
+   172.25.4.0/24
+   172.25.5.0/24
+   172.25.6.0/24
+   172.25.7.0/24
+
+region-2
+192.168.0.0/16
+  192.168.128.0/18
+  192.168.64.0/18
+  192.168.0.0/18
+172.28.4.0/22
+  172.28.4.0/24
+  172.28.5.0/24
+  172.28.6.0/24
+  172.28.7.0/24
+172.18.0.0/16
+  172.18.0.0/24
+  172.18.1.0/24
+  172.18.2.0/24
+  172.18.3.0/24
+  172.18.4.0/24

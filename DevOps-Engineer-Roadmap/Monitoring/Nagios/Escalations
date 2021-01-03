@@ -1,0 +1,28 @@
+Escalations are a specific type of notification sent when problems persist
+beyond a specified period of time. Beyond that, they're identical to normal
+escalations
+
+Nagios XI checks the objects notification interval to determine
+if enough time has past since the last notification was sent.
+
+In the above example using a check interval of 5 minutes, the object needs to
+be checked 12 more times (12 x 5 = 60) before the next notification is sent
+• When the next notification is sent, this is determined to be notification #2
+
+
+What Are Escalations And Why Are They Required
+Escalations allow to send notifications based on different criteria.
+In the Notification Basics section, the notifications will always be sent to the
+contacts defined on the object. Escalations allow you to send the
+notifications to different contacts after x amount of notifications have been sent.
+Hence you can escalate an
+problem from the Help Desk Team to the On Call Team and then to the Department Manager.
+Escalations allow you to send notifications to the required people at the right time.
+The Department Manager does not want to be notified of a problem initially, they only want to know about
+it if the Help Desk Team and the On Call Team have not addressed the issue.
+
+Escalations Take Priority
+Escalations will overwrite ANY notification options on the host or service object when they take affect (this
+includes the contacts/contactgroups). This is very important to remember when determining who should be
+notified. When an escalation no longer takes affect then the notification options on the host or service object
+will be used.

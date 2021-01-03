@@ -1,0 +1,99 @@
+1. The AWSTemplateFormatVersion section (optional) identifies the capabilities of the template.
+   "AWSTemplateFormatVersion" : "2010-09-09"
+
+2. The Description section (optional) enables you to include comments about your template.
+   "Description" : "Here are some details about the template."
+
+3. Metadata: optional, can include template implementation details about specific resources, details about the template.
+ "Metadata" : {
+ "Instances" : {"Description" : "Information about the instances"},
+ "Databases" : {"Description" : "Information about the databases"}
+ }
+    Metadata keys: AWS::CloudFormation::Init, Defines configuration tasks for the
+    cfn-init helper script. This script is useful for configuring and installing
+    applications on EC2 instances.
+
+    AWS::CloudFormation::Interface, Defines the grouping and ordering of input
+    parameters when they are displayed in the AWS CloudFormation console. By default,
+    the AWS CloudFormation console alphabetically sorts parameters by their logical ID.
+
+    AWS::CloudFormation::Designer, Describes how your resources are laid out in AWS CloudFormation
+    Designer (Designer). Designer automatically adds this information when you use it to create and
+    update templates.
+
+4. Parameters, optional, Parameters enable you to input custom values to your template
+               each time you create or update a stack.
+
+               "Parameters" : {
+  "InstanceTypeParameter" : {
+    "Type" : "String",
+    "Default" : "t2.micro",
+    "AllowedValues" : ["t2.micro", "m1.small", "m1.large"],
+    "Description" : "Enter t2.micro, m1.small, or m1.large. Default is t2.micro."
+  }
+}
+
+
+5. Mappings, optional, matches a key to a corresponding set of named values. For example,
+if you want to set values based on a region, you can create a mapping that uses the
+region name as a key and contains the values you want to specify for each specific region.
+You use the Fn::FindInMap intrinsic function to retrieve values in a map.
+
+"Mappings" : {
+  "Mapping01" : {
+    "Key01" : {
+      "Name" : "Value01"
+    },
+    "Key02" : {
+      "Name" : "Value02"
+    },
+    "Key03" : {
+      "Name" : "Value03"
+    }
+  }
+}
+
+6. https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html
+
+
+
+
+
+
+
+
+
+
+{
+  "AWSTemplateFormatVersion" : "version date",
+
+  "Description" : "JSON string",
+
+  "Metadata" : {
+    template metadata
+  },
+
+  "Parameters" : {
+    set of parameters
+  },
+
+  "Mappings" : {
+    set of mappings
+  },
+
+  "Conditions" : {
+    set of conditions
+  },
+
+  "Transform" : {
+    set of transforms
+  },
+
+  "Resources" : {
+    set of resources
+  },
+
+  "Outputs" : {
+    set of outputs
+  }
+}

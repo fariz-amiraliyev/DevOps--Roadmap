@@ -1,0 +1,25 @@
+Amazon EKS now supports automatic DNS resolution for private cluster endpoints.
+This feature works automatically for all EKS clusters.
+
+By default, when you create an Amazon EKS cluster, the Kubernetes cluster endpoint
+is public. While it is accessible from the internet, access to the Kubernetes cluster
+endpoint is restricted by AWS Identity and Access Management (IAM) and Kubernetes
+role-based access control (RBAC) policies.
+
+At some point, you may need to configure the Kubernetes cluster endpoint to be private.
+ Changing your Kubernetes cluster endpoint access from public to private completely
+ disables public access such that it can no longer be accessed from the internet.
+
+ In fact, a cluster that has been configured to only allow private access can only
+ be accessed from the following:
+
+The VPC where the worker nodes reside
+Networks that have been peered with that VPC
+A network that has been connected to AWS through AWS Direct Connect (DX) or a virtual private network (VPN)
+
+However, the name of the Kubernetes cluster endpoint is only resolvable from the worker node VPC, for the following reasons:
+
+The Amazon Route 53 private hosted zone that is created for the endpoint is only associated with the worker node VPC.
+The private hosted zone is created in a separate AWS managed account and cannot be altered.
+
+Route 53 inbound and outbound endpoints:

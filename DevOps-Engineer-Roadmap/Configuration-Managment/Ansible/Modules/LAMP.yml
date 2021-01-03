@@ -1,0 +1,45 @@
+tasks:
+17 - name: Get software for apt repository management.
+18 apt:
+19 name:
+20 - python-apt
+21 - python-pycurl
+22 state: present
+23
+24 - name: Add ondrej repository for later versions of PHP.
+25 apt_repository: repo='ppa:ondrej/php' update_cache=yes
+26
+27 - name: "Install Apache, MySQL, PHP, and other dependencies."
+28 apt:
+29 name:
+30 - git
+   - curl
+32 - unzip
+33 - sendmail
+34 - apache2
+35 - php7.1-common
+36 - php7.1-cli
+37 - php7.1-dev
+38 - php7.1-gd
+39 - php7.1-curl
+40 - php7.1-json
+41 - php7.1-opcache
+42 - php7.1-xml
+43 - php7.1-mbstring
+44 - php7.1-pdo
+45 - php7.1-mysql
+46 - php-apcu
+47 - libpcre3-dev
+48 - libapache2-mod-php7.1
+49 - python-mysqldb
+50 - mysql-server
+51 state: present
+52
+53 - name: Disable the firewall (since this is for local dev only).
+54 service: name=ufw state=stopped
+55
+56 - name: "Start Apache, MySQL, and PHP."
+57 service: "name={{ item }} state=started enabled=yes"
+58 with_items:
+59 - apache2
+60 - mysql

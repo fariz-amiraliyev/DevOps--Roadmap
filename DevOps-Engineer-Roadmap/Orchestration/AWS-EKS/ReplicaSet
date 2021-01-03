@@ -1,0 +1,3 @@
+kubectl scale --replicas=10 deployment/nginx-to-scaleout
+kubectl get pods -l app=nginx -o wide --watch
+kubectl -n kube-system logs -f deployment/cluster-autoscaler

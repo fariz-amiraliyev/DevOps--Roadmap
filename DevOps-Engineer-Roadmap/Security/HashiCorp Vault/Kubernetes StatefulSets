@@ -1,0 +1,13 @@
+In Kubernetes, there are multiple types of workload controller primitives and one
+of which is the StatefulSet. The StatefulSet, typically used to manage stateful
+applications, manages the deployment and scaling of a set of Pods, and provides
+ guarantees about the ordering and uniqueness of these Pods. Like a Deployment,
+ a StatefulSet manages Pods that are based on an identical container spec, but
+ unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods.
+ These pods are created from the same spec, but are not interchangeable: each has a persistent
+ identifier that it maintains across any rescheduling.
+
+The Vault Helm Chart uses the StatefulSet deployment model. Although individual
+Pods in a StatefulSet are susceptible to failure, the persistent Pod identifiers
+make it easier to match existing volumes to the new Pods that replace any that
+have failed.

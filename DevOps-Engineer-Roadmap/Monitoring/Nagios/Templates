@@ -1,0 +1,26 @@
+Nagios provides an exceptionally powerful and simple templating system.
+
+
+There are host templates and service templates. Host templates
+control settings for host objects and service templates control settings
+for service objects. Best practice is to set as many of the settings as
+possible via templates so changes are centralized later on down the road.
+
+So I define a host template like the following -
+
+define host {
+       name                          		HTP-TEMPPROBE
+       alias                         		Template for ITWatchdog temp probes
+       hostgroups                    		Site_Temperature_Probe
+       check_command                 		check_icmp_vpn!!!!!!!!
+       max_check_attempts            		3
+       check_interval                		15
+       retry_interval                		5
+       check_period                  		24x7
+       event_handler_enabled         		1
+       flap_detection_enabled        		1
+       process_perf_data             		1
+       retain_status_information     		1
+       retain_nonstatus_information  		1
+       contact_groups                		NOC
+}

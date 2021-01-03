@@ -1,0 +1,22 @@
+An EKS cluster consists of two VPCs: one VPC managed by AWS that hosts the Kubernetes control plane
+A second VPC managed by customers that hosts the Kubernetes worker nodes (EC2 instances) where containers run, as well as other
+AWS infrastructure (like load balancers) used by the cluster.
+
+
+
+ All worker nodes need the ability to connect to the managed API server endpoint.
+ This connection allows the worker node to register itself with the
+ Kubernetes control plane and to receive requests to run application pods.
+
+
+
+ The worker nodes connect either to the public endpoint, or through the EKS-managed
+ elastic network interfaces (ENIs) that are placed in the subnets that you provide
+ when you create the cluster. The route that worker nodes take to connect is determined
+ by whether you have enabled or disabled the private endpoint for your cluster.
+ Even when the private endpoint is disabled, EKS still provisions ENIs to allow
+ for actions that originate from the Kubernetes API server, such as kubectl exec and logs.
+
+If the node is unable to reach the cluster endpoint, it’s unable to register with
+the control plane and thus unable to receive commands to start or stop pods.
+If new nodes are unable to connect, this prevents you from being able to use these nodes as part of the cluster.

@@ -1,0 +1,25 @@
+Authoring Groups
+
+Host and service groups
+
+define hostgroup with cfg file.
+
+
+Adding Services to Service Groups
+
+Log in to the Nagios Core Host.
+Change to the /opt/nagios/etc/objects/servicegroups directory.
+Edit the new file: remote-services.cfg
+Use the defaults defined in the "linux-server" template
+Use "remote-services" for the service group name.
+Use "Remote Service Group" for the alias.
+Find all of the services running on our remote servers and add them with the
+ "members" directive, taking care to pay attention to the pairing of values
+ required. Check your configuration, restart Nagios, and view the Servicegroup in the WebUI.
+
+
+ define servicegroup{
+  servicegroup_name remote-services
+  alias        Remote Service Group
+  members fqdn-2.mylabserver.com,Root Partition,fqdn-2.mylabserver.com,Current Users,fqdn-2.mylabserver.com,Total Processes,fqdn-2.mylabserver.com,Current Load,fqdn-2.mylabserver.com,SSH,fqdn-3.mylabserver.com,Root Partition,fqdn-3.mylabserver.com,Current Users,fqdn-3.mylabserver.com,Total Processes,fqdn-3.mylabserver.com,Current Load,fqdn-3.mylabserver.com,SSH
+ }

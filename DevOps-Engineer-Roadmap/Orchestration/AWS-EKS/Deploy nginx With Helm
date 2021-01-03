@@ -1,0 +1,3 @@
+# first, add the default repository, then update
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo update

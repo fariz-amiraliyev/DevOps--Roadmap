@@ -1,0 +1,11 @@
+Amazon Elastic Block Store (Amazon EBS) provides persistent block storage volumes for use with
+Amazon EC2 instances. EBS volumes can be attached to a running EC2 instance and can persist
+independently from the instance. EBS volumes are automatically replicated within an Availability Zone,
+providing high durability and availability, along with protection from component failure.
+Amazon EBS is especially suited for applications that require a database, a file system, or access to raw
+block storage. Typical use cases include big data analytics, relational or NoSQL databases, stream or log
+processing applications, and data warehousing applications.
+
+ Any application data that needs to be persisted should be
+stored on EBS volumes. If the EC2 instance fails and needs to be replaced, the EBS volume can simply be
+attached to the new EC2 instance. Since this

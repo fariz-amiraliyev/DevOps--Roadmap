@@ -1,0 +1,22 @@
+AWS Secrets Controller PoC: integrating AWS Secrets Manager with Kubernetes
+
+https://aws.amazon.com/blogs/containers/aws-secrets-controller-poc/
+
+Solution overview
+This proof of concept (PoC) makes use of the following Kubernetes constructs:
+
+Annotations are an array of non-identifying key-value pairs. In this instance,
+we’re using annotations to enable/disable the init container injector, specify the AWS ARN of the secret.
+The Downward API is a mechanism to get metadata about a pod. In this solution,
+we’re using it to retrieve the values of a set of key-value pairs in the annotation field of the pod.
+A mutating webhook is called when a pod is created. It is implemented as a pod that
+runs within the cluster. If the secret.k8s.aws/sidecarInjectorWebhook: enabled appears
+in the annotations field, the webhook will inject the init container into the pod.
+IAM Roles for Service Accounts (IRSA) is a way to assign an IAM role to a Kubernetes pod.
+This PoC uses IRSA to grant the pod access to retrieve a secret from Secrets Manager and
+decrypt that secret using a KMS key. It’s through the ServiceAccount that you can grant
+access to secrets in Secrets Manager.
+An init container is a container that runs and exits before the application container
+is started. In our PoC, the init container is used to fetch the secret from Secrets
+Manager and writes it to an emptyDir (RAM disk) volume that is subsequently mounted by
+the application container.

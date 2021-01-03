@@ -1,0 +1,8 @@
+OSI model:
+Application
+Presentation : TLS/SSL
+Session
+Transport
+Networking
+Data link
+Physical

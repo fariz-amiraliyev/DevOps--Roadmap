@@ -1,0 +1,2 @@
+ELB=$(kubectl get service ecsdemo-frontend -o json    | jq -r '.status.loadBalancer.ingress[].hostname')
+kubectl get apiservice v1beta1.metrics.k8s.io -o yaml | yq - r 'status'

@@ -1,0 +1,31 @@
+What’s a Proxy Server?
+A proxy server acts as a gateway between you and the internet. It’s an
+intermediary server separating end users from the websites they browse.
+Proxy servers provide varying levels of functionality, security, and privacy
+depending on your use case, needs, or company policy.
+
+
+
+Caching
+Content restriction
+Traffic shaping
+
+
+Squid cashing proxy:
+
+1. yum install -y squid
+2. systemctl enable squid
+3. systemctl start squid
+
+
+4. firewall-cmd --permanent --add-service=squid
+5. firewall-cmd --reload
+6. vi /etc/squid/squid.conf
+
+7. /var/log/squid/access.log
+8. blacklist and whitelist
+9. acl blacklist dstdomain  and_domain_names  (in  /etc/squid/squid.conf)
+   http_access deny blacklist
+
+  10. systemctl restart squid
+  11. 

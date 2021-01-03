@@ -1,0 +1,17 @@
+Installing or upgrading CoreDNS
+
+To check if your cluster is already running CoreDNS, use the following command.
+
+kubectl get pod -n kube-system -l k8s-app=kube-dns
+
+
+To install CoreDNS on an updated Amazon EKS cluster with kubectl:
+
+kubectl patch -n kube-system deployment/kube-dns --patch \
+'{"spec":{"selector":{"matchLabels":{"eks.amazonaws.com/component":"kube-dns"}}}}'
+
+
+Deploy CoreDNS to your cluster:
+export DNS_CLUSTER_IP=$(kubectl get svc -n kube-system kube-dns -o jsonpath='{.spec.clusterIP}')
+
+export REGION="region-code"

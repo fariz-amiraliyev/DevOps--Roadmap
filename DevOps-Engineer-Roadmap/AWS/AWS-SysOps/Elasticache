@@ -1,0 +1,21 @@
+Using Elasticache to Improve DynamoDB Performance:
+
+1. Launch an ElastiCache Cluster
+   Navigate to the ElastiCache web console.
+   Click Get Started Now
+   Set the Cluster Engine to Memcached
+   Provide a name for the cluster (like tatourneycache)
+   Set the Cluster Node to t2.small
+
+2. Modify getTaStats Lambda Function
+  Navigate to the Lambda Web Console.
+  Select the function with GetTaStats in the name.
+  Modify the function in editme.py to implement read through data caching (using what's in the GitHub repo).
+
+
+3. Modify the taStreamProcessor Lambda Function
+  Navigate to the Lambda Web Console.
+  Select the function with taStreamProcessor in the name.
+  Modify the function in editme.py to implement cache invalidation when records in the TaTourneyStats table are updated. Use the code in the GitHub repo to do this.
+
+  

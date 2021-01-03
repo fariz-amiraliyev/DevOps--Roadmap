@@ -1,0 +1,28 @@
+AWS Storage Gateway connects an on-premises software appliance with cloud-based storage
+to provide integration with data security features between on-premises IT environment and
+the AWS storage infrastructure.
+
+Virtual machine that car be tun on-premise with VMware.
+Provides local storage recources backed on S3 and Glacier.
+Often used in Disaster Recovery for sync data.
+Useful in cloud migration.
+
+AWS Storage Gateway offers file-based, volume-based, and tape-based storage solutions:
+
+1. File Gateway.
+   Can store and retrieve objects in Amazon S3 using industry-standard file
+   protocols such as Network File System (NFS) and Server Message Block (SMB).
+   The software appliance, or gateway, is deployed into your on-premises environment
+   as a virtual machine (VM) running on VMware ESXi, Microsoft Hyper-V, or
+   Linux Kernel-based Virtual Machine (KVM) hypervisor.
+2. Volume Gateway Stored Mode.
+   Volume Gateway – A volume gateway provides cloud-backed storage volumes that
+   you can mount as Internet Small Computer System Interface (iSCSI) devices
+   from your on-premises application servers.
+   The volume gateway is deployed into your on-premises environment as a VM running on VMware ESXi, KVM, or Microsoft Hyper-V hypervisor.
+3. Volume Gateway Cached Mode. Cached volumes – You store your data in Amazon
+   Simple Storage Service (Amazon S3) and retain a copy of frequently accessed data subsets locally.
+4. Tape Gateway.
+   A tape gateway provides cloud-backed virtual tape storage. The tape gateway
+   is deployed into your on-premises environment as a VM running on VMware ESXi,
+   KVM, or Microsoft Hyper-V hypervisor.

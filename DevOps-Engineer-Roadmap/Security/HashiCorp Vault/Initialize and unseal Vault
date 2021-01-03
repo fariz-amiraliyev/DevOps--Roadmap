@@ -1,0 +1,29 @@
+kubectl exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+
+
+cat cluster-keys.json | jq -r ".unseal_keys_b64[]"
+rrUtT32GztRy/pVWmcH0ZQLCCXon/TxCgi40FL1Zzus=
+
+
+Create a variable named VAULT_UNSEAL_KEY to capture the Vault unseal key.
+
+$ VAULT_UNSEAL_KEY=$(cat cluster-keys.json | jq -r ".unseal_keys_b64[]")
+
+Create a variable named VAULT_UNSEAL_KEY to capture the Vault unseal key.
+
+$ VAULT_UNSEAL_KEY=$(cat cluster-keys.json | jq -r ".unseal_keys_b64[]")
+
+
+Unseal Vault running on the vault-1 pod.
+
+$ kubectl exec vault-1 -- vault operator unseal $VAULT_UNSEAL_KEY
+## ...
+Copy
+Unseal Vault running on the vault-2 pod.
+
+$ kubectl exec vault-2 -- vault operator unseal $VAULT_UNSEAL_KEY
+## ...
+Copy
+Verify all the Vault pods are running and ready.
+
+$ kubectl get pods

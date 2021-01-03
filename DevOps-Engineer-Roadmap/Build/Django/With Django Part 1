@@ -1,0 +1,36 @@
+https://realpython.com/get-started-with-django-1/
+
+mkdir rp-portfolio
+cd rp-portfolio
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install Django
+
+Create a Django Project#
+
+django-admin startproject personal_portfolio
+
+
+$ mv personal_portfolio/manage.py ./
+$ mv personal_portfolio/personal_portfolio/* personal_portfolio
+$ rm -r personal_portfolio/personal_portfolio/
+
+
+python manage.py runserver  #
+
+localhost:8000
+
+
+
+Create a Django Application:
+
+This will create another directory called hello_world with several files:
+
+__init__.py tells Python to treat the directory as a Python package.
+admin.py contains settings for the Django admin pages.
+apps.py contains settings for the application configuration.
+models.py contains a series of classes that Django’s ORM converts to database tables.
+tests.py contains test classes.
+views.py contains functions and classes that handle what data is displayed in the HTML templates.

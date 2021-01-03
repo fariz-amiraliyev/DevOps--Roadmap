@@ -1,0 +1,36 @@
+Why Use HashiCorp?
+
+1. Central location for secrets
+2. Fine-graded access to secrets
+3. Logs
+4. Short-lived dynamic credentials
+5. Uniqe credentials for Service
+6. key managment and Cryptygrphy
+
+
+What Problems Does HashiCorp Vault Solve and Where Is It Used?
+
+1. General secret Storage
+2. Employee credentials Storage
+3. Data encryption
+4. API Key Generation
+
+
+Overview of High Level Architecture:
+
+Core
+Storage
+Database
+Audit
+Syslogs
+
+Secrets
+
+Installation and Configuration:
+Download Consul
+Unpack
+Configure
+
+
+brew install hashicorp/tap/vault
+brew install hashicorp/tap/consul

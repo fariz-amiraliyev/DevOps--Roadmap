@@ -1,0 +1,7 @@
+Declarative deployment pattern for Kubernetes
+Deployments are created by writing a manifest. The manifest is then applied to
+the Kubernetes cluster using kubectl apply, or you can use a declarative deployment pattern.
+Configuration files for Kubernetes can be written using YAML or JSON.
+
+When creating a deployment, you’ll describe the desired state and Kubernetes will
+implement it using either a rolling or recreate deployment strategy.

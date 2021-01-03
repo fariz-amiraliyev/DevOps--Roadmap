@@ -1,0 +1,16 @@
+Network structure:
+
+TCP/IP >>>> Datagram >>>> Socket >>>> Packet >>>> Ports
+
+Subnets: small chunk of network
+Why we use subnets in network ?
+Routing: the process to select path to send traffic.
+Routing Table:   command: netstat -nr
+CIDR block: Classless InterDomain Routing
+BGP:        Boarder Gateway Protocol manages how packets route to edge routers
+Proxy: Reverse and Forward Proxy
+DNS:
+Difference between aplication and network loadbalancers?
+VXLAN
+Overlay
+Service Mesh Istio in Kubernetes.

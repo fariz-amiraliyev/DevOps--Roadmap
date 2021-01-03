@@ -1,0 +1,29 @@
+1. Restoring an Amazon RDS Instance Using Snapshots
+
+Create an RDS Snapshot:
+
+In the RDS console, choose the running instance.
+Select Actions > Take snapshot.
+Name the snapshot (e.g., "wordpress-YYYYMMDD").
+
+Log in to the Bastion Host and Delete Database Data:
+In the EC2 console, find the public IP of the bastion host.
+Log in to the bastion host via SSH as cloud_user using the public IP.
+Connect to MySQL:
+mysql --user=wpuser --password=Password1 --host=<RDS endpoint name>
+At the MySQL prompt, switch to the WordPress database:
+use wordpressdb;
+Delete a critical table:
+
+drop table wp_posts;
+Restore an RDS Database from a Snapshot
+Rename Database Instances
+
+In the RDS console, navigate to snapshots.
+Note the snapshot creation time.
+Navigate to Databases, and select wordpress-database.
+Under Actions, select Restore to point in time.
+Select a custom restore time, and enter the point in time you want to restore from.
+Name the recovered database instance wordpress-recovery.
+Select availability zone us-east-1b.
+Launch the database instance.

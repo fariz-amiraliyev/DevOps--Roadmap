@@ -1,0 +1,107 @@
+1. How to set policies on a Glacier vault such as retention or enforcing MFA before delete?
+   Glacier Vault Lock
+
+2. what is ACID compliance model?
+   The ACID consistency model is Atomic, Consistent, Isolated and Durable.
+
+3. You have decided to use EFS for sharing files across many EC2 instances and you want to
+   be able to tolerate an AZ failure. You should:
+
+   As of December 2016, the common mount target name of an EFS file system will
+   resolve to its local mount target in each AZ. So, you only need to create mount
+   targets in each AZ within the same subnet as the EC2 instances then use the common FQDN.
+
+
+
+4. Which of the following data formats does Amazon Athena support?
+   Amazon Athena is an interactive query service that makes it easy to analyse
+   data in Amazon S3, using standard SQL commands. It will work with a number of
+   data formats including "JSON", "Apache Parquet", "Apache ORC" amongst others,
+   but "XML" is not a format that is supported.
+
+
+5.  You need to improve performance of queries to your DynamoDB table.
+    The most common queries do not use the partition key. What should you do?
+
+    Create a Global Secondary Index with the most common queried attribute as the hash key:
+    A global secondary index can be used to speed up queries against non-primary key items.
+    A local secondary index, on the other hand, must retain the partition key of the table.
+    Hash key is another term for partition key.
+
+
+6. What DynamoDB features can be utilised to increase the speed of read operations?
+
+   Secondary Indexes, DynamoDB Accelerator (DAX)
+   Whilst there are many ways can tune DynamoDB to meet the performance needs of specific
+   operations, the options specified which will give the greatest speed increase for reads are;
+   "Secondary Indexes", which contain a subset of attributes from a table, and an
+   alternate key for Queries and "DynamoDB Accelerator (DAX)" which works as an
+   in-memory cache in front of DynamoDB. Encryption At Rest encrypts data stored in a DynamoDB
+   table, whilst Streams provide a time ordered sequence of item level changes that are also
+   de-duplicated. Streams and Encryption will not speed up DynamoDB.
+
+
+7. As part of disaster recovery preparation, you have decided to maintain a
+  replica of your on-site data on AWS S3 using Storage Gateway. Which mode should you use?
+
+  Gateway Stored Volume Mode, or Volume Gateway Stored Mode as its also called, would be
+   a way to maintain a full local copy of the data and have it replicated asynchronously to S3.
+
+
+
+8. Which of database approaches would be best for storing and analyzing the
+   complex interpersonal relationships of people involved in organized crime?
+
+   Graph databases are best a storing complex relationship data and AWS Neptune
+   is a graph database. While other options might be able to work, none would work as
+   well as a true graph database and we can run such a database like SAP HANA or Neo4j on EC2.
+
+9. Amazon Elasticache can fulfil a number of roles. Choose the operations from the
+   following list which can be implemented using Elasticache for Redis.
+
+   Pub/Sub, Sorted Sets, In-Memory Data Store
+
+  10. You are trying to decide on what product you should select for your
+    in-memory cache needs. You require support for encryption. Which should you choose?
+
+    ElastiCache Redis
+
+  11. You are architecting a complex application landscape that values fast disk I/O for
+     EC2 instances above everything else. Which storage option would you choose?
+     Instance Store, because it is locally attached, provides the fastest disk
+     I/O among the choices. Note the question did not specify the need for the storage
+     to be persistent so ephemeral options are in play too.
+
+13. Because of regulatory requirements, certain areas of your organization can only use certain regions. Which is
+    the BEST way to implement this control?
+    ACLs and Resource-based policies apply to assets and not users or groups. Identity-based policies using the
+    aws:RequestedRegion condition key could do the job but since we are trying to control at the OU level, an SCP
+    would require less management and localized care. We can use a DENY with StringNotEqualsIfExists conditional
+    against aws:ReqeustedRegion for allowed regions.
+
+14. You are creating a mobile app that needs secure access to AWS resources. What is the best way to do this?
+    For mobile apps, AWS recommends using the Cognito SDK for managing temporary credentials.
+
+15. Your client recently failed a security audit because they had username and passwords hard-coded in a script which
+    runs on an EC2 instance. Which of the following is a way to remediate?
+    Store credentials in an encrypted file on S3 and create an IAM role with access assigning it to the EC2 instance.
+
+16. Which are characteristics of OAuth 2.0?
+    OAuth 2.0 provides authorization only and issues tokens to clients.
+    It is best suited to API authorization between apps rather than SSO.
+
+17. Your client is trying to setup SSO for on-prem employees into AWS via a trust relationship with Simple AD but its not working. What is
+    the most likely cause?
+    Simple AD does not support trust relationships with other domains.
+
+18. Which of the following would be the most effective way of dealing with Layer 7 DDoS attacks?
+    The challenge with layer 7 detection is telling an attack from normal user traffic. CloudFront in
+    conjunction with AWS WAF can be an effective way to create DDoS resilience at Layer 7. Network Load Balancers
+    are NACLs are Layer 4 solutions, and would have no visibility of Layer 7 DDoS. CloudTrail and GuardDuty are focused
+    on the security of the AWS account, and would not be suitable in isolation for securing at Layer 7
+
+19. Your client is trying to setup SSO for on-prem employees into AWS via a trust relationship with Simple AD but its
+    not working. What is the most likely cause?
+
+
+20. Which of the following AWS services allow native encryption of data, while at rest?

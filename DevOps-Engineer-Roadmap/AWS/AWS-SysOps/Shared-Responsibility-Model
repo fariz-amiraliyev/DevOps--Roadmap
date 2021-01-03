@@ -1,0 +1,6 @@
+  AWS is responsible for securing the underlying infrastructure that supports 
+its cloud platform. You, the customer, are responsible for any resources you
+operate on, place in, or connect to AWS. This shared responsibility model can
+reduce your total cost of ownership and help improve your security posture
+without the undifferentiated heavy lifting involved in an on-premises
+infrastructure.

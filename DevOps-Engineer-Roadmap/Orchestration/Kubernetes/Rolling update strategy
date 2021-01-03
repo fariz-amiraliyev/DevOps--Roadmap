@@ -1,0 +1,13 @@
+Rolling update strategy
+A rolling update strategy provides a controlled, phased replacement of the application's
+pods, ensuring that there are always a minimum number available.
+
+The deployment makes sure that, by default, a maximum of only 25% of pods are
+unavailable at any time, and it also won’t over provision more than 25% of the
+number of pods specified in the desired state.
+With a rolling update strategy there is no downtime during the update process,
+however the application must be architected to ensure that it can tolerate the
+pod destroy and create operations.
+
+During the update process 2 versions of the container are running at the same
+time, which may cause issues for the service consumers.

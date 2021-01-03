@@ -1,0 +1,9 @@
+helm install --debug --dry-run workshop ~/environment/eksdemo
+helm install workshop ~/environment/eksdemo
+kubectl get svc,po,deploy
+ROLLING BACK:
+helm upgrade workshop ~/environment/eksdemo
+kubectl get pods
+helm status workshop
+helm history workshop
+helm uninstall workshop

@@ -1,0 +1,45 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-test-jenkins
+  region: YOUR_CLUSTER_AWS_REGION
+
+vpc:
+  subnets:
+    private:
+      us-east-1a:
+        id: "YOUR_SUBNET_1_ID"
+
+      us-east-1b:
+        id: "YOUR_SUBNET_2_ID"
+
+nodeGroups:
+  - name: ng-test-jenkins
+    instanceType: m5.xlarge
+    desiredCapacity: 1
+    privateNetworking: true
+  - name: ng-test-jenkins-spot
+    minSize: 0
+    maxSize: 5
+    desiredCapacity: 0
+    privateNetworking: true
+    instancesDistribution:
+      instanceTypes: ["m5.4xlarge", "m4.4xlarge", "r5.4xlarge", "r5a.4xlarge", "m5a.4xlarge", "r4.4xlarge"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
+      spotInstancePools: 4
+    labels:
+      lifecycle: Ec2Spot
+      intent: apps
+    taints:
+      spotInstance: "true:PreferNoSchedule"
+    tags:
+      k8s.io/cluster-autoscaler/node-template/label/lifecycle: Ec2Spot
+      k8s.io/cluster-autoscaler/node-template/label/intent: apps
+      k8s.io/cluster-autoscaler/node-template/taint/spotInstance: "true:PreferNoSchedule"
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        cloudWatch: true
+        albIngress: true

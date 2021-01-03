@@ -1,0 +1,77 @@
+Responding to Invalid SSH Logins:
+
+Scenario:  an EC2 instance is experiencing multiple failed SSH logins, and we want to automatically take the instance
+offline in response to this potential security event.
+
+We use the Web Server Log Group and the Invalid SSH Login metric filter to trigger a
+CloudWatch alarm set for 2 data points within 1 minute.
+This alarm should publish to an alarm notification SNS topic and
+send you an email as well as trigger the Lambda function to stop the instance.
+
+Configure CloudWatch metrics on EC2 instance:
+
+1. The EC2 instance must have an IAM role that can communicate with both CloudWatch and Systems Manager.
+Create an IAM Instance Role
+Select IAM > Create Role > AWS Service > EC2 > Next: Permissions.
+Select the CloudWatchAgentAdminPolicy managed policy.
+Select the AmazonSSMManagedInstanceCore managed policy.
+Name the role "CloudWatchAgentAdminRole".
+2. Attach the IAM Role to the Instance
+
+
+3. Install CloudWatch Agent using Systems Manager
+Run command: AWS-ConfigureAWSPackage
+Action: Install
+Name: AmazonCloudWatchAgent
+
+4. Configure the CloudWatch Agent
+Run the CloudWatch Agent Configuration Wizard.
+Create a new session using SSM Session Manager.
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+Note: Do not select CollectD, unless you already installed it using sudo yum install collectd.
+Specify /var/log/secure at the "Do you want to monitor any log files?" prompt.
+Validate the Configuration
+```sh
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+
+Create an SNS Topic
+Create an SNS Topic
+The CloudWatch Alarm will notify this topic, and the topic will trigger the Lambda function.
+Topic name: AlarmNotificationTopic
+
+4. Configure the CloudWatch Alarm
+Add a Metric Filter to the Web Server Log Group
+Click Secure log group.
+Click Create metric filter.
+Filter pattern: [Mon, day, timestamp, ip, id, status = Invalid*]
+Click Test pattern.
+Click Assign metric.
+Filter name: InvalidSSHLogin
+Metric namespace: SSH
+Metric name: InvalidSSHLogin
+Create Alarm
+Metric filter: SSH/InvalidSSHLogin
+Click Create alarm.
+
+Name: InvalidSSHLoginAlarm
+Description: Invalid login attempts >2 in 1 min for instance <append instance ID>
+Note: The description is critical, as the instance ID at the end is used by the Lambda function to stop the instance.
+
+Whenever InvalidSSHLogin >= 2 for 1 out of 1 datapoints
+
+Subscribe to the SNS Topic
+Select AlarmNotificationTopic and click Create alarm.
+
+Create IAM Role for Lambda Function
+Create the role LambdaStopInstances using policy lambda_execution_role.json.
+Create Lambda function
+Name: StopInstance
+Role: StopInstancesRole
+Trigger Lambda from SNS
+Select Trigger > SNS > AlarmNotificationTopic.
+Trigger the CloudWatch Alarm
+Make 3 invalid SSH login attempts within 2 minutes.
+Verify that the secure log contains the Invalid user string.
+Verify that the CloudWatch alarm is set.
+Verify that the CloudWatch Log for the Lambda function ran.
+Verify that the EC2 instance is stopped.

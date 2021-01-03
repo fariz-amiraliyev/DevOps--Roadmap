@@ -1,0 +1,11 @@
+Auto Scaling deployment concepts, including techniques such as lifecycle hooks,
+termination policies, and helper scripts.
+
+https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-dg.pdf#GettingStartedTutorial
+
+Amazon EC2 Auto Scaling enables you to take advantage of the safety and
+reliability of geographic redundancy by spanning Auto Scaling groups across
+multiple Availability Zones within a Region. When one Availability Zone becomes
+unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone.
+When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically
+redistributes the application instances evenly across all of the designated Availability Zones.

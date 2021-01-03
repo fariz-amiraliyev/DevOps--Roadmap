@@ -1,0 +1,129 @@
+56. You are a Software Engineer managing your company's popular blogging platform.
+Bloggers from all around the world upload millions of entries per month, and the
+average blog entry size is 300 KB. The access rate to blog entries drops to
+negligible level 6 months after publishing and after a year, bloggers rarely
+access a blog. The blog entries have a high update rate during the first 3
+months after the blogger has published it and this drops to no updates after
+6 months. Your customers want to use CloudFront to improve the load times of
+the blogging platform. How can you implement the cloud architecture for this scenario?
+Explanation
+You can control how long your objects stay in a CloudFront cache before CloudFront
+forwards another request to your origin. Reducing the duration allows you to serve dynamic content.
+Increasing the duration means your users get better performance because your objects are more
+likely to be served directly from the edge cache. A longer duration also reduces the load on your origin.
+
+Typically, CloudFront serves an object from an edge location until the cache duration that you
+specified passes—that is, until the object expires. After it expires, the next time the edge
+location gets a user request for the object, CloudFront forwards the request to the origin server
+to verify that the cache contains the latest version of the object.
+Option 1 is incorrect because maintaining two separate buckets is not going to improve the load time for the users.
+
+Option 2 is incorrect because setting minimum TTL of 0 will enforce loading of the content from origin every
+time, even if it has not been updated over 6 months.
+
+Option 3 is incorrect as the location-wise distribution is not going to improve the load time for the users.
+
+Option 4 is correct because the content is only accessed by CloudFront, and if the content is partitioned at
+the origin based on the month it was uploaded, you can control the cache behavior accordingly and keep only
+the latest updated content in the CloudFront cache so that it can be accessed with fast load-time, hence,
+improving the performance.
+ 
+
+57. You are working for a hospital chain in London which uses an online central hub
+for doctors and nurses. The application interacts with millions of requests per day to
+fetch various medical data of their patients. The system is composed of a web tier,
+an application tier and a database tier that receives large and unpredictable traffic
+demands. Your responsibility as a Solutions Architect is to ensure that its architecture
+is scalable enough to handle web traffic fluctuations automatically. Which of the following
+AWS architecture should you use to meet the above requirements?
+
+When users or services interact with an application, they will often perform a series of
+interactions that form a session. A session is unique data for users that persists between
+requests while they use the application. A stateless application is an application that does
+not need knowledge of previous interactions and does not store session information.
+For example, an application that, given the same input, provides the same response to any end user,
+is a stateless application. Stateless applications can scale horizontally because any of the available
+compute resources (such as EC2 instances and AWS Lambda functions) can service any request. Without
+stored session data, you can simply add more compute resources as needed. When that capacity is no
+longer required, you can safely terminate those individual resources, after running tasks have been
+drained. Those resources do not need to be aware of the presence of their peers—all that is required
+is a way to distribute the workload to them.
+
+In this scenario, the best option is to use a combination of Elasticache, Cloudwatch, and RDS Read Replica.
+Hence, option 3 is correct.
+Option 1 is incorrect because it uses stateful instances. It also does not use any caching mechanism
+for web and application tier, and multi-AZ RDS does not improve read performance.
+Option 2 is incorrect because it uses stateful instances and it does not use any caching mechanism
+ for web and application tier.
+Option 3 is correct because it uses stateless instances. The web server uses ElastiCache for read
+operations and CloudWatch which monitors fluctuations in the traffic and notifies the autoscaling
+group to scale in/scale out accordingly. In addition, it uses read replicas for RDS to handle the read-heavy workload.
+Option 4 is incorrect because multi-AZ RDS does not improve read performance.
+
+
+58. You are working for a leading online media company that runs a popular sports news website.
+You are tasked to analyze each web visitor's clickstream data on the website to populate user
+analytics which gives you an insight on the sequence of pages and advertisements the visitor
+has clicked. The data will be processed real-time which will then transform the page layout
+as the visitors click through the web portal to increase user engagement and consequently,
+increase the revenue for the company. Which option meets the requirements in this scenario?
+Amazon Kinesis makes it easy to collect, process, and analyze real-time, streaming data so
+you can get timely insights and react quickly to new information. Amazon Kinesis offers key
+capabilities to cost-effectively process streaming data at any scale, along with the flexibility
+to choose the tools that best suit the requirements of your application. With Amazon Kinesis,
+you can ingest real-time data such as video, audio, application logs, website clickstreams,
+and IoT telemetry data for machine learning, analytics, and other applications. Amazon Kinesis
+enables you to process and analyze data as it arrives and respond instantly instead of having
+to wait until all your data is collected before the processing can begin.
+Option 2 is the correct answer since it is using Amazon Kinesis.
+
+Options 1, 3 and 4 are wrong as SQS, EC2, EMR services do not have the capacity to analyze real-time streaming data.
+
+
+59. You are working for a wildlife photography company in Korea that has uploaded large amounts
+of photographs to their Amazon S3 bucket. Currently, you're using a dedicated group of servers
+to process these data and you have an open source messaging system to deliver job information
+to the servers. After processing, the data would go to your tape library and be stored for archival.
+The company decided to shift everything to AWS Cloud, and you were tasked to implement the same
+existing infrastructure design and leverage AWS tools such as archival storage and messaging
+services to minimize cost.
+Which of the following options is the most suitable solution that will meet the requirement?
+
+Explanation
+In this scenario, the best option is the combination of SQS and Glacier as a storage option.
+
+Option 1 is correct because it uses SQS to process the messages, and it uses Glacier as
+the archival storage solution which is the cheapest storage option.
+
+Option 2 is incorrect because S3 IA is not an archival storage option, and since auto scaling
+is not mentioned, you cannot use CloudWatch alarms to terminate the idle EC2 instances.
+
+Option 3 is incorrect because S3 IA is not an archival storage option.
+
+Option 4 is incorrect as Amazon Simple Notification Service cannot be use to process the messages.
+
+
+
+60.You are working as a Solutions Architect for a leading food chain that has recently adopted
+a hybrid cloud infrastructure which extends its data centers into AWS Cloud. You are told to
+allow on-premises users, who are already signed-in using their corporate accounts, to manage
+AWS resources without creating separate IAM users for each of them. This is to avoid having
+two separate login accounts and memorizing multiple credentials.
+Which of the following is the best way to handle user authentication in this hybrid architecture?
+
+Explanation
+In this scenario, you need to provide temporary access to AWS resources to the existing
+users but you should not create new IAM users for them, to avoid having to maintain two login accounts.
+This means that you need to setup a single-sign on authentication for your users so they only need
+to sign-in once in their on-premises network and can also access AWS cloud at the same time.
+Option 1 is incorrect because OAuth 2.0 is not applicable in this scenario. We are not using Web
+Identity Federation as it is used with public identity providers such as Facebook, Google, etc.
+Option 2 is correct because it gives a federated access to the users to AWS resources by using
+SAML 2.0 identity provider and it uses on-premises single sign-on (SSO) endpoint to authenticate
+users which gives them access tokens prior to providing the federated access.
+Option 3 is incorrect as the use of AssumeRoleWithWebIdentity is wrong which is only for Web Identity
+Federation (Facebook, Google, and other social logins). Even though it uses SAML 2.0 identity provider,
+the requirement is to provide a single sign-on to users which means that the users should not sign in
+to AWS console using any security credentials but through their corporate identity provider.
+Option 4 is incorrect because we are not using Web Identity Federation as it is used with public identity
+providers such as Facebook, Google, etc.

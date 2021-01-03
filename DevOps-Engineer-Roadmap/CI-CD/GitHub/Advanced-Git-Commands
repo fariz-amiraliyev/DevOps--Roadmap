@@ -1,0 +1,16 @@
+1. git branch --merged | egrep -v "(*|master|dev)" | xargs git branch -d
+
+   #delete already merged branches.
+
+2. git clean
+   # remove untracked files that are not added to the staging area
+
+3. git pull --rebase --autostash
+# to pull in the commits of another engineer and rebase your changes on top.
+
+4. git pull origin master --rebase --autostash -v
+5. This command allows you to list all the commands that were executed and then
+   recover particular commits:
+   git reflog
+
+6. 

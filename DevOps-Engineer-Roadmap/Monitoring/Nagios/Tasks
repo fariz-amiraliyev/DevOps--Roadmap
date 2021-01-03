@@ -1,0 +1,30 @@
+1. Active Check w/NRPE
+Create command and service definitions which mirror the "Local Time Offset"
+command and service.
+Make sure that this service is configured properly in the NRPE configuration
+file of one of your remote hosts. Ensure the local clock time offset is being
+monitored by an active check.
+
+Use the check_ntp plugin to build the command on the remote host.
+Specify the command in the nrpe.cfg file of th remote host.
+Build the service on the Nagios Core host, using the check_nrpe plugin to
+remotely execute the command built in step #1.
+
+Command Definition on Nagios Core
+define command{
+commmand_name           nrpe-clock-offset
+command_line            $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_local_time_offset -H 0.us.pool.ntp.org -W 60
+}
+
+Service Definition on Nagios Core
+define service{
+use                     remote-service
+host_name
+service_description     Remote Clock Offset
+check_command   nrpe-clock-offset
+active_checks_enabled1
+}
+nrpe.cfg on Remote Host
+command[check_local_time_offset]=/opt/nagios/libexec/check_ntp_time -H 0.us.pool.ntp.org -W 60
+
+2.

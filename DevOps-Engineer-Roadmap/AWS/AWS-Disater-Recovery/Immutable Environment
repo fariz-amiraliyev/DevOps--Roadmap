@@ -1,0 +1,9 @@
+An immutable environment is a type of infrastructure in which resources (that is, servers) are never
+modified once they have been deployed.
+
+Typically, these servers are built from a common image (such as
+an Amazon Machine Image). The benefit of this type of environment is increased reliability, consistency
+and a more predictable environment.
+
+In AWS, this can be achieved by creating the infrastructure using
+AWS CloudFormation or AWS Cloud Development Kit (AWS CDK) (CDK).

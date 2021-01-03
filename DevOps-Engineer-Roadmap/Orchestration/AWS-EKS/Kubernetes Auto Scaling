@@ -1,0 +1,18 @@
+The three common options for running multi-AZ worker nodes are:
+
+Availability Zone bounded Auto Scaling groups
+Region bounded Auto Scaling groups
+Individual instances without Auto Scaling groups
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+spec:
+  selector:
+    app: example
+  ports:
+    - port: 8765
+      targetPort: 9376
+  externalTrafficPolicy: Local
+  type: LoadBalancer

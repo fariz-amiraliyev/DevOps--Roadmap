@@ -1,0 +1,32 @@
+Allocate an Elastic IP address from a public IPv4 address pool, or use global IP addresses
+from AWS Global Accelerator. You can have one Elastic IP associated with a running instance at
+ no charge. You’re charged for additional Elastic IPs that are associated with the instance,
+ Elastic IPs that are associated with stopped instances or unattached network interfaces,
+ and unassociated Elastic IPs
+
+An Elastic IP address is a static IPv4 address designed for dynamic cloud computing.
+ By using an Elastic IP address, you can mask the failure of an instance or software
+ by rapidly remapping the address to another instance in your account.
+ An Elastic IP address is allocated to your AWS account, and is yours until you release it.
+
+
+ To use an Elastic IP address, you first allocate one to your account,
+ and then associate it with your instance or a network interface.
+
+ When you associate an Elastic IP address with an instance,
+ it is also associated with the instance's primary network interface.
+
+When you associate an Elastic IP address with an instance or its primary network
+interface, the instance's public IPv4 address (if it had one) is released back
+into Amazon's pool of public IPv4 addresses. You cannot reuse a public
+IPv4 address, and you cannot convert a public IPv4 address to an Elastic IP address.
+
+
+You can disassociate an Elastic IP address from a resource, and then associate
+it with a different resource. To avoid unexpected behavior, ensure that all active
+connections to the resource named in the existing association are closed before you
+make the change. After you have associated your Elastic IP address to a different resource,
+you can reopen your connections to the newly associated resource.
+
+When you associate an Elastic IP address with an instance that previously had a public IPv4 address,
+the public DNS host name of the instance changes to match the Elastic IP address.

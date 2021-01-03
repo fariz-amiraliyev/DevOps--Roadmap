@@ -1,0 +1,63 @@
+Deploying Jenkins on Amazon EKS with Amazon EFS
+
+https://aws.amazon.com/blogs/storage/deploying-jenkins-on-amazon-eks-with-amazon-efs/?nc1=b_rp
+
+
+Once the infrastructure is set up, I walk you through deploying Jenkins to the Amazon EKS cluster,
+creating some user-specific configuration, and simulating a node failure in our EKS cluster.
+Lastly, I show you how check to make sure that your configuration state is persisted to Amazon EFS after
+Kubernetes launches a new Jenkins pod.
+
+Create an Amazon EKS cluster:
+eksctl create cluster --name myekscluster --region us-east-1 --zones us-east-1a,us-east-1b --managed --nodegroup-name mynodegroup
+kubectl get svc
+
+
+Create an Amazon EFS file system:
+aws ec2 describe-vpcs
+aws ec2 create-security-group \
+--region us-east-1 \
+--group-name efs-mount-sg \
+--description "Amazon EFS for EKS, SG for mount target" \
+--vpc-id identifier for our VPC (i.e. vpc-1234567ab12a345cd)
+
+
+aws ec2 authorize-security-group-ingress \
+--group-id identifier for the security group created for our Amazon
+EFS mount targets (i.e. sg-1234567ab12a345cd) \
+--region us-east-1 \
+--protocol tcp \
+--port 2049 \
+--cidr 192.168.0.0/16
+
+aws efs create-file-system \
+--creation-token creation-token \
+--performance-mode generalPurpose \
+--throughput-mode bursting \
+--region us-east-1 \
+--tags Key=Name,Value=MyEFSFileSystem \
+--encrypted
+
+aws ec2 describe-instances --filters Name=vpc-id,Values= identifier
+for our VPC (i.e. vpc-1234567ab12a345cd) --query
+'Reservations[*].Instances[].SubnetId'
+
+aws efs create-mount-target \
+--file-system-id identifier for our file system (i.e. fs-123b45fa) \
+--subnet-id identifier for our node group subnets (i.e. subnet-
+1234567ab12a345cd) \
+--security-group identifier for the security group created for our
+Amazon EFS mount targets (i.e. sg-1234567ab12a345cd) \
+--region us-east-1
+
+aws efs create-access-point --file-system-id identifier for our file
+system (i.e. fs-123b45fa) \
+--posix-user Uid=1000,Gid=1000 \
+--root-directory
+"Path=/jenkins,CreationInfo={OwnerUid=1000,OwnerGid=1000,Permissions=777
+
+
+Deploy the Amazon EFS CSI Driver to your Amazon EKS cluster
+Deploy Jenkins to Amazon EKS
+Simulate a Kubernetes node failure
+Check for persisted state thanks to Amazon EFS!

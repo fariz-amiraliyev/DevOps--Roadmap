@@ -1,0 +1,3 @@
+AWS WAF is a web application firewall that lets you monitor the HTTP and HTTPS requests that are
+forwarded to an Amazon CloudFront distribution, an Amazon API Gateway REST API, or an Application
+Load Balancer.

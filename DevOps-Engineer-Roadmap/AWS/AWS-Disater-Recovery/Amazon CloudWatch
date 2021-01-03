@@ -1,0 +1,6 @@
+We can use Amazon CloudWatch to collect and store metrics on a durable
+platform that is separate and independent from your own infrastructure.
+You can use these metrics to measure the performance and response times and also
+capture custom metrics for your applications.
+These metrics that can be used to do additional actions such as trigger
+Auto Scaling, Notification, Fanout, trigger automated tasks, etc.

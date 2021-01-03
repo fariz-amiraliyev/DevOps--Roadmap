@@ -1,0 +1,3 @@
+IAM policies are JSON documents that either allow or deny access to
+combinations of actions and resources.
+Implicity deny ?

@@ -1,0 +1,128 @@
+CloudTrail
+CloudWatch
+GuardDuty
+Config
+SecurityHub
+Trusted Advisor
+Macie
+Inspector
+
+CloudTrail
+Functions: Monitoring CloudTrail records AWS API call activity for an AWS account.
+Enabling this service will provide an event history of all API calls made across your account.
+These API calls include any actions done in the console, AWS SDKs and command line tools.
+This service is crucial to your account and should always be enabled. This information is
+the cornerstone for monitoring and figuring out what is going on in your account. One important
+feature with CloudTrail is that its data can be hooked up to other AWS services (CloudWatch and SNS)
+and based on configured rules, notifications can be sent to you. So when CloudTrail is enabled and
+integrated with CloudWatch and SNS, you can monitor and send alerts when security critical APIs are
+used such as creating IAM roles and policies and modifications to account ownership information.
+This service supports compliance and operational auditing of your account.  Turning this on in
+every region and configuring it to work with rules in CloudWatch along with notifications in
+SNS is a good thing and one of the first tasks you should do to start securing your account.
+Usage recommendations:  Always enable CloudTrail when you setup your account.  Collecting the
+API calls in your account is information required to audit activity being performed in the account.
+
+CloudWatch
+Functions: Monitoring, Alerting CloudWatch collects monitoring and operational data and stores
+them in logs and as metrics.  Having all your logs and metrics stored together provides you a
+way to correlate data points across your environment.  In addition, CloudWatch has customizable
+rules that can trigger alarms.  From these alarms you can send notifications via the AWS service
+SNS so that you can troubleshoot issues or you could automate actions using AWS services like
+ASG or Lambda to perform identified actions.  CloudWatch collects data on many of the AWS built
+ services and in addition with the CloudWatch Agent, you can publish data from your applications
+ directly to CloudWatch logs as needed.  This ability to have the events across your environment
+ in one place is what makes CloudWatch an important part of securing your account. CloudWatch is
+ not an AWS security service but rather a service that can be used to help with security monitoring
+ of your account.  A great example is that CloudTrail can publish to CloudWatch and rules can be
+ built to watch for certain events that are considered a security issue.  Examples would be any
+ use of the root account, adding users, or changing permission policy.  As mentioned above,
+ integrating CloudTrail events with CloudWatch rules and alarming on identified security issues
+ is a good piece of information to have when trying to detect usage of critical APIs in your
+ account. Usage recommendations:  Use CloudWatch as your first level monitor for AWS services
+ that integrate with it.  Specifically use it with CloudTrail and setup rules to alert based on
+ critical API calls.
+
+
+ GuardDuty
+Functions: Monitoring, Alerting GuardDuty continuously analyzes your AWS account for suspicious
+activity using data provided by other AWS services.  It gives you what AWS terms as “intelligent
+threat detection” by analyzing the data collected from CloudTrail, VPC Flow Logs, and DNS Logs
+from you account.  The intelligent part is enabled by providing known threat information and the
+usage of machine learning.  Known threat information includes items like know lists of malicious IPs.
+The machine learning works by detecting anomalous account and network activity and combining this with
+the known threat information.  Here are some examples of what Guard Duty can detect:
+An EC2 instance being probed or brute force attacked
+A compromised EC2 instance communicating with a known malware server
+Any traffic containing crypto currency mining
+Highly sensitive AWS API calls that are invoked under suspicious circumstances.
+There are a lot more actual detections than listed above.  I would recommend looking at the AWS
+documentation for more information (docs). In addition to what it does, the other strong point
+behind Guard Duty is you just turn it on.  There is no configuration needed, no agents to install,
+no virtual machines to run, and no rules/permissions to create.  It operates entirely on AWS’s own
+infrastructure.  You do not need to enable CloudTrail, VPC Flow Logs or DNS Logs.  Guard Duty inspects
+that information whether you have those enabled or not.   To add to this, AWS is continually learning
+and adding new anomaly detections behind the scenes. Usage recommendations:  Use Guard Duty when you have
+resources running in your account and are worried about malicious or unauthorized behavior targeted at those
+resources.
+
+Config
+Functions: Monitoring, Alerting AWS Config maintains an inventory of your AWS resources and watches for
+ changes to those resources.  Additionally, you may configure rules that AWS Config will monitor your resources
+ against.  This service will store your configuration history and snapshots in S3 and it can notify you via SNS
+ Topics that a configuration has changed.  It also has built in integrations with CloudTrail, AWS Systems Manager,
+ EC2 Dedicated Host, Application Load Balancers (ALB), and AWS Organizations.  These integrations are important and
+ provide the following:
+
+CloudTrail – Use CloudTrail logs to get information about the event that invoked the configuration change
+Systems Manager – This integration gives you visibility to the OS configuration on your EC2 instances and on-premise servers.
+With this integration you can see a timeline of EC2 instance changes
+EC2 Dedicated Host – With this integration you can assess your license compliance for dedicated hosts.  This includes launching,
+stopping, and terminating events along with important information like the software license, number of cores, and Amazon Machine
+Image ID.
+Application Load Balancer – With this integration you will able to see changes to the ALB.  This includes changes to EC2 security
+groups, VPC and subnets.
+With Config, you can continuously monitor resource configuration and notify on potential security issues that might happen. Usage
+recommendations:  Use AWS Config when you want to evaluate configuration settings, retrieve historical configuration settings, or
+ alert on a configuration change for AWS resources running in your account.
+
+Trusted Advisor
+Functions: Monitoring, Alerting Trusted Advisor analyzes your account and recommends improvements in three architectural pillars:
+Costs
+Performance
+Security
+A basic version of Trusted Advisor is included with every AWS account and there is also a Premium version.
+The Premium Support version includes more Trusted Advisor recommendations and access to technical support,
+architecture support, and use case guidance.  For this, we will just look at what the base Trusted Advisor
+security recommendations. The following checks and recommendations are provided:
+
+S3 Bucket Permissions
+Security Groups – Specific Ports Unrestricted
+IAM Use
+MFA on Root Account
+EBS Public Snapshots
+RDS Public Snapshots
+Usage recommendations:  Use Trusted Advisor to provide you guidance on some basic security settings in your AWS account.
+
+Inspector
+Functions: Monitoring, Alerting Amazon Inspector checks on the applications and resources you have deployed in your account.
+This works two ways.  The first is a network assessment.  This will evaluate any ports open on your EC2 instances along with
+any ports reachable into your network from outside the VPC.  This network assessment does not require an Inspector agent to be
+installed.  However, having this agent on the EC2 instance will allow port inspection on the EC2 instance.  The second check
+is a host assessment.  This requires the Inspector agent to be installed on the instance.  This check will look for vulnerabilities
+(CVE) on the host and check for host hardening vs the CIS benchmarks and security best practices. Usage recommendations:  Use
+Inspector when have applications running on EC2 and want to check for both network and host vulnerabilities.
+
+Security Hub
+Functions: Aggregation & Visualization Security Hub is AWS’s newest security service.  This service aggregates and prioritizes
+security information and alerts from across the account.  Mostly this aggregation is from other AWS security services.  For example,
+this Security Hub is integrated with Guard Duty, Inspector, and Macie. Security Hub’s main functions are to:
+Aggregate security findings across the account
+Automate foundational account level configuration and compliance checks
+Provide integrated dashboards to view assessment results and start remediation
+In addition to integrated dashboards, you have the ability to run account-level configuration and compliance checks.  These checks
+are against industry standards and best practices and will provide you with a compliance score and identification of account problems.
+This service integrates with CloudWatch Logs and Events.  This allows you to search through log data and identify compliance or
+incident issues and define workflows that can be executed when vulnerabilities are detected.  This can include sending notification
+or tasks to other systems. Usage recommendations:  Use AWS Security Hub to aggregate security information if you are running other
+AWS Security services like Guard Duty, Inspector and Macie.

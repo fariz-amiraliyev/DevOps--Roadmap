@@ -1,0 +1,32 @@
+How Does Velero Work ?
+When you run velero backup create test-backup:
+
+The Velero client makes a call to the Kubernetes API server to create a Backup object.
+The BackupController notices the new Backupobject and performs validation.
+The BackupController begins the backup process. It collects the data to back up
+by querying the API server for resources.
+The BackupController makes a call to the object storage service – for example,
+AWS S3 – to upload the backup file.
+
+
+Backup:
+
+velero backup create <bkp-name> --include-namespaces <namespace-name>
+
+velero backup describe wp-backup --details
+
+
+Scheduled Backups:
+
+velero schedule create daily-wordpress-backup--schedule="0 10 * * *" --include-namespaces wordpress
+
+
+Restore Application and data:
+velero restore create --from-backup wp-backup
+
+Troubleshooting:
+
+$ velero backup describe <backupName>
+$ velero backup logs <backupName>
+$ velero restore describe <restoreName>
+$ velero restore logs <restoreName>

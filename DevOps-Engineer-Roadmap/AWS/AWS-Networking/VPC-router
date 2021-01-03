@@ -1,0 +1,21 @@
+Logical construct to manage all routings.
+Routing decisions based on route table which are associated with VPC and Subnets.
+
+
+VPC 10.0.0.0/16
+
+    AZs:                Subnets:
+10.0.0.0/18  :         10.0.0.0/21   10.0.8.0/21   10.0.16.0/21
+10.0.64.0/18 :         10.0.64.0/21  10.0.72.0/21  10.0.80.0/21
+10.0.128.0/18:         10.0.128.0/21 10.0.128.0/21 10.0.128.0/21 ?
+
+
+VPC ROUTER : CONNECTED ALL OF THEM
+ROUTER ATTACHED TO SUBNET:
+
+AWS reserved IP addresses:
+1. Network addresses
+2. reserved for VPC ROUTER
+3. for DNS server
+4. for future use
+5. network broadcast address. very last address in CIDR block.

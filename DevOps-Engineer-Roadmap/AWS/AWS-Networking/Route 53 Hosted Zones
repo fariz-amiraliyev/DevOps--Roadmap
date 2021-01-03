@@ -1,0 +1,18 @@
+public hosted zone
+private hosted zone  (choose VPC ID)
+
+Routing traffic to an Amazon API Gateway API by using your domain name
+Routing traffic to an Amazon CloudFront web distribution by using your domain name
+Routing traffic to an Amazon EC2 instance
+Routing traffic to an AWS Elastic Beanstalk environment
+Routing traffic to an ELB load balancer
+Opening connections to an Amazon RDS database instance using your domain name
+Routing traffic to a website that is hosted in an Amazon S3 bucket
+Routing traffic to an Amazon Virtual Private Cloud interface endpoint by using your domain name
+Routing traffic to Amazon WorkMail
+Using Amazon Route 53 as the DNS service for subdomains without migrating the parent domain
+Transitioning to latency-based routing in Amazon Route 53
+Adding another Region to your latency-based routing in Amazon Route 53
+Using latency and weighted records in Amazon Route 53 to route traffic to multiple Amazon EC2 instances in a Region
+Managing over 100 weighted records in Amazon Route 53
+Weighting fault-tolerant multi-record answers in Amazon Route 53

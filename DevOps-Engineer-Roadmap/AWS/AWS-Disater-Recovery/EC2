@@ -1,0 +1,46 @@
+Instance types in Amazon EC2 are essentially hardware archetypes.
+You choose an instance type that matches the amount of memory (RAM) and
+computing power (number of CPUs) that you need for your application.
+
+
+The first step towards building fault-tolerant applications on
+AWS is to decide on how the AMIs will be configured.
+
+
+There are two distinct mechanisms to do this, dynamic and static:
+
+A dynamic configuration starts with a base AMI and, on launch, deploys the
+software and data required by the application.
+
+
+A static configuration deploys the required software and data to the base
+AMI and then uses this to create an application-specific AMI that is used for
+application deployment.
+
+
+The frequency of application changes—a dynamic configuration offers greater flexibility for frequent
+application changes.
+
+Speed of launch—an application installed on the AMI reduces the time between launch and when the
+instance becomes available. If this is important then a static configuration minimizes the launch time.
+
+Audit—when an audit trail of the application configuration is required, then a static configuration
+combined with a retention policy for AMIs allows past configurations to be recreated.
+
+
+A common pattern is for the application software
+to be deployed on the AMI while data is deployed once the instance is launched. Your application should
+be comprised of at least one AMI that you have configured. To start your application, launch the required
+number of instances from your AMI. For example, if your application is a website or a web service, your
+AMI could include a web server, the associated static content, and the code for the dynamic pages. As a
+result, after you launch an instance from this AMI, your web server starts and your application is ready to
+accept requests.
+
+
+Auto
+Scaling (p. 5) group can be configured to automatically replace failed or degraded instances. The
+ability to quickly replace a problematic instance is just the first step towards fault-tolerance. With AWS,
+an AMI lets you launch a new instance based on the same template, allowing you to quickly recover from
+failures or problematic behaviors.
+To minimize downtime, you have the option to keep a spare instance running, ready to take over in
+the event of a failure. This can be done efficiently using elastic IP addresses. Failover to a replacement

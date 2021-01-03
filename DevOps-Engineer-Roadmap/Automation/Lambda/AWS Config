@@ -1,0 +1,15 @@
+1.Finding Outdated Instance Types
+2.Remediate Security Group Using Config and Lambda
+Complete the following:
+Create AWS Config Rule
+Create SNS Topic
+Create Lambda Function
+Create CloudWatch Rule
+Note: If AWS Config has trouble detecting changes after a reasonable amount of time, go under AWS Config Settings and toggle it off and on again.
+3. Remediate S3 Bucket ACL Using Config and Lambda
+Complete the following:
+Create AWS Config Rule
+Create SNS Topic
+Create Lambda Function
+Create CloudWatch Rule
+Note: If AWS Config has trouble detecting changes after a reasonable amount of time, go under AWS Config Settings and toggle it off and on again.

@@ -1,0 +1,6 @@
+Amazon S3 is an object storage service that provides highly durable, secure,
+fault-tolerant data storage.
+AWS is responsible for maintaining availability and fault-tolerance;
+you simply pay for the storage that you use.
+Data is stored as objects within resources called buckets and a
+single object can be up to 5 terabytes in size.

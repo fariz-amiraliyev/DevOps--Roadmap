@@ -1,0 +1,3 @@
+In AWS, scaling out means horizontal scaling by increasing the number of 
+instances in an Auto Scaling group. Scaling up refers to vertical scaling by
+increasing the instance size or family.

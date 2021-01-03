@@ -1,0 +1,24 @@
+Install Docker Toolbox on macOS
+
+https://docs.docker.com/toolbox/toolbox_install_mac/
+
+
+Docker Toolbox includes the following Docker tools:
+
+Docker CLI client for running Docker Engine to create images and containers
+Docker Machine so you can run Docker Engine commands from macOS terminals
+Docker Compose for running the docker-compose command
+Kitematic, the Docker GUI
+the Docker QuickStart shell preconfigured for a Docker command-line environment
+Oracle VM VirtualBox
+
+
+Docker Desktop for Mac
+https://hub.docker.com/editions/community/docker-ce-desktop-mac
+
+
+Run docker version to check that you have the latest release installed.
+
+Run docker run hello-world to verify that Docker is pulling images and running as expected.
+
+docker run -it ubuntu bash

@@ -1,0 +1,17 @@
+1. Kafka is a streaming data processing env.
+2. Kafka is a set of clusters.
+3. Implementation Kafka to real env requried additional set up for each env.
+4. Kafka cluster---Producer-Connector-Consumer-Stream Processor
+5. Name 0f Kafka cluster is broker.
+6. Broker consisit of topic and partition.
+7. Topic is a category. Separate log collection.
+8.  Broker is a logical separation of topics.
+9. Producers create data for kafka.
+10. Producer configuration.
+11. Zookeeper is a broker cordinator.
+12. Consumer configuration: Group id, session timeout, heartbeat, autocommit,
+13. Hardware recommendations: memory, cpu, disk, network
+14. Adding removing topic.
+15. set up multibrocker cluster.
+16. steram data processing.
+17. 

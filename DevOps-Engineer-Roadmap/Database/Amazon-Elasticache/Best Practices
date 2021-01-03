@@ -1,0 +1,10 @@
+Caching Strategies and Best Practices
+https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.html
+
+Caching Strategies
+Restricted Redis Commands
+Ensuring That You Have Enough Memory to Create a Redis Snapshot
+Managing Reserved Memory
+Mitigating Failure Issues When Using Redis AOF
+Best Practices: Online Cluster Resizing
+Best Practices: Minimizing Downtime During Maintenance

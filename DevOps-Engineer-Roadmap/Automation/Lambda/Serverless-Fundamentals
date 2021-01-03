@@ -1,0 +1,33 @@
+Event-driven architecture and how it all ties in with serverless applications;
+Lambda consept: Worry about the code and events, not the infrastructure!
+
+AWS Lambda allows to easily automate IT processes so can focus on
+writing business logic. With AWS Lambda, there are no servers to manage or provision.
+Just need only to upload code, and everything required to run and scale it is
+handled with high availability.
+
+1. Designer: add triggers, configure other aws resources to trigger lambda function.
+2. Function code: add and edit code from console, runtime, handler, code section
+3. Environment variables
+4. Tags
+5. Execution role
+6. Networking: VPC,sunbnets, SGs
+6. Settings:  Description, memory, timeout
+7. Dead letter queue: SQS,SNS, active tracing
+8. Auditing and compliance: Cloud Trail:
+9. Concurrency:
+
+
+IT Automation with AWS Lambda:
+
+https://aws.amazon.com/lambda/it-automation/
+Lambda as Cron: Scheduling Invocations in AWS Lambda
+Start and Stop Amazon EC2 Instances at Regular Intervals using AWS Lambda
+Serverless Architectural Patterns and Best Practices
+AUTOMATED CLEANUP OF UNUSED IMAGES IN AMAZON ECR
+CAPTURING CUSTOM, HIGH-RESOLUTION METRICS FROM CONTAINERS USING AWS STEP FUNCTIONS AND AWS LAMBDA
+CONTINUOUS DEPLOYMENT TO KUBERNETES USING AWS CODEPIPELINE, AWS CODECOMMIT, AWS CODEBUILD, AMAZON ECR AND AWS LAMBDA
+USING AWS LAMBDA WITH AUTO SCALING LIFECYCLE HOOKS
+AUTOMATING SECURITY GROUP UPDATES WITH AWS LAMBDA
+AUTOMATIC DEPLOYMENT TO NEW AMAZON EC2 ON-DEMAND AND SPOT INSTANCES USING AWS CODEDEPLOY, AMAZON CLOUDWATCH EVENTS, AND AWS LAMBDA
+USING CONTINUOUS JOBS WITH AWS IOT DEVICE MANAGEMENT

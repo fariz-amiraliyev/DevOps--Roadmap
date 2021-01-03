@@ -1,0 +1,54 @@
+1. git log --show-signature
+2. git push
+3. git pull
+4. git fetch
+5. git status
+6. git checkout
+7. git branch
+
+
+https://sethrobertson.github.io/GitFixUm/fixup.html
+
+Description	Command
+Commit them on the local branch.	git commit -am "My descriptive message"
+Commit them on another branch, no checkout conflicts.	git checkout otherbranch && git commit -am "My descriptive message"
+Commit them on another branch, conflicts.	git stash; git checkout otherbranch; git stash apply; : "resolve conflicts"; git commit -am "My descriptive message"; git stash drop
+Commit them on a new branch.	git checkout -b newbranch; git commit -am "My descriptive message"
+Stash them for a rainy day.	git stash save "my descriptive name"
+
+
+However, perhaps you are confident (or arrogant) enough to know for sure that you will never ever want the uncommitted changes. If so, you can run git reset --hard,
+
+
+How to undo all uncommitted changes ?
+
+So you have not yet committed and you want to undo everything:
+git stash save "description of changes"
+git stash list
+git stash apply
+git stash drop
+
+
+However, perhaps you are confident (or arrogant) enough to know for sure that you will
+never ever want the uncommitted changes. If so, you can run:
+
+git reset --hard
+This will not delete untracked or ignored files:
+git clean -nd
+git clean -ndX
+
+
+git branch -a; git tag, git log --all
+
+Removing the last commit:
+git reset --hard HEAD
+to remove the last two commits:
+
+git reset --hard HEAD~2
+
+
+Changing the latest Git commit message
+If the message to be changed is for the latest commit to the repository, then the following commands are to be executed:
+
+git commit --amend -m "New message"
+git push --force repository-name branch-name

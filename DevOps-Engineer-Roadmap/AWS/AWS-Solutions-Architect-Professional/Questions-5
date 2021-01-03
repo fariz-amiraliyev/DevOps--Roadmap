@@ -1,0 +1,242 @@
+31. The manufacturing company that you are working for just recently decided to
+build a hybrid infrastructure in which their on-premises data center is connected to
+their VPC cloud. They have an on-premises Active Directory service which they want
+to use and connect to AWS.
+
+What available service can be used to satisfy this requirement? 
+
+Explanation
+AD Connector is a directory gateway with which you can redirect directory requests
+to your on-premises Microsoft Active Directory without caching any information in the cloud.
+AD Connector comes in two sizes, small and large. A small AD Connector is designed for smaller
+ organizations of up to 500 users. A large AD Connector can support larger organizations of up to 5,000 users.
+Option 1 is incorrect because SimpleAD does not connect existing on-premises AD to AWS.
+Option 2 is incorrect because AWS Directory Service for Microsoft AD is an AWS managed service that
+is hosted on the AWS cloud, it does not connect your AD with AWS.
+Option 3 is correct because AD Connector helps connect your on-premises
+Microsoft Active Directory to the AWS cloud.
+Option 4 is incorrect because none of the options above are acceptable except AD Connector.
+
+32. The software development company that you are working for has two departments that want to use AWS Redshift.
+The engineering department uses a process that takes 3 hours to analyze the data whereas the accounting department
+just takes a few minutes.
+What can you do to ensure that there is no performance impact on the accounting department's queries?
+Explanation
+Amazon Redshift workload management (WLM) enables users to flexibly manage priorities
+within workloads so that short, fast-running queries won't get stuck in queues behind long-running queries.
+Amazon Redshift WLM creates query queues at runtime according to service classes, which define the configuration
+parameters for various types of queues, including internal system queues and user-accessible queues.
+From a user perspective, a user-accessible service class and a queue are functionally equivalent.
+Option 1 is incorrect because Redshift does not have read replicas.
+Option 2 is incorrect because this will affect the performance of the current Redshift cluster.
+Option 3 is incorrect because queries cannot be paused in Redshift.
+Option 4 is correct because by creating two separate workload management groups - one for each
+department and run the queries on them, will provide a better performance on the processing.
+￼ 
+33. There is a legacy accounting application hosted in your on-premises data center which you need to migrate to AWS.
+The new application should be accessible over the Internet and will be hosted on EC2 instances which are connected to
+an Elastic Load Balancer to maintain a highly available and fault-tolerant architecture.
+
+In this scenario, which of the following ensures an even distribution of traffic to Amazon EC2 instances
+in multiple Availability Zones registered with a load balancer?
+
+Explanation
+In this scenario, the correct answer is Option 3 because with cross-zone load balancing, each load balancer node
+for your Classic Load Balancer distributes requests evenly across the registered instances in all enabled Availability Zones.
+If cross-zone load balancing is disabled, each load balancer node distributes requests evenly across the registered
+instances in its Availability Zone only.
+
+Cross-zone load balancing reduces the need to maintain equivalent numbers of instances in each enabled Availability Zone,
+and improves your application's ability to handle the loss of one or more instances. However, it is still recommended that
+you maintain approximately equivalent numbers of instances in each enabled Availability Zone for higher fault tolerance.
+
+Option 1 is incorrect because a Proxy Protocol is just an Internet protocol used to carry connection information from the
+source requesting the connection to the destination for which the connection was requested. This will not make the ELB
+distribute the requests evenly across the EC2 instances.
+
+Option 2 is incorrect because Geolocation routing policy in Route 53 just routes the traffic based on the location of your
+users and does not distribute the request evenly across registered EC2 instances.
+
+Option 4 is incorrect because just as with Option 2, the Latency Routing policy in Route 53 does not distribute the request
+evenly across registered EC2 instances. What it does is just route traffic to the region that provides the best latency.
+
+34. There is a technical requirement in your team to build a distributed system that fetches workload from a queue.
+To implement the new architecture, you have deployed the Java web application on a fleet of Spot EC2 instances that
+accesses an SQS FIFO queue. In this scenario, how should you configure the application to use AWS credentials to access
+the SQS queue securely?
+
+Explanation
+An IAM role is similar to a user, in that it is an AWS identity with permission policies that determine what the
+identity can and cannot do in AWS. However, instead of being uniquely associated with one person, a role is intended
+to be assumable by anyone who needs it. Also, a role does not have standard long-term credentials (password or access keys)
+associated with it. Instead, if a user assumes a role, temporary security credentials are created dynamically and provided to the user.
+
+In this specific question where there is a need to access an SQS queue, you must use an IAM role instead of an IAM user. Hence,
+the answer is Option 1.
+
+Options 2 and 4 are incorrect because it uses an IAM user instead of an IAM Role. In addition, you should never store the IAM user
+ credentials to EC2 instances as it is a security vulnerability.
+
+Option 3 is incorrect because storing the AWS access and secret keys is a security risk and is not a recommended solution.
+
+35:
+There was a major incident that occurred in your company wherein the web application that you are
+supporting unexpectedly went down in the production environment. Upon investigation, it was found that a
+junior DevOps engineer mistakenly terminated the EC2 instance in production which caused the disruption of service.
+You also found out that there are a lot of developers who have access to your production AWS account. Which of the
+following options will fix this security vulnerability in your cloud architecture and prevent this kind of failure from
+happening again? (Choose 2)
+
+Explanation
+To help you manage your instances, images, and other Amazon EC2 resources, you can optionally assign your
+own metadata to each resource in the form of tags. Tags enable you to categorize your AWS resources in different ways,
+for example, by purpose, owner, or environment. This is useful when you have many resources of the same type—you can quickly
+identify a specific resource based on the tags you've assigned to it. For example, you could define a set of tags for your
+account's Amazon EC2 instances that helps you track each instance's owner and stack level.
+
+Take note that MFA is just an additional layer of security but it won't totally prevent the users from terminating the EC2 instances.
+
+Option 1 is correct because it identifies the instances based on its environment using a tag which creates a resource level
+permission that explicitly denies anyone from terminating certain instances hosted in production.
+
+Option 2 is correct because modifying the IAM Role assigned to the developers to revoke their privilege of terminating EC2
+instances will certainly prevent the issue from happening again.
+
+Option 3 is incorrect because MFA is just an additional layer of security given to the users when logging into AWS and accessing
+the resources. However, an MFA alone cannot prevent the users from performing resource level actions, such as terminating the instance.
+
+Option 4 is incorrect because a security group is mainly used to secure and control the traffic coming in and out of the EC2
+instances. In this scenario, it is best to modify the IAM policy of all of the developers and add tags to the instances in the
+production environment.
+
+Option 5 is incorrect because attaching a <code>PowerUserAccess</code> AWS managed policy to the developers will only provide
+more permissive access to terminate EC2 instances.
+
+36. To ensure high availability of both the web servers and the database of your web application,
+you deployed your auto-scaled EC2 instances to multiple Availability Zones with an Application Load Balancer
+in front and used Multi-Availability Zone configuration to your RDS instance. There is a spike in incoming
+requests in the past few hours and the performance of the primary database is starting to go down.
+What would happen to the database if the primary DB instance fails?
+Amazon RDS Multi-AZ deployments provide enhanced availability and durability for Database (DB) Instances,
+making them a natural fit for production database workloads. When you provision a Multi-AZ DB Instance,
+Amazon RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby
+instance in a different Availability Zone (AZ). Each AZ runs on its own physically distinct, independent
+infrastructure, and is engineered to be highly reliable. In case of an infrastructure failure,
+Amazon RDS performs an automatic failover to the standby (or to a read replica in the case of Amazon Aurora),
+so that you can resume database operations as soon as the failover is complete.
+When automatic failover occurs, your application can remain unaware of what's happening behind the scenes.
+The CNAME record for your DB instance will be altered to point to the newly promoted standby. Hence,
+the correct answer in this question is Option 4.
+Option 1 is incorrect because the Canonical Name Record (CNAME) will be changed and not the IP address.
+Option 2 is incorrect because the RDS instance will not automatically reboot.
+Option 3 is incorrect because there is no new DB instance that will be created.
+
+
+37. You are a Solutions Architect for a multinational law firm based in London.
+Their operations are worldwide and they have several VPCs in the US, Europe and Asia regions.
+As part of the internal infra audit, your CTO wants to set up a single dashboard to collectively
+monitor all of the firm's EC2 instances which are located in different AWS regions. Which of the
+following is the best option that will meet the requirement?
+You can monitor AWS resources in multiple regions using a single CloudWatch dashboard. For example,
+you can create a dashboard that shows CPU utilization for an EC2 instance located in the us-west-2
+region with your billing metrics, which are located in the us-east-1 region.
+ 
+Option 1 is correct because you can monitor AWS resources in multiple regions using a single CloudWatch dashboard.
+Option 2 is incorrect because you can monitor AWS resources in multiple regions using a single CloudWatch dashboard.
+Option 3 is incorrect because you do not need to explicitly register any instances from different regions.
+Option 4 is incorrect because monitoring of EC2 instances is possible using a single dashboard created from
+CloudWatch matrix which is stated in Option 1.
+
+38. You are a Solutions Architect for a software development company and you have been
+instructed to manage your AWS cloud infrastructure as an application code to automate the
+build and deploy process. The company would like to have the ability to easily deploy exact copies
+of different versions of your cloud infrastructure, stage changes into different environments,
+revert back to previous versions, and identify the specific versions running in the VPC. Plus,
+all new public-facing applications should also have global content delivery network (CDN) service.
+Which of the following can meet this requirement?
+
+The correct answer is Option 4: Use AWS CloudFormation to manage the cloud architecture and CloudFront as the CDN.
+
+AWS CloudFormation provides a common language for you to describe and provision all the infrastructure
+resources in your cloud environment. CloudFormation allows you to use a simple text file to model and provision,
+in an automated and secure manner, all the resources needed for your applications across all regions and accounts.
+This file serves as the single source of truth for your cloud environment.
+
+Amazon CloudFront is a web service that speeds up the distribution of your static and dynamic web content,
+such as .html, .css, .js, and image files, to your users. CloudFront delivers your content through a
+worldwide network of data centers called edge locations. When a user requests content that you're serving
+with CloudFront, the user is routed to the edge location that provides the lowest latency (time delay),
+so that content is delivered with the best possible performance.
+
+Options 1 and 3 are incorrect because CloudWatch is not a CDN service.
+
+Option 2 is incorrect because even though Elastic Beanstalk enables you to quickly deploy and
+manage applications in the AWS Cloud, you still can't manage the cloud infrastructure as an
+application code with it. The best option is CloudFormation.
+
+39.You are an IT Consultant for a leading commercial bank which has multiple AWS accounts
+that are consolidated using AWS Organizations. They are building an online portal for the
+foreclosed real estate properties they own. The online portal is designed to use SSL for better security.
+The bank would like to implement a separation of responsibilities between the DevOps team and their cybersecurity team.
+The DevOps team are entitled to manage and log in to the EC2 instances while the cybersecurity team has the exclusive
+access to the application's X.509 certificate, which contains the private key and stored in AWS Certificate Manager (ACM).
+In this scenario, which configuration option would satisfy the requirement?
+Explanation
+In this scenario, the best solution is to set the appropriate IAM policy to both the DevOps and cybersecurity
+teams and then add a configuration to terminate the SSL on the ELB.
+
+Take note that you can either terminate the SSL on the ELB side or on the EC2 instance. If you choose the former,
+the X.509 certificate will only be present in the ELB and if you choose the latter, the X.509 certificate will be
+stored inside the EC2 instance.
+
+Since we don't want the DevOps team to have access to the certificate, it is best to terminate the SSL on the ELB
+level rather than the EC2. Hence, the correct answer is Option 2.
+
+Option 1 is incorrect because the AWS Config service simply enables you to assess, audit, and evaluate the
+configurations of your AWS resources. It does not grant any permission or access. In addition, CloudHSM is a
+managed hardware security module (HSM) in the AWS Cloud that handles encryption keys and not SSL certificates.
+
+Option 3 is incorrect because the Systems Manager Session Manager service simply provides secure and auditable
+instance management without the need to open inbound ports, maintain bastion hosts, or manage SSH keys.
+This service does not handle SSL connections. It is also a security risk to store X.509 certificates in an S3 bucket.
+ It should be stored in the AWS Certificate Manager.
+
+Option 4 is incorrect because a service control policy (SCP) simply determines what services and actions can be
+delegated by administrators to the users and roles in the accounts that the SCP is applied to. It does not grant
+any permissions, unlike an IAM Policy.
+
+40.You are a Software Engineer for a leading call center company in Seattle. Their corporate web portal is deployed to
+AWS and is linked to their corporate data center via a link aggregation group (LAG) which terminates at the same
+AWS Direct Connect endpoint and connected on a private virtual interface (VIF) in your VPC. The portal must
+authenticate against their on-premises LDAP server. Each Amazon S3 bucket can only be accessed by a logged-in
+user if it belongs to that user.
+
+How will you implement this architecture in AWS? (Choose 2)
+
+Explanation
+Lightweight Directory Access Protocol (LDAP) is a standard communications protocol used to read and
+write data to and from Active Directory. You can manage your user identities in an external system
+outside of AWS and grant users who sign in from those systems access to perform AWS tasks and access
+your AWS resources. The distinction is where the external system resides—in your data center or an external third party on the web.
+
+For enterprise identity federation, you can authenticate users in your organization's network, and then
+provide those users access to AWS without creating new AWS identities for them and requiring them to sign in
+with a separate user name and password. This is known as the single sign-on (SSO) approach to temporary access.
+AWS STS supports open standards like Security Assertion Markup Language (SAML) 2.0, with which you can use
+Microsoft AD FS to leverage your Microsoft Active Directory.
+
+Option 1 is incorrect because the users need to be authenticated using LDAP first, not STS. Also, the temporary
+ credentials to log into AWS are provided by STS, not identity broker.
+
+Option 2 is correct because it follows the correct sequence. It develops an identity broker that authenticates
+users against LDAP, gets the security token from STS, and then accesses the S3 bucket using the IAM federated user credentials.
+
+Option 3 is incorrect because you cannot use the LDAP credentials to log into IAM.
+
+Option 4 is correct because it follows the correct sequence. It authenticates users using LDAP, gets the security
+ token from STS, and then accesses the S3 bucket using the temporary credentials.
+
+Option 5 is incorrect because using a Direct Connect Gateway will only improve the availability of your
+on-premises network connection and using a transit VPC is just a common strategy for connecting multiple,
+geographically disperse VPCs and remote networks in order to create a global network transit center.
+These two things will not meet the requirement.

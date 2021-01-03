@@ -1,0 +1,39 @@
+You manage your DB engine configuration by associating your DB instances with
+parameter groups. Amazon RDS defines parameter groups with default settings
+that apply to newly created DB instances.
+
+A DB parameter group acts as a container for engine configuration
+values that are applied to one or more DB instances.
+
+1.Why You Should Always Use a Custom DB Parameter Group When Creating an RDS Instance ?
+https://www.missioncloud.com/blog/why-you-should-always-use-a-custom-db-parameter-group-when-creating-an-rds-instance
+
+
+A DB parameter group acts as a container for engine configuration values that
+are applied to one or more DB instances. DB parameter groups apply to DB instances
+in both Amazon RDS and Aurora. These configuration settings apply to properties
+that can vary among the DB instances within an Aurora cluster, such as the sizes
+for memory buffers.
+
+Copying a DB parameter group
+
+You can copy custom DB parameter groups that you create. Copying a parameter group
+is a convenient solution when you have already created a DB parameter group and
+you want to include most of the custom parameters and values from that group in a
+new DB parameter group. You can copy a DB parameter group by using the AWS Management
+Console, the AWS CLI copy-db-parameter-group command, or the RDS API
+CopyDBParameterGroup operation.
+
+
+DB parameter values
+You can specify the value for a DB parameter as any of the following:
+
+An integer constant
+
+A DB parameter formula
+
+A DB parameter function
+
+A character string constant
+
+A log expression (the log function represents log base 2), such as value={log(DBInstanceClassMemory/8187281418)*1000}

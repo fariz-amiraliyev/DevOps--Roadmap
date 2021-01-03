@@ -1,0 +1,65 @@
+In this exercise, we will install the Nagios Remote Plugin Executor on the
+Nagios Core Host as well as any remote hosts on which we haven't already
+installed it. We must install this software there to install the "check_nrpe"
+plugin that we use to perform active checks using the NRPE. Use the latest 3.x
+series (3.0.1 was current at the time of writing).
+
+Re-install the dependencies:
+yum group mark remove "Development Tools"
+yum groupinstall "Development Tools"
+yum install krb5-devel openssl-devel
+Obtain the source code, which can be found at the Nagios Plugin Exchange.
+cd ~user
+wget https://github.com/NagiosEnterprises/nrpe/archive/nrpe-3.0.1.tar.gz
+gunzip nrpe-3.0.1.tar.gz
+tar -xvf nrpe-3.0.1.tar.gz
+cd nrpe-3.0.1
+Configure the source code, compile it, and install it:
+./configure --prefix=/opt/nagios --exec-prefix=/opt/nagios --enable-ssl --enable-command-args --enable-bash-command-substitution --with-opsys=linux --with-dist-type=rh --with-init-type=systemd --with-nrpe-user=nagios --with-nrpe-group=nagios --with-nagios-user=nagios --with-nagios-group=nagios
+make all && make install && make install-config && make install-init
+Check to make sure the "check_nrpe" plugin has been placed in "/opt/nagios/libexec." Make sure the file is properly owned and has the appropriate permissoins.
+Edit the NRPE configuration file, which should be at /opt/nagios/etc/nrpe.cfg, so that it has the following amendments:
+allow_weak_random_seed=1
+ssl_version=SSLv2+
+ssl_client_certs=0
+log_facility=daemon
+debug=1
+pid_file=/opt/nagios/var/nrpe.pid
+server_port=5666
+listen_queue_size=5
+nrpe_user=nagios
+nrpe_group=nagios
+allowed_hosts=127.0.0.1
+dont_blame_nrpe=1
+allow_bash_command_substitution=1
+command_timeout=60
+connection_timeout=300
+DO NOT enable the NRPE service. It's not necessary on the Nagios Core Host. On all other hosts, issue the following commands to enable NRPE:
+systemctl enable nrpe.service
+systemctl start nrpe.service
+
+
+
+The "check_nrpe" binary exists in "/opt/nagios/libexec," and the nrpe.cfg file located in "/opt/nagios/etc" has the following values:
+
+allow_weak_random_seed=1
+ssl_version=SSLv2+
+ssl_client_certs=0
+log_facility=daemon
+debug=1
+pid_file=/opt/nagios/var/nrpe.pid
+server_port=5666
+listen_queue_size=5
+nrpe_user=nagios
+nrpe_group=nagios
+allowed_hosts=127.0.0.1,
+dont_blame_nrpe=1
+allow_bash_command_substitution=1
+command_timeout=60
+connection_timeout=300
+ Make SURE to include the commands from the study guide at the bottom of the file:
+
+command[check_users]=/opt/nagios/libexec/check_users -w $ARG1$ -c $ARG2$
+command[check_load]=/opt/nagios/libexec/check_load -w $ARG1$ -c $ARG2$
+command[check_disk]=/opt/nagios/libexec/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
+command[check_procs]=/opt/nagios/libexec/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$

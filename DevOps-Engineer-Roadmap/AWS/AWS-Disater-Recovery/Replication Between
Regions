@@ -1,0 +1,5 @@
+In addition to replicating applications and data across multiple data centers in the same Region using
+Availability Zones, you can also choose to increase redundancy and fault tolerance further by replicating
+data between geographic Regions. You can do so using both private, high speed networking and public
+internet connections to provide an additional layer of business continuity, or to provide low latency
+access across the globe.

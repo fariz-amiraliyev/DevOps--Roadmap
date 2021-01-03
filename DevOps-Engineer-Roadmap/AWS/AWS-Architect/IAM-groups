@@ -1,0 +1,8 @@
+IAM groups allow for large-scale management of IAM users.
+This way, policies can be applied to groups and impact collections
+of similar users.
+
+IAM Groups not real identities Note that a group is not truly an
+"identity" in IAM because it cannot be identified as a Principal in a
+permission policy. It is simply a way to attach policies to multiple users
+at one time.

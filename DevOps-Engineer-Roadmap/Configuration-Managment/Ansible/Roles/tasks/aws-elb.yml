@@ -1,0 +1,24 @@
+---
+#
+# hardcoding instance IDs (TODO - Use ec2 and elb facts to auto-discover)
+#
+- elb_classic_lb:
+    name: "{{ item.name }}"
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    state: present
+    cross_az_load_balancing: "{{ item.cross_az_load_balancing }}"
+    health_check: "{{ item.health_check }}"
+    instance_ids: "{{ item.instance_ids }}"
+    listeners: "{{ item.listeners }}"
+    purge_instance_ids: yes
+    purge_listeners: yes
+    purge_subnets: yes
+    purge_zones: yes
+    scheme: "{{ item.scheme }}"
+    security_group_names: "{{ item.security_group_names }}"
+    subnets: "{{ item.subnets }}"
+  with_items: "{{ elb }}"
+
+
+  

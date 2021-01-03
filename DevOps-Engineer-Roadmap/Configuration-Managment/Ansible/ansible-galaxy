@@ -1,0 +1,5 @@
+ ansible-galaxy collection install
+   # this command install a collection on your system.
+
+To install a collection hosted in Galaxy:
+ansible-galaxy collection install my_namespace.my_collection

@@ -1,0 +1,5 @@
+For hybrid environments, ones that include some sort of on-premises
+infrastructure, AWS provides services to assist with data durability.
+Storage Gateway provides us a way to back up and even migrate to the cloud.
+It has three main types, and they all include some sort of on-premises
+component

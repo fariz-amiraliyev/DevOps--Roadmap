@@ -1,0 +1,30 @@
+Systems Manager is comprised of individual capabilities, which are grouped into five categories:
+
+Operations Management,
+Application Management,
+Actions & Change,
+Instances & Nodes, and
+Shared Resources.
+
+Systems Manager Agent: SSM Agent
+Systems Manager parameters: SSM parameters
+Systems Manager service endpoints: ssm.us-east-2.amazonaws.com
+AWS CloudFormation resource types: AWS::SSM::Document
+AWS Config rule identifier: EC2_INSTANCE_MANAGED_BY_SSM
+AWS CLI commands: aws ssm describe-patch-baselines
+
+AWS Identity and Access Management (IAM) managed policy names: AmazonSSMReadOnlyAccess
+Systems Manager resource ARNs: arn:aws:ssm:us-east-2:111222333444:patchbaseline/pb-07d8884178EXAMPLE
+
+How Systems Manager works:
+Configure Systems Manager: Use the Systems Manager console, SDK, AWS CLI, or AWS Tools
+for Windows PowerShell to configure, schedule, automate, and run actions that you want
+to perform on your AWS resources.
+
+Verification and processing: Systems Manager verifies the configurations, including
+permissions, and sends requests to the SSM Agent running on your instances or servers
+in your hybrid environment. SSM Agent performs the specified configuration changes.
+
+Reporting: SSM Agent reports the status of the configuration changes and actions to
+Systems Manager in the AWS cloud. Systems Manager then sends the status to the user
+and various AWS services, if configured.

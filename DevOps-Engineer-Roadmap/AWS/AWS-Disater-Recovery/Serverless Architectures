@@ -1,0 +1,17 @@
+Serverless allows to build and run applications and services without thinking about servers.
+
+It eliminates infrastructure management tasks such as server or cluster
+provisioning, patching, operating system maintenance, and capacity provisioning.
+
+Serverless provides built-in availability and fault tolerance. You don't nee
+
+
+In addition to AWS Lambda, other AWS serverless technologies include:
+• AWS Fargate—a serverless compute engine for containers
+• Amazon DynamoDB—a fast and flexible NoSQL database
+• Amazon Aurora Serverless—a MySQL compatible relational database
+• Amazon API Gateway—a service to create, publish, monitor and secure APIs
+• Amazon S3—a secure, durable and highly scalable object storage
+• Amazon Elastic File System—a simple, scalable, elastic file storage
+• Amazon SNS—a fully managed pub/sub messaging service
+• Amazon SQS—a fully managed message queuing service

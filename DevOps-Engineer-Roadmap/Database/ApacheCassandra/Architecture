@@ -1,0 +1,13 @@
+1. Cassandra is not RDB.
+2. Cassandra is cluster based DB.
+3. Cassandra clusters are nodes.
+4. Cassandra CQL language.
+5. CQL commands: create, update, delete etc.
+6. Cassandra is eventually consistence DB.
+7. Keyspaces is important feature of Cassandra.
+8. Replicas of Data is important in Cassandra.
+9. Data ypes of Cassandra: list, map, sets,
+10. primary_key is important in Cassandra.
+11. Indexing.
+12. Partition key, clustering Key
+13.

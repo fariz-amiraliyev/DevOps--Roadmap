@@ -1,0 +1,7 @@
+Extend Kubernetes:
+Configure the Aggregation Layer
+Use Custom Resources
+Set up an Extension API Server
+Configure Multiple Schedulers
+Use an HTTP Proxy to Access the Kubernetes API
+Set up Konnectivity service

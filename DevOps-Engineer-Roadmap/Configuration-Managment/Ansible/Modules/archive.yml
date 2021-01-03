@@ -1,0 +1,25 @@
+
+ #archive
+
+
+- name: Create a tar.gz archive of a single file.
+  archive:
+    path: /path/to/foo/single.file
+    dest: /path/file.tar.gz
+    format: gz
+    force_archive: true
+
+- name: Compress directory /path/to/foo/ into /path/to/foo.tgz
+  archive:
+    path: /path/to/foo
+    dest: /path/to/foo.tgz
+
+- name: Compress regular file /path/to/foo into /path/to/foo.gz and remove it
+  archive:
+    path: /path/to/foo
+    remove: yes
+
+- name: Create a zip archive of /path/to/foo
+  archive:
+    path: /path/to/foo
+    format: zip

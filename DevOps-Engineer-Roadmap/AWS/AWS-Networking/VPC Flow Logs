@@ -1,0 +1,11 @@
+Flow traffic
+Manage and Troubleshoot AWS Networks Using VPC Flow Logs 
+ALL
+Allow
+Reject
+
+Destinatin:
+CloudWatch
+S3
+
+Log record format

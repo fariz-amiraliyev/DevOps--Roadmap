@@ -1,0 +1,10 @@
+Amazon Relational Database Service guides you in the setup, operation, and scaling a relational
+database in the cloud.
+It provides cost-efficient and resizable capacity while automating time-consuming
+administration tasks such as hardware provisioning, database setup, patching, and backups.
+Amazon RDS is available on several database instance types and is optimized for memory, performance,
+or I/O.
+We can choose from six familiar database engines including Amazon Aurora, PostgreSQL, MySQL,
+MariaDB, Oracle Database, and SQL Server.
+Amazon RDS has many features that enhance reliability for critical production databases, including
+automated backups, database snapshots, and automatic host replacement.

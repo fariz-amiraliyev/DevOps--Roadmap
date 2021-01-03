@@ -1,0 +1,80 @@
+---
+# tasks file for aws-manage
+- include_vars: "{{ aws_env }}.yml"
+  tags:
+    - always
+
+- import_tasks: aws-sg.yml
+  when: security_groups is defined
+  tags:
+    - sg
+    - elasticache
+    - never
+
+- import_tasks: "aws-dynamodb.yml"
+  when: dynamodb_table is defined
+  tags:
+    - dynamo
+    - never
+
+- import_tasks: aws-alerts.yml
+  static: no
+  when: aws_env == "production"
+  tags:
+    - alerts
+    - never
+
+# elasticache security groups are exclusively managed here
+- import_tasks: aws-elasticache.yml
+  when: elasticache is defined
+  tags:
+    - elasticache
+    - never
+
+- import_tasks: aws-sqs.yml
+  when: sqs is defined
+  tags:
+    - sqs
+    - never
+
+- import_tasks: aws-sns.yml
+  when: sns is defined
+  tags:
+    - sns
+    - never
+
+- import_tasks: aws-iam-user.yml
+  when: iam is defined
+  tags:
+    - iam
+    - never
+
+- import_tasks: aws-iam-policy.yml
+  when: iam is defined
+  tags:
+    - iam
+    - never
+
+- import_tasks: aws-iam-role.yml
+  when: iam_role is defined
+  tags:
+    - iam_role
+    - never
+
+- import_tasks: aws-s3.yml
+  when: s3 is defined
+  tags:
+    - s3
+    - never
+
+- import_tasks: aws-ec2.yml
+  when: ec2 is defined
+  tags:
+    - ec2
+    - never
+
+- import_tasks: aws-elb.yml
+  when: elb is defined
+  tags:
+    - elb
+    - never

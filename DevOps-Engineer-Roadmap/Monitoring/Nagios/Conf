@@ -1,0 +1,17 @@
+/opt/nagios/sbin
+
+nagios/etc/objectc
+
+/opt/nagios/etc/nagios.cfg
+
+/etc/objects/hosts/localhost.cfg
+
+#to check Configuration correctness
+
+/opt/nagios/bin/nagios -v //etc/objects/hosts/localhost.cfg
+
+systemctl restart nagios.service
+
+ls -al /etc/objects/hostgroups
+
+chown -R nagios:nagios  /etc/objects/hostgroups

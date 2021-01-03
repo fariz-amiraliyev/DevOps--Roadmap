@@ -1,0 +1,8 @@
+AWS Container Network Interface (amazon-vpc-cni-k8s) plug-in.
+
+This is exactly what the AWS team has done with the amazon-vpc-cni-k8s plug-in. It
+leverages EC2’s ability to provision multiple elastic network interfaces (ENIs)
+to a host instance, each with multiple secondary IP addresses, to get multiple
+IPs allocated from the VPC pool. It then hands out these IPs to pods on the host,
+connects the ENI to the virtual ethernet port (veth) created on the pod, and lets
+the Linux kernel take care of the rest.

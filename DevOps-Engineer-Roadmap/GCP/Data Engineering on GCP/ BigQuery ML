@@ -1,0 +1,5 @@
+BigQuery ML for Quick Model Building.
+Demo: Train a model with BigQuery ML to predict NYC taxi fares.
+Supported Models.
+Lab Option 1: Predict Bike Trip Duration with a Regression Model in BQML.
+Lab Option 2: Movie Recommendations in BigQuery ML.

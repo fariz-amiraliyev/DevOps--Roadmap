@@ -1,0 +1,11 @@
+GitOps is a term coined by WeaveWorks and is a way to do Kubernetes cluster
+management and continuous delivery. In this approach, a Git repository
+is designated as the single source of truth for deployment artifacts,
+such as YAML files, that provide a declarative way to describe the cluster state.
+As illustrated in the architecture below, a Weave Flux agent runs in the Kubernetes
+cluster and watches the Git repository and image registries, such as Amazon Elastic
+Container Registry (Amazon ECR) and Docker Hub, where the container images pertaining
+to application workloads reside. If changes to deployment artifacts are pushed to this
+config repository or a new image is pushed to the image registry by a continuous integration
+system such as Jenkins, the Weave Flux agent responds by pulling these changes down and updating
+the relevant applications workloads deployed to the cluster.

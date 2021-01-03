@@ -1,0 +1,7 @@
+1. docker top container_image_id
+2. docker ps
+3. docker diff CONTAINER  # List the changed files and directories in a container᾿s filesystem since the container was created. Three different types of change are tracked:
+4. docker rm [OPTIONS] CONTAINER [CONTAINER...]
+5. docker images
+6. docker events [OPTIONS]
+7.

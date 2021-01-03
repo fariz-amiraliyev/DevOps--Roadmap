@@ -1,0 +1,5 @@
+With AWS Elastic Beanstalk, you can quickly deploy and manage applications in the AWS Cloud
+without having to learn about the infrastructure that runs those applications. Elastic Beanstalk reduces
+management complexity without restricting choice or control. After uploading your application, Elastic
+Beanstalk will automatically handle the details of capacity provisioning, load balancing, scaling, and
+application health monitoring.

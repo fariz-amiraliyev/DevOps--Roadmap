@@ -1,0 +1,45 @@
+To understand Kubernetes load balancing, you first have to understand
+how Kubernetes organizes containers. Since containers typically perform specific
+services or sets of services, it makes sense to look at them in terms of the
+services they provide, rather than individual instances of a service
+(i.e., a single container).
+
+
+In Kubernetes, the pod serves as a kind of basic, functional unit.
+A pod is a set of containers, along with their shared volumes. The containers
+are generally closely related in terms of function and services provided.
+
+Pods that have the same set of functions are abstracted into sets, called services.
+
+Pods are routinely created and destroyed by Kubernetes, and are not designed to
+be persistent entities. Every pod has its own IP address (localhost-based), UID,
+and port; new pods, whether they are duplicates of current or previous pods,
+are assigned new UIDs and IP addresses. Within each pod, communication between
+containers is possible, but direct communication with containers in different
+pods is not possible.
+
+Kubernetes uses its own built-in tools to manage communication with individual
+pods. This means that under ordinary circumstances, it is sufficient to rely on
+Kubernetes to keep track of pods internally, without worrying about the creation,
+deletion, or replication of individual pods.
+
+
+In many respects, Kubernetes can be seen as a pod-management system as much
+as a container-management system.
+Infrastructure deals with containers at the pod level, rather than at the container level.
+
+Kubernetes uses two methods of load distribution, both of them operating through
+a feature called kube-proxy, which manages the virtual IPs used by services.
+
+The default mode for kube-proxy is called iptables, which allows fairly
+sophisticated rule-based IP management. The native method for load distribution in
+iptables mode is random selection— an incoming request goes to a randomly chosen pod within a service.
+
+
+flexible method is Ingress, which operates by means of a controller in a
+specialized Kubernetes pod. The controller includes an Ingress resource—a set
+of rules governing traffic—and a daemon which applies those rules.
+The controller has its own built-in features for load balancing, with some
+reasonably sophisticated capabilities. You can also include more complex
+load-balancing rules in an Ingress resource, allowing you to take into account
+load-balancing features and requirements for specific systems or vendors.

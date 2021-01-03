@@ -1,0 +1,35 @@
+# get the version of the api server
+kubectl version --short
+
+# release the hold on versions of kubeadm and kubelet
+sudo apt-mark unhold kubeadm kubelet
+
+# install version 1.18.5 of kubeadm
+sudo apt install -y kubeadm=1.18.5-00
+
+# hold the version of kubeadm at 1.18.5
+sudo apt-mark hold kubeadm
+
+# verify the version of
+kubeadm version
+
+# plan the upgrade of all the controller components
+sudo kubeadm upgrade plan
+
+# upgrade the controller components
+sudo kubeadm upgrade apply v1.18.5
+
+# release the hold on the version of kubectl
+sudo apt-mark unhold kubectl
+
+# upgrade kubectl
+sudo apt-install -y kubectl=1.18.5-00
+
+# hold the version of kubectl at 1.18.5
+sudo apt-mark hold kubectl
+
+# Upgrade kubelet to 1.18.5
+sudo apt install -y kubelet=1.18.5-00
+
+# hold the version of kubelet at 1.18.5
+sudo apt-mark hold kubelet

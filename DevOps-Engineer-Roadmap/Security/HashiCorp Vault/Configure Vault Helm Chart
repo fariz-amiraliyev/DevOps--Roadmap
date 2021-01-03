@@ -1,0 +1,14 @@
+For a production-ready install, we suggest that the Vault Helm chart is installed
+in high availability (HA) mode. This installs a StatefulSet of Vault server Pods
+with either Integrated Storage, or a Consul storage backend. The Vault Helm chart,
+however, can also configure Vault to run in dev, or standalone mode.
+
+
+Historically, customers have addressed the shortcomings of Kubernetes Secrets by
+using an external secret provider like Hashicorp’s Vault, which supports both
+granular permissions and the automatic rotation of secrets. It also integrates
+with Kubernetes by way of Kubernetes Service Accounts and mutating webhooks.
+The Service Account assigns an identity to a pod, which is used to grant access
+to secrets in Vault whereas the webhook is used to inject an init container
+into a Pod that mounts the Secret from Vault to a temporary volume. Together,
+these make it easier to consume Vault secrets from within Kubernetes.

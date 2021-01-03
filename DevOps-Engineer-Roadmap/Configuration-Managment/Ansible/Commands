@@ -1,0 +1,102 @@
+
+1. ansbile --version
+2. ansible-config view
+3. ansible-config list
+4. ansible-config -h
+5. echo $ANSIBLE_CONFIG
+6. ansible -m ping localhost
+7. ansibele host remote -m yum -a  "name=pkg state=present"
+8. ansible-doc file
+9. ansible-doc -s copy
+10. ansible -i hosts -m lineinfile -a "path=/tmp/file1 line="add something here"
+11. ansible -i hosts -m get_url -a "url=http:/hh.com dest="/home/file"
+12. ansible -i env remote -b -m file -a "nane=testfile state=touch"
+13. ansible -i env remote -b -m file -a "nane=testfile state=absent"
+14. ansible-doc file
+15. ansible-doc -s copy
+16. ansible -i hosts -m lineinfile -a "path=/tmp/file1 line"add something here state=present"
+17. ansbile all -b -m package -a "name=ntp state=latest"
+18. ansbile all -b -m service  -a "name=ntp state=started enabled=yes"
+19. ansible host-name -a "df -h"
+20. ansible host-name -a "free -m"
+21. ansible multi -a "date"
+22. ansible multi -b -m yum -a "name=ntp state=present"
+23. ansible multi -b -m service -a "name=ntpd state=started \
+     enabled=yes"
+24. $ ansible multi -b -a "service ntpd stop"
+    $ ansible multi -b -a "ntpdate -q 0.rhel.pool.ntp.org"
+    $ ansible multi -b -a "service ntpd start"
+
+25. Configure the Application servers
+    ansible app -b -m yum -a "name=MySQL-python state=present"
+    ansible app -b -m yum -a "name=python-setuptools state=present"
+    ansible app -b -m easy_install -a "name=django<2 state=present"
+
+26. Configure the Database servers:
+    ansible db -b -m yum -a "name=mariadb-server state=present"
+    ansible db -b -m service -a "name=mariadb state=started \
+    enabled=yes"
+    ansible db -b -a "iptables -F"
+   ansible db -b -a "iptables -A INPUT -s 192.168.60.0/24 -p tcp \
+   -m tcp --dport 3306 -j ACCEPT"
+
+27. Manage users and groups
+    ansible app -b -m group -a "name=admin state=present"
+    ansible app -b -m user -a "name=johndoe group=admin createhome=yes"
+    ansible app -b -m user -a "name=johndoe state=absent remove=yes"
+
+28. Manage packages
+    ansible app -b -m package -a "name=git state=present"
+29. Manage files and directories:
+     ansible multi -m stat -a "path=/etc/environment"
+     ansible multi -m copy -a "src=/etc/hosts dest=/tmp/hosts"
+     ansible multi -b -m fetch -a "src=/etc/hosts dest=/tmp"
+     ansible multi -m file -a "dest=/tmp/test mode=644 state=directory"
+     ansible multi -m file -a "src=/src/file dest=/dest/symlink \
+     state=link"
+     ansible multi -m file -a "dest=/tmp/test state=absent"
+
+30. ansible multi -b -B 3600 -P 0 -a "yum -y update"
+31. ansible multi -b -m async_status -a "jid=169825235950.3572"
+32. Check log files:
+    ansible multi -b -a "tail /var/log/messages"
+    ansible multi -b -m shell -a "tail /var/log/messages | \
+    grep ansible-command | wc -l"
+
+    ansible multi -b -m cron -a "name='daily-cron-all-servers' \
+    hour=4 job='/path/to/daily-script.sh'"
+
+    ansible multi -b -m cron -a "name='daily-cron-all-servers' \
+    state=absent"
+
+    ansible app -b -m git -a "repo=git://example.com/path/to/repo.git \
+    dest=/opt/myapp update=yes version=1.2.4"
+    ansible app -b -a "/opt/myapp/update.sh"
+
+33. Limiting playbooks to particular hosts and groups:
+    ansible-playbook playbook.yml --limit webservers
+    ansible-playbook playbook.yml --limit xyz.example.com
+    ansible-playbook playbook.yml --list-hosts
+
+34. Setting user and sudo options with ansible-playbook:
+    ansible-playbook playbook.yml --user=johndoe
+    ansible-playbook playbook.yml --become --become-user=janedoe \
+    --ask-become-pass
+
+35. ansible all -i inventory -m copy -a "src=./file.txt dest=~/myfile.txt"
+36. ansible all -i inventory -m file -a "dest=/var/www/file.txt mode=600 owner=sammy group=sammy" --become  -K
+37. ansible webservers -i inventory -m service -a "name=nginx state=restarted" --become  -K
+38. ansible webservers -i inventory -a "/sbin/reboot"  --become  -K
+39. ansible server1 -i inventory -m setup
+40. ansible all -i inventory -a "df -h"
+41. ansible-playbook -i production site.yml --tags ntp
+42. ansible-playbook -i production webservers.yml --limit boston
+43. ansible-playbook -i production webservers.yml --limit boston[10:19]
+44. ansible atlanta -a "/sbin/reboot"
+45. ansible atlanta -a "/sbin/reboot" -f 10 -u username --become [--ask-become-pass]
+46. ansible atlanta -m copy -a "src=/etc/hosts dest=/tmp/hosts"
+47. ansible webservers -m file -a "dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory"
+48. ansible all -m user -a "name=foo password=<crypted password here>"
+49. ansible webservers -m service -a "name=httpd state=restarted"
+50. ansible webservers -m file -a "dest=/srv/foo/b.txt mode=600 owner=mdehaan group=mdehaan"
+51. ansible all -m setup

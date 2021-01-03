@@ -1,0 +1,14 @@
+
+---
+- name: create/update sns topics
+sns_topic:
+  name: "{{ item.name }}"
+  profile: "{{ aws_profile }}"
+  region: "{{ aws_region }}"
+  state: present
+  display_name: "{{ item.name }}"
+  # PENDING: if we have more than one subscription we don't want to errase them, we can change this later.
+  # once we are confident we should set this to 'yes' to remove any subscirption that was manually added.
+  purge_subscriptions: no
+  subscriptions: "{{ item.subscriptions }}"
+with_items: "{{ sns }}"

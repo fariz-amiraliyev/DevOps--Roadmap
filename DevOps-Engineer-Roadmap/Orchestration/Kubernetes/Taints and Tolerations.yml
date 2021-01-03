@@ -1,0 +1,63 @@
+Taints and Tolerations
+
+Taints allow a node to repel a set of pods.
+
+Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+
+Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes.
+One or more taints are applied to a node; this marks that the node should not accept any pods that do not tolerate the taints.
+
+
+You add a taint to a node using kubectl taint. For example,
+
+kubectl taint nodes node1 key=value:NoSchedule
+To remove the taint added by the command above, you can run:
+kubectl taint nodes node1 key:NoSchedule-
+
+Here's an example of a pod that uses tolerations:
+
+pods/pod-with-toleration.yaml Copy pods/pod-with-toleration.yaml to clipboard
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  tolerations:
+  - key: "example-key"
+    operator: "Exists"
+    effect: "NoSchedule"
+
+
+Example Use Cases
+Taints and tolerations are a flexible way to steer pods away from nodes or
+ evict pods that shouldn't be running.
+
+Dedicated Nodes: If you want to dedicate a set of nodes for exclusive use by a
+particular set of users, you can add a taint to those nodes (say, kubectl taint
+nodes nodename dedicated=groupName:NoSchedule) and then add a corresponding
+toleration to their pods (this would be done most easily by writing a custom
+admission controller).
+The pods with the tolerations will then be allowed to use the tainted (dedicated)
+nodes as well as any other nodes in the cluster. If you want to dedicate the nodes
+to them and ensure they only use the dedicated nodes, then you should additionally
+add a label similar to the taint to the same set of nodes (e.g. dedicated=groupName),
+and the admission controller should additionally add a node affinity to require that
+the pods can only schedule onto nodes labeled with dedicated=groupName.
+
+
+Nodes with Special Hardware: In a cluster where a small subset of nodes have
+specialized hardware (for example GPUs), it is desirable to keep pods that don't
+need the specialized hardware off of those nodes, thus leaving room for later-arriving
+pods that do need the specialized hardware. This can be done by tainting the nodes
+that have the specialized hardware (e.g. kubectl taint nodes nodename special=true:NoSchedule
+  or kubectl taint nodes nodename special=true:PreferNoSchedule) and adding a corresponding
+  toleration to pods that use the special hardware. As in the dedicated nodes use case, it
+  is probably easiest to apply the tolerations using a custom admission controller.
+
+  

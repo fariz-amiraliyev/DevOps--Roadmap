@@ -1,0 +1,384 @@
+41. You are designing a trading platform in which you have to set up your architecture
+    to mitigate distributed denial-of-service (DDoS) attacks to secure your application.
+    It should also include a notification for incoming Layer 3 or Layer 4 attacks such
+    as SYN floods and UDP reflection attacks. The solution should provide protection
+    against SQL injection, cross-site scripting and other Layer 7 attacks as well.
+    Which of the following solutions should you implement together to meet the
+    above requirement? (Choose 2)
+A Distributed Denial of Service (DDoS) attack is a malicious attempt to make a targeted system,
+such as a website or application, unavailable to end users. To achieve this,
+attackers use a variety of techniques that consume network or other resources,
+interrupting access for legitimate end users.
+AWS provides flexible infrastructure and services that help customers implement
+strong DDoS mitigations and create highly available application architectures
+that follow AWS Best Practices for DDoS Resiliency. These include services such
+as Amazon Route 53, Amazon CloudFront, Elastic Load Balancing, and AWS WAF to
+control and absorb traffic, and deflect unwanted requests.
+These services integrate with AWS Shield, a managed DDoS protection service,
+that provides always-on detection and automatic inline mitigations to safeguard
+web applications running on AWS.
+
+AWS WAF is a web application firewall that helps protect your web applications
+from common web exploits that could affect application availability, compromise
+security, or consume excessive resources. AWS WAF gives you control over which
+traffic to allow or block to your web applications by defining customizable web
+security rules. You can use AWS WAF to create custom rules that block common attack
+patterns, such as SQL injection or cross-site scripting, and rules that are designed
+for your specific application. New rules can be deployed within minutes, letting you
+respond quickly to changing traffic patterns. Also, AWS WAF includes a full-featured
+API that you can use to automate the creation, deployment, and maintenance of web security rules.
+
+In this scenario, AWS Shield Advanced and AWS WAF are the two services that can
+provide optimal DDoS attack mitigation and protection against Layer 7 security risks
+to your cloud infrastructure. Hence, Options 1 and 2 are correct.
+
+Option 3 is incorrect because although AWS Shield Standard can mitigate Layer 3 or Layer
+4 attacks, it does not include a detailed notification of the recent layer attacks to your
+AWS resources such as SYN floods and UDP reflection attacks. You should upgrade this to
+AWS Shield Advanced in order to meet the requirement, which also includes an AWS DDoS
+Response Team (DRT) that support experts who apply manual mitigations for more complex
+and sophisticated DDoS attacks.
+Option 4 is incorrect because although CloudFront can help mitigate DDoS attacks,
+improving the cache hit ratio of your CloudFront distribution is still not enough to
+totally protect your infrastructure. This option also fails to mention the geoblocking
+and HTTPS protocol support features of CloudFront. Using AWS Shield Advanced and AWS
+WAF will provide a more effective protection against DDoS.
+Option 5 is incorrect because Amazon AppStream 2.0 is just a fully managed application
+streaming service and is not suitable in this scenario. It is primarily used to easily
+scale to any number of users across the globe without acquiring, provisioning,
+and operating hardware or infrastructure.
+
+42. You are creating a CloudFormation script to deploy an online voting application
+for a Nature Photography Contest that accepts high-resolution images, stores them in
+an S3 bucket, and records 100-character summary about the image in RDS. As a Solutions Architect,
+you have to ensure that the same online voting application can be deployed once again
+using the same CloudFormation template for the succeeding contests in the future.
+The photography contest will run for just a month and once it has been concluded,
+there would be nobody using the online voting application anymore until the next
+\contest. As a preparation for the upcoming events next year, the 100-character summaries
+should be kept and the S3 bucket which contains the high-resolution photos should remain.
+In this scenario, which of the following is the best option to meet the above requirement?
+Explanation
+With the DeletionPolicy attribute, you can preserve or (in some cases) back up a
+resource when its stack is deleted. You specify a DeletionPolicy attribute for each
+resource that you want to control. If a resource has no DeletionPolicy attribute,
+AWS CloudFormation deletes the resource by default.
+Note that this capability also applies to stack update operations that lead to
+resources being deleted from stacks, for example, if you remove the resource from
+the stack template and then update the stack with the template. This capability does
+not apply to resources whose physical instance is replaced during stack update operations.
+For example, if you edit a resource's properties such that AWS CloudFormation replaces
+that resource during a stack update.
+In this scenario, you need to keep the data on your S3 bucket and RDS which can be
+achieved by setting the DeletionPolicy of S3 to Retain and for RDS to use Snapshot.
+Option 2 is incorrect because S3 does not support snapshots. It should be set to Retain.
+Option 3 is incorrect because you cannot use Retain on both S3 and RDS as the latter should be set to Snapshot.
+Option 4 is incorrect because even though your data will still be available in the
+other region because of the CRR, the current S3 bucket will still be deleted.
+
+43.You are designing a photo-sharing mobile app for an advertising company.
+The app will store all pictures directly uploaded by users in a single Amazon
+S3 bucket and users will also be able to view and download their own pictures
+directly from the Amazon S3 bucket. You are to configure security on the application
+to handle potentially millions of users in the most secure manner possible.  How do
+you set up the user registration flow in AWS for this mobile app?
+In this scenario, the best solution is to use a combination of an IAM Role and STS
+for authentication. The STS AssumeRole returns a set of temporary security credentials
+that you can use to access AWS resources that you might not normally have access to.
+These temporary credentials consist of an access key ID, a secret access key, and a
+security token. Typically, you use AssumeRole for cross-account access or federation
+
+Option 1 is correct as it creates an IAM Role with appropriate permissions and
+then generates temporary security credentials using STS AssumeRole. Then,
+it generates new credentials when the user runs the app the next time.
+
+Option 2 is incorrect because it asks to create an IAM User, not the
+IAM Role - which is not a good solution. You should create an IAM Role so
+that the app can access the AWS Resource using STS AssumeRole.
+Option 3 is incorrect because you should always grant the short term or
+temporary credentials for the mobile application. This option asks to create long term credentials.
+Option 4 is incorrect as it does not create the required IAM Role but instead, an IAM user.
+
+44. You are managing a NodeJS application that needs an NGINX server for the front end,
+Elasticsearch and Logstash for log processing, as well as a MongoDB database instance
+for document management. In order to improve the process of updating the application
+stack, your manager instructed you to choose between In-place and Disposable method.
+Which of the following is true about the In-place and Disposable method?
+The deployment services offer two methods to help you update your application stack,
+namely in-place and disposable. An in-place upgrade involves performing application
+updates on live Amazon EC2 instances. A disposable upgrade, on the other hand, involves
+rolling out a new set of EC2 instances by terminating older instances.
+
+An in-place upgrade is typically useful in a rapid deployment with a consistent
+rollout schedule. It is designed for sessionless applications. You can still use
+the in-place upgrade method for stateful applications by implementing a rolling
+deployment schedule.
+
+In contrast, disposable upgrades offer a simpler way to know if your application
+has unknown dependencies. The underlying EC2 instance usage is considered temporary
+or ephemeral in nature for the period of deployment until the current release is active.
+During the new release, a new set of EC2 instances are rolled out by terminating older
+instances. This type of upgrade technique is more common in an immutable infrastructure.
+Hence, Option 4 is the correct answer.
+
+Option 1 is incorrect because the definition of the in-place and disposable upgrades
+were switched. Remember that an in-place upgrade involves performing application updates
+ on live Amazon EC2 instances. A disposable upgrade, on the other hand, involves rolling
+ out a new set of EC2 instances by terminating older instances.
+Option 2 is incorrect because the in-place upgrade defines a Hybrid Deployment model approach.
+Option 3 is incorrect because the disposable upgrade defines a Hybrid Deployment model approach.
+
+ 45. You are planning to launch a mobile app for the department of transportation that
+ allows government staff to upload the latest photo of the ongoing construction works
+ such as bridges, roads culverts, and dams all over the country. The mobile app should
+ send the photos to a web server hosted on an EC2 instance which then adds a watermark
+ to each photo that contains the project details and the date it was taken. Your job is
+  to design a solution in which the generated photos by the server will be uploaded to
+  an S3 bucket for durable storage.
+
+In this scenario, how should you design a secure architecture to allow the EC2
+instance to upload photos to S3?
+
+Explanation
+This question tests your understanding of IAM, specifically on when to use
+an IAM Role over an SCP. Since the server is running on an EC2 instance and
+the application makes requests to S3 to store the photos, the more suitable
+option to use here is an IAM Role.
+In addition, don't create an IAM user and pass the user's credentials to the
+application or embed the credentials in the application. That will create a security
+risk because if an attacker had unauthorized access to that EC2 instance, then the user
+credentials can easily be acquired and exploited. The better way is to create an IAM role
+that you can attach to the EC2 instance to give applications running on the instance temporary
+security credentials which can be used to access other AWS resources such as an S3 bucket.
+The credentials have the permissions specified in the policies attached to the role.
+Option 1 is incorrect as SCPs simply enable you to restrict, at the account level of granularity,
+what services and actions the users, groups, and roles in those accounts can do. SCPs don't grant
+permissions to any user or role because this is handled through IAM policies.
+Option 2 is incorrect as an IAM Role is a better option to use instead of an IAM User.
+Plus, you should always retrieve the temporary security credentials from the instance metadata and not from the user data.
+Option 3 is correct as it uses an IAM Role and fetches the temporary security credentials from the instance metadata.
+Option 4 is incorrect because although it uses an IAM Role, the temporary security credentials
+should be retrieved from the instance metadata and not from the user data.
+
+
+
+46. Question 46: Skipped
+You are working as a Senior Solutions Architect in a multinational healthcare company
+where you need to launch a new medtech information website. You chose to use Amazon
+CloudFormation to deploy a three-tier web application that consists of a web tier and application
+tier that will utilize Amazon DynamoDB for storage. In this scenario, which of the following options
+will allow the application instance access to the DynamoDB tables without exposing API credentials?
+Explanation
+An IAM role is similar to a user, in that it is an AWS identity with permission policies
+that determine what the identity can and cannot do in AWS. However, instead of being uniquely
+ associated with one person, a role is intended to be assumable by anyone who needs it.
+ Also, a role does not have standard long-term credentials (password or access keys)
+ associated with it. Instead, if a user assumes a role, temporary security credentials
+ are created dynamically and provided to the user. The scenario requires the instance to
+ have access to DynamoDB tables without having to use the API credentials.
+ In such scenarios, always think of creating IAM Roles rather than IAM Users.
+Option 1 is incorrect because you should never expose the Access and Secret Keys
+while accessing the AWS resources, and using IAM Role is a more secure way of accessing
+the resources than using IAM Users with security credentials.
+Option 2 is incorrect because the IAM Role is not associated to the application by
+referencing an instance profile; it has to be used as an instance profile property.
+Option 3 is incorrect because you should never expose the Access and Secret Keys while
+accessing the AWS resources, and using IAM Role is a more secure way of accessing the resources
+than using IAM Users with security credentials.
+Option 4 is correct because it uses IAM Role with the appropriate permissions to access the
+resource, and it references that Role in the instance profile property of the application instance.
+
+
+47. Question 47: Skipped
+You are working as an AWS Cloud Architect for a maturing startup that runs its
+customer support application on AWS hosted on a fleet of on-demand EC2 instances
+connected on an Elastic Load Balancer and configured with Auto Scaling. The web
+application runs on large EC2 instances to properly process the high volume of data
+that are stored in DynamoDB. Each app deployment is done once a week and requires an
+automated way of creating and testing a new Amazon Machine Image for the application servers.
+To meet the growing number of support tickets being sent, it was decided that a new video chat
+ feature should be implemented as part of the customer support app, but should be hosted on a
+ different set of servers to allow users to chat with a representative. The startup decided to
+ streamline the deployment process and use AWS OpsWorks as an application lifecycle tool to
+ simplify management of the app and reduce time-consuming deployment cycles. What is the most
+ cost-efficient and flexible way to integrate the new video chat module in AWS?
+
+Explanation
+AWS OpsWorks Stacks lets you manage applications and servers on AWS and on-premises.
+With OpsWorks Stacks, you can model your application as a stack containing different layers,
+such as load balancing, database, and application server. You can deploy and configure Amazon
+EC2 instances in each layer or connect other resources such as Amazon RDS databases. OpsWorks
+Stacks lets you set automatic scaling for your servers based on preset schedules or in response
+to changing traffic levels, and it uses lifecycle hooks to orchestrate changes as your environment scales.
+
+In OpsWorks, you will be provisioning a stack and layers. The stack is the top-level AWS OpsWorks
+Stacks entity. It represents a set of instances that you want to manage collectively, typically
+because they have a common purpose such as serving PHP applications. In addition to serving as a
+container, a stack handles tasks that apply to the group of instances as a whole, such as managing
+ applications and cookbooks.
+
+Every stack contains one or more layers, each of which represents a stack component,
+such as a load balancer or a set of application servers. As you work with AWS OpsWorks
+Stacks layers, keep the following in mind:
+
+-Each layer in a stack must have at least one instance and can optionally have multiple instances.
+
+-Each instance in a stack must be a member of at least one layer, except for registered
+instances. You cannot configure an instance directly, except for some basic settings such as
+the SSH key and hostname. You must create and configure an appropriate layer, and add the instance to the layer.
+
+In the scenario, it tells us that the video chat feature should be implemented as part
+of the customer support application, but should be hosted on a different set of servers.
+This means that the chat feature is part of the stack, but should be in a different
+layer since it will be using a different set of servers. Hence, we have to use one stack and two layers to meet the requirement.
+
+
+Options 1 and 2 are incorrect because two OpsWorks stacks are unnecessary since
+the new video chat feature is still a part of the customer support website but just
+deployed on a different set of servers. Hence, this should be deployed on a different
+layer and not on an entirely different stack.
+
+Option 3 is correct because only one stack would be sufficient and two layers would be
+required for handling separate requirements. One custom recipe for DynamoDB would be required.
+
+Option 4 is incorrect because it would be a better solution to create two separate layers:
+one customer support web servers and one for the video chat feature.
+
+Question 48: Skipped
+You are working as a Solutions Architect in a technology company which manages an
+automated industrial chain orchestration on AWS cloud. They have a web application
+that must be cost-effective, scalable, highly available, and should require minimal
+human intervention. Your team has deployed a fleet of EC2 instances to host the web and
+database servers of the app. The web and database EC2 instances are deployed in the public
+and private subnet of the VPC respectively. How can you properly improve the availability
+and load balancing of this cloud architecture? (Choose 2)
+
+Explanation
+Amazon Route 53 alias records provide a Route 53–specific extension to DNS functionality.
+Alias records let you route traffic to selected AWS resources, such as CloudFront distributions
+and Amazon S3 buckets. They also let you route traffic from one record in a hosted zone to another record.
+
+Unlike a CNAME record, you can create an alias record at the top node of a DNS namespace,
+also known as the zone apex. For example, if you register the DNS name tutorialsdojo.com,
+the zone apex is tutorialsdojo.com. You can't create a CNAME record for tutorialsdojo.com,
+but you can create an alias record for tutorialsdojo.com that routes traffic to www.tutorialsdojo.com
+(take note of the www subdomain).
+
+You can also type the domain name for the resource. For example:
+
+
+-  CloudFront distribution domain name: dtut0rial5d0j0.cloudfront.net
+-  Elastic Beanstalk environment CNAME: tutorialsdojo.elasticbeanstalk.com
+-  ELB load balancer DNS name:tutorialsdojo-1.us-east-2.elb.amazonaws.com
+-  S3 website endpoint: s3-website.us-east-2.amazonaws.com
+-  Resource record set in this hosted zone: www.tutorialsdojo.com
+-  VPC endpoint: tutorialsdojo.us-east-2.vpce.amazonaws.com
+-  API Gateway custom regional API: d-tut5d0j0c0m.execute-api.us-west-2.amazonaws.com
+
+
+
+
+
+Multivalue answer routing lets you configure Amazon Route 53 to return multiple values,
+such as IP addresses for your web servers, in response to DNS queries. You can specify
+multiple values for almost any record, but multivalue answer routing also lets you check
+the health of each resource, so Route 53 returns only values for healthy resources.
+It's not a substitute for a load balancer, but the ability to return multiple health-checkable
+IP addresses is a way to use DNS to improve availability and load balancing.
+
+Option 1 is correct because if the web servers are behind an ELB, the load on the web servers
+will be uniformly distributed which means that if any of the web servers goes offline, the web
+traffic would be routed to other web servers. In this way, there would be no unnecessary downtime.
+You can also use Route 53 to set the ALIAS record that points to the ELB endpoint.
+
+Option 2 is incorrect as it is using AWS CloudFront which is directly pointing to the web server
+as its origin. In case that the server or the EC2 instances goes down, then the entire website would also become unavailable.
+
+Option 3 is incorrect as a NAT instance is mainly used to allow EC2 instance launched on a private
+subnet to access the Internet via a public subnet. In addition, the issue is mainly on the web servers
+which are hosted on the public subnet and not on the private subnet.￼ 
+
+Option 4 is incorrect because although it is correct to use a load balancer in front of your EC2 instances,
+you need to use an Alias Record in Route 53, and not a Non-Alias Record.
+
+Option 5 is correct because although a Multivalue answer routing is not a substitute for a load balancer,
+its ability to return multiple health-checkable IP addresses can still improve availability and load balancing of your system.
+
+Question 49: Skipped
+You are working as a Network Engineer for an electronics and communications company in
+Japan where you are managing a NAT instance in your VPC. This allows multiple EC2 instances
+that are launched in a private subnet to initiate connections to the Internet but restrict any
+requests coming from any outside network. However, there are numerous incidents where your NAT
+instance is not available, which affects the batch processing of your applications.
+
+In this scenario, which is the most suitable solution that provides better availability and bandwidth
+to your architecture with minimal administrative effort?
+Explanation
+You can use a NAT device to enable instances in a private subnet to connect to the
+internet (for example, for software updates) or other AWS services, but prevent the
+internet from initiating connections with the instances. A NAT device forwards traffic
+from the instances in the private subnet to the internet or other AWS services, and then
+sends the response back to the instances. When traffic goes to the internet, the source IPv4
+address is replaced with the NAT device’s address and similarly, when the response traffic goes
+to those instances, the NAT device translates the address back to those instances’ private IPv4 addresses.
+
+AWS offers two kinds of NAT devices—a NAT gateway or a NAT instance. It is recommended
+to use NAT gateways, as they provide better availability and bandwidth over NAT instances.
+The NAT Gateway service is also a managed service that does not require your administration efforts.
+
+A NAT instance is launched from a NAT AMI and you can choose to use a NAT instance for special purposes.
+However, this type of NAT device is limited and is not highly available compared with a NAT Gateway.
+Hence, Option 1 is the correct answer.
+
+Option 2 is incorrect because even if you upgrade your NAT device to a larger instance, it would still
+be a single component. This means that if your NAT instance goes down, there would be no other instance
+to handle the requests, which means that your architecture is not highly available. It is better to use a
+NAT Gateway to provide better availability and bandwidth for your infrastructure.
+
+Option 3 is incorrect because although this solution is indeed highly available and fault-tolerant, this
+entails a lot of administrative effort to manage those two NAT instances. Hence, it is still better to use
+the NAT Gateway service since it is a managed service that does not require administrative effort.
+
+Option 4 is incorrect because an egress-only Internet gateway is primarily used to handle IPv6 traffic,
+which is not mentioned in this scenario.
+
+Question 50:
+You are working as a Solutions Architect for a cryptocurrency analytics website
+which uses a CloudFront distribution with a custom domain name (tutorialsdojo.com)
+to speed up the loading time of the site. Since the data being distributed are quite
+confidential, your manager instructed you to require HTTPS communication between the viewers (web visitors)
+and the CloudFront distribution. You are also instructed to improve the performance by increasing the
+proportion of your viewer requests that are served from CloudFront edge caches instead of going to your origin servers.
+
+What should you do to accomplish the above requirement? (Choose 2)
+
+Explanation
+You can configure one or more cache behaviors in your CloudFront distribution to
+require HTTPS for communication between viewers and CloudFront. You also can configure
+one or more cache behaviors to allow both HTTP and HTTPS, so that CloudFront requires HTTPS
+for some objects but not for others. The configuration steps depend on which domain name you're using in object URLs:
+
+- If you're using the domain name that CloudFront assigned to your distribution, such as
+d111111abcdef8.cloudfront.net, you change the Viewer Protocol Policy setting for one or more cache behaviors
+to require HTTPS communication. In that configuration, CloudFront provides the SSL/TLS certificate.
+
+- If you're using your own domain name, such as tutorialsdojo.com, you need to change several CloudFront
+settings. You also need to use an SSL/TLS certificate provided by AWS Certificate Manager (ACM), or
+import a certificate from a third-party certificate authority into ACM or the IAM certificate store.
+You can improve performance by increasing the proportion of your viewer requests that are served from
+CloudFront edge caches instead of going to your origin servers for content; that is, by improving the cache hit
+ ratio for your distribution. To increase your cache hit ratio, you can configure your origin to add a
+ Cache-Control max-age directive to your objects, and specify the longest practical value for max-age.
+ The shorter the cache duration, the more frequently CloudFront forwards another request to your origin
+ to determine whether the object has changed and, if so, to get the latest version.
+
+In this scenario, the correct answers are Options 1 and 2 as these two can meet the requirement as explained above.
+
+Option 3 is incorrect because Lambda@Edge is an extension of AWS Lambda which lets you execute functions that
+ customize the content that CloudFront delivers. This feature does not improve the cache hit ratio of your
+ CloudFront distribution.
+Option 4 is incorrect because the Amazon Elasticsearch Service is just a fully managed service that makes
+it easier to deploy, secure, and operate Elasticsearch in AWS. This service will not improve the cache hit
+ratio of your CloudFront distribution. The built-in Kibana support only provides a way to get faster and better
+ insights into your data and thus, not related to this scenario.
+Option 5 is incorrect because an S3 bucket, whether it is public or private, is not suitable to store the SSL certificate.

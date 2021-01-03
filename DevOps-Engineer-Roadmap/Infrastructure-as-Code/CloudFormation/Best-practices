@@ -1,0 +1,23 @@
+Planning and organizing
+Organize your stacks by lifecycle and ownership
+Use cross-stack references to export shared resources
+Use IAM to control access
+Reuse templates to replicate stacks in multiple environments
+Verify quotas for all resource types
+Use nested stacks to reuse common template patterns
+
+Creating templates
+Do not embed credentials in your templates
+Use AWS-specific parameter types
+Use parameter constraints
+Use AWS::CloudFormation::Init to deploy software applications on Amazon EC2 instances
+Use the latest helper scripts
+Validate templates before using them
+
+Managing stacks
+Manage all stack resources through AWS CloudFormation
+Create change sets before updating your stacks
+Use stack policies
+Use AWS CloudTrail to log AWS CloudFormation calls
+Use code reviews and revision controls to manage your templates
+Update your Amazon EC2 Linux instances regularly

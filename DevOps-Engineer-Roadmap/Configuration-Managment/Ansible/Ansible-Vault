@@ -1,0 +1,49 @@
+Ansible Vault is a feature that allows users to encrypt values and data
+structures within Ansible projects. This provides the ability to secure any
+sensitive data that is necessary to successfully run Ansible plays but should
+not be publicly visible, like passwords or private keys. Ansible automatically
+decrypts vault-encrypted content at runtime when the key is provided.
+
+Vault is a mechanism that allows encrypted content to be incorporated
+transparently into Ansible workflows. A utility called ansible-vault secures
+ confidential data by encrypting it on disk. To integrate these secrets with
+ regular Ansible data, both the ansible and ansible-playbook commands, for
+ executing ad hoc tasks and structured playbook respectively, have support for
+ decrypting vault-encrypted content at runtime.
+
+
+ The ansible-vault command is the main interface for managing encrypted content
+ within Ansible. This command is used to initially encrypt files and is subsequently
+ used to view, edit, or decrypt the data.
+
+ Creating New Encrypted Files:
+
+ ansible-vault create vault.yml
+
+
+ Encrypting Existing Files:
+ ansible-vault encrypt encrypt_me.txt
+
+
+ Viewing Encrypted Files:
+ ansible-vault view vault.yml
+
+ Editing Encrypted Files:
+ ansible-vault edit vault.yml
+
+ Manually Decrypting Encrypted Files:
+ ansible-vault decrypt vault.yml
+
+ Changing the Password of Encrypted Files:
+ ansible-vault rekey encrypt_me.txt
+
+ Using an Interactive Prompt:
+ ansible --ask-vault-pass -bK -m copy -a 'src=secret_key dest=/tmp/secret_key mode=0600 owner=root group=root' localhost
+
+ Using Ansible Vault with a Password File:
+ ansible --vault-password-file=.vault_pass -bK -m copy -a 'src=secret_key dest=/tmp/secret_key mode=0600 owner=root group=root' localhost
+ Reading the Password File Automatically
+ To avoid having to provide a flag at all, you can set the ANSIBLE_VAULT_PASSWORD_FILE
+ environment variable with the path to the password file:
+
+ export ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass

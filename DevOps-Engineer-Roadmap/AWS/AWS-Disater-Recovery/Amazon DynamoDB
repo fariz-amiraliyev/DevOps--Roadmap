@@ -1,0 +1,12 @@
+Amazon DynamoDB is a key-value and document database that delivers single-digit millisecond
+performance at any scale.
+Amazon DynamoDB is purpose-built for mission-critical workloads. DynamoDB helps secure your data
+with encryption at rest by default and continuously backs up your data for protection, with guaranteed
+reliability through a service level agreement. Point-in-time recovery (PITR) helps protect DynamoDB
+tables from accidental write or delete operations. PITR provides continuous backups of your DynamoDB
+table data, and you can restore that table to any point in time up to the second during the preceding 35
+days.
+With Amazon DynamoDB, there are no servers to provision, patch, or manage, and no software to
+install, maintain, or operate. DynamoDB automatically scales tables to adjust for capacity and maintains
+performance with zero administration. Availability and fault tolerance are built in, eliminating the need
+to architect your applications for these capabilities.

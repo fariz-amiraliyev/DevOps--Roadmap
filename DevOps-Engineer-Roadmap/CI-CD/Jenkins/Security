@@ -1,0 +1,18 @@
+Configure Global Security from Jenkins Dashboard
+We will define security realm and explore how to configure basic security within Jenkins.
+This will provide a solid foundation as we move on to the following lessons and learn more advanced configurations of permissions.
+
+1. Authentication: who you are ?
+   Security Realm
+
+2. Autorization: what can you do ?
+   Matrix based Autorization method in Jenkins option.
+
+   How to apply Matrix-Based Security?
+
+   It is a Table based metrix.
+
+   Project level
+   Object  level martix security.
+
+   

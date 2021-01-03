@@ -1,0 +1,9 @@
+---
+- sqs_queue:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.name }}"
+  with_items: "{{ sqs }}"
+
+
+  

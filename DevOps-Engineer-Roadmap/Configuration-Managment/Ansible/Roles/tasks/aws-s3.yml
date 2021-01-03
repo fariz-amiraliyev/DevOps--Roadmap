@@ -1,0 +1,17 @@
+# Disallow bucket deletion on purpose
+# Default bucket versioning
+---
+- s3_bucket:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.name }}"
+    versioning: "{{ item.versioning | default('yes') }}"
+    policy: "{{
+      lookup('template', 's3-public-bucket-policy.json.j2')
+      if item.DANGEROUSLY_SET_THE_BUCKET_TO_PUBLIC_I_KNOW_WHAT_I_AM_DOING is defined
+      and item.DANGEROUSLY_SET_THE_BUCKET_TO_PUBLIC_I_KNOW_WHAT_I_AM_DOING else omit }}"
+    state: present
+  with_items: "{{ s3 }}"
+
+
+  

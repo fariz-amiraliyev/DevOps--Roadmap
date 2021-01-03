@@ -1,0 +1,13 @@
+Building Batch Data Pipelines visually with Cloud Data Fusion.
+Components.
+UI Overview.
+Building a Pipeline.
+Exploring Data using Wrangler.
+Lab: Building and executing a pipeline graph in Cloud Data Fusion.
+Orchestrating work between GCP services with Cloud Composer.
+Apache Airflow Environment.
+DAGs and Operators.
+Workflow Scheduling.
+Optional Long Demo: Event-triggered Loading of data with Cloud Composer, Cloud Functions, Cloud Storage, and BigQuery.
+Monitoring and Logging.
+Lab: An Introduction to Cloud Composer.

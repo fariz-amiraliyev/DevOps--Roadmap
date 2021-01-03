@@ -1,0 +1,3 @@
+S3 offers several features that can assist with data integrity in addition 
+to its built-in availability and durability features. We also need methods to
+protect our objects from human error.

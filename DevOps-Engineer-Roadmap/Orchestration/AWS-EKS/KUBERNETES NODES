@@ -1,0 +1,44 @@
+The machines that make up a Kubernetes cluster are called nodes.
+Nodes in a Kubernetes cluster may be physical, or virtual.
+
+There are two types of nodes:
+A Control-plane-node type, which makes up the Control Plane, acts as the “brains” of the cluster.
+A Worker-node type, which makes up the Data Plane, runs the actual container images (via pods).
+
+K8S OBJECTS OVERVIEW:
+
+What pods (containers) are running, and on which nodes
+IP endpoints that map to a logical group of containers
+How many replicas of a container are running
+and more:
+
+Pod
+A thin wrapper around one or more containers
+DaemonSet
+Implements a single instance of a pod on a worker node
+Deployment
+Details how to roll out (or roll back) across versions of your application
+
+ReplicaSet
+Ensures a defined number of pods are always running
+Job
+Ensures a pod properly runs to completion
+Service
+Maps a fixed IP address to a logical group of pods
+Label
+Key/Value pairs used for association and filtering
+
+
+Control Plane:
+
+Sheduler
+Controller manager
+ETCD
+API Server - kubectl
+
+
+Worker Node:
+
+Kubelet
+Kube-proxy
+container

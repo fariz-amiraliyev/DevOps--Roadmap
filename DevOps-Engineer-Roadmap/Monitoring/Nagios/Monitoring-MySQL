@@ -1,0 +1,140 @@
+Monitoring MySQL With Nagios Core and NRPE
+
+Your host definition should be fairly straightforward:
+
+define host{
+    name                            glscott3.mylabserver.com
+    host_name                       glscott3.mylabserver.com
+    use    linux-server
+    address    172.31.120.15
+    alias    glscott3.mylabserver.com
+    check_period                    24x7
+    display_name    glscott3.mylabserver.com
+    max_check_attempts              10
+    check_command                   check_ping!2000.00,80%!5000.00,100%
+    contact_groups                  admins
+}
+Your commands should resemble the following:
+
+define command{
+          command_name    nrpe-check-mariadb-uptime
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a uptime
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-running-threads
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a threads-running
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-innodb-buffer-pool-hits
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a bufferpool-hitrate
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-innodb-wait-free
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a bufferpool-wait-free
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-innodb-log-waits
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a log-waits
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-table-cache-hits
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a tablecache-hitrate
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-lock-contention
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a table-lock-contention
+          }
+
+define command{
+          command_name    nrpe-check-mariadb-tmp-tables
+          command_line    $USER1$/../libexec/check_nrpe -H "$HOSTADDRESS$" -c check_mariadb -a tmp-disk-tables
+          }
+
+Your Service Definitions Should Resemble the Following:
+
+define service{
+        name                    mariadb-uptime
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB Uptime
+        check_command           nrpe-check-mariadb-uptime
+}
+
+define service{
+        name                    mariadb-running-threads
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB Running Threads
+        check_command           nrpe-check-mariadb-running-threads
+}
+
+define service{
+        name                    mariadb-buffer-pool-hits
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB InnoDB Buffer Pool Hits
+        check_command           nrpe-check-mariadb-innodb-buffer-pool-hits
+}
+
+
+define service{
+        name                    mariadb-innodb-wait-free
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB InnoDB Wait Free
+        check_command           nrpe-check-mariadb-innodb-wait-free
+}
+
+define service{
+        name                    mariadb-innodb-log-waits
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB InnoDB Log Waits
+        check_command           nrpe-check-mariadb-innodb-log-waits
+}
+
+define service{
+        name                    mariadb-table-cache-hits
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB Table Cache Hits
+        check_command           nrpe-check-mariadb-table-cache-hits
+}
+
+define service{
+        name                    mariadb-check-lock-contention
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB Table Lock Contention
+        check_command           nrpe-check-mariadb-lock-contention
+}
+
+define service{
+        name                    mariadb-check-tmp-tables
+        use                     generic-service
+        host_name               glscott3.mylabserver.com
+        check_interval          2
+        service_description     MariaDB Temp Tables
+        check_command           nrpe-check-mariadb-tmp-tables
+}
+
+And lastly, the commands configured on the DB host (in the NRPE configuration file) should look like this:
+
+command[check_users]=/opt/nagios/libexec/check_users -w $ARG1$ -c $ARG2$
+command[check_load]=/opt/nagios/libexec/check_load -w $ARG1$ -c $ARG2$
+command[check_disk]=/opt/nagios/libexec/check_disk -w $ARG1$ -c $ARG2$ -p $ARG3$
+command[check_procs]=/opt/nagios/libexec/check_procs -w $ARG1$ -c $ARG2$ -s $ARG3$
+command[check_mariadb]=/opt/nagios/libexec/check_mysql_health --socket=/var/lib/mysql/mysql.sock --username=nagios --password=qbrzhu18 --mode=$AR

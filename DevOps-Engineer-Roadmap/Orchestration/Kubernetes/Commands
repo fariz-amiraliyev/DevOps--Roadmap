@@ -1,0 +1,52 @@
+1. kubectl logs <pod>
+2. kubectl logs --since=1h <pod>
+3. kubectl logs -f <pod>
+4. kubectl label nodes --all 'lifecycle=OnDemand'
+5. eksctl create nodegroup -f ~/environment/eks-workshop-ng-spot.yaml
+6. kubectl get nodes --sort-by=.metadata.creationTimestamp
+7. kubectl get nodes --label-columns=lifecycle --selector=lifecycle=Ec2Spot   #node-labels to identify the lifecycle of the nodes.
+8. show all nodes with the lifecycle=OnDemand:
+   kubectl get nodes --label-columns=lifecycle --selector=lifecycle=OnDemand
+9. kubectl --namespace=kube-system get daemonsets
+  take a look at all pods deployed on Spot instances:
+10.  for n in $(kubectl get nodes -l lifecycle=Ec2Spot --no-headers | cut -d " " -f1);
+     do echo "Pods on instance ${n}:";kubectl get pods --all-namespaces  --no-headers --field-selector spec.nodeName=${n} ;
+     echo ; done
+
+11.  check all pods deployed on Spot Instances and should now see the frontend pods running on Spot instances:
+
+     for n in $(kubectl get nodes -l lifecycle=Ec2Spot --no-headers | cut -d " " -f1); do echo "Pods on instance ${n}:";
+     kubectl get pods --all-namespaces  --no-headers --field-selector spec.nodeName=${n} ; echo ; done
+
+12. helm uninstall aws-node-termination-handler --namespace=kube-system
+13. helm upgrade --install aws-node-termination-handler \
+             --namespace kube-system \
+             --set nodeSelector.lifecycle=Ec2Spot \
+              eks/aws-node-termination-handler
+  14. kubectl taint nodes node1 key=value:NoSchedule
+  15. kubectl taint nodes node1 key:NoSchedule-
+  16. kubectl run nginx --image=nginx
+      kubectl scale --replicas=3 deployments/nginx
+      kubectl expose deployment/nginx --type=NodePort --port 80
+      kubectl get pods -o wide
+      kubectl run -i --rm --tty debug --image=busybox -- sh
+17.  eksctl create cluster -f eks-test-jenkins.yaml
+18.  eksctl get nodegroups --cluster=eks-test-jenkins
+19. kubectl apply -f pv-claim.yaml
+20. kubectl get pvc
+21. docker build -f Dockerfile-jenkins -t "YOUR_DOCKER_IMAGE_FILE_NAME"
+22. kubectl expose deployment jenkins --type=LoadBalancer --name=jenkins-external
+23. kubectl get services
+24. kubectl get services | grep jenkins-external | awk '{print $4}'
+25.  kubectl describe storageclass mysql-gp2
+
+26. kubectl create namespace mysql
+27. kubectl -n mysql rollout status statefulset mysql
+28. kubectl exec --stdin --tty shell-demo -- /bin/bash
+29. kubectl exec shell-demo env,ls,ps,top etc.
+30. kubectl get limitrange mem-min-max-demo-lr --namespace=constraints-mem-example --output=yaml
+31. kubectl get resourcequota pod-demo --namespace=quota-pod-example --output=yaml
+33. kubectl create deployment php-apache --image=us.gcr.io/k8s-artifacts-prod/hpa-example
+34. kubectl set resources deploy php-apache --requests=cpu=200m
+35. kubectl expose deploy php-apache --port 80
+36. kubectl get pod -l app=php-apache

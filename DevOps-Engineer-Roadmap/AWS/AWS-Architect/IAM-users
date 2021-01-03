@@ -1,0 +1,3 @@
+IAM users are one identity provided by IAM. This lesson goes
+over the functionality provided by IAM users and talks about
+scenarios where IAM users should (and shouldn't) be used.

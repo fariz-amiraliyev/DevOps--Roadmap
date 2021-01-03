@@ -1,0 +1,239 @@
+21.An e-commerce company is having their annual sale event. The e-commerce site will
+receive millions of visitors in a short period.
+The visitors will first login to the site using either their Facebook or Google credentials
+and add items to their cart. After purchasing, a page will display the cart discounted prices.
+The company needs to build a scalable, cost-effective checkout system that can handle the sudden surge of
+incoming traffic. Which of the following AWS architectural design patterns should they use?
+
+The best solution is to use a combination of CloudFront, Elastic Load Balancer and SQS to provide a highly scalable architecture.
+Option 1 is incorrect because multi-AZ RDS is a more expensive solution compared to DynamoDB.
+Option 2 is correct because it is a highly scalable solution and creates appropriate IAM Role to access the DynamoDB database.
+In addition, it uses SQS to hold the user data/votes such that the application does not consume read and write
+provisioned capacity of DynamoDB.
+Option 3 is incorrect because although this would work, it is not scalable and storing all the data directly
+in DynamoDB would consume read and write capacity and increase the cost.
+Option 4 is incorrect because it is not scalable and storing all the data directly in DynamoDB would consume
+read and write capacity and increase the cost.
+
+22. An enterprise software company has just recently started using AWS.
+They are building issue tracking system which would be accessed by their customers worldwide.
+ You  have to ensure that the architecture of the issue tracking system is both scalable and
+highly available to avoid any complaints from the clients.
+It is expected that the application will have a steady-state usage and the database would
+be used for online transaction processing (OLTP).
+Which of the following would be the best architecture setup to satisfy the above requirement?
+
+It is recommended to use a CloudFormation template to launch your architecture in AWS.
+An Auto Scaling group of EC2 instances across multiple Availability Zones with an ELB in
+front is a highly available and scalable architecture.
+In addition, leveraging on CloudFront in distributing your static content improves the load times of the system.
+Finally, an RDS instance with Multi-AZ deployments configuration can ensure the availability of your database
+in case one instance goes down.
+Option 2 is incorrect because using Dedicated EC2 instances without Auto Scaling is not a scalable nor a
+highly available architecture. In addition, RedShift is not applicable to OLTP but rather with OLAP.
+Option 3 is incorrect because Spot EC2 instances are not suitable for steady state usage and Read
+Replicas only provide limited availability compared to Multi-AZ Deployments.
+Option 4 is incorrect because this does not use Auto Scaling and is not deployed across
+multiple Availability Zones.
+
+
+23. A startup is looking for a cost-effective location-based alert to their iOS and Android mobile apps.
+Their users will receive alerts on their mobile device regarding real estate offers in proximity to their current location and the
+delivery time for the push notifications should be less than a minute.
+The existing mobile app has an initial 2 million users worldwide and is rapidly growing.
+What is the most suitable architecture to use in this scenario?
+
+Amazon SNS Mobile Push Notifications have the ability to send push notification
+messages directly to apps on mobile devices.
+Push notification messages sent to a mobile endpoint can appear in the mobile app as message alerts,
+badge updates, or even sound alerts.
+
+Option 1 is incorrect because although a combination of On-Demand EC2 instances and
+API Gateway can provide scalable computing system, it is wrong to use AWS AppSync for
+push notification to mobile devices. You should use AWS SNS Mobile Push service instead.
+
+Option 2 is incorrect because although it is correct to use Amazon Pinpoint to send push
+notifications, RDS is not a suitable database for the mobile app because it is not as scalable
+enough when processing data from various users around the globe, compared with DynamoDB.
+Usually, mobile applications do not have complicated table relationships hence,
+it is recommended to use NoSQL database like DynamoDB.
+
+Option 3 is correct because SQS is a highly scalable, cost-effective solution for carrying out
+utility tasks such as holding the location of millions of users.
+In addition, it uses a highly scalable DynamoDB table and a cost-effective
+AWS SNS Mobile Push service to send push notification messages directly to the mobile apps.
+
+Option 4 is incorrect because AWS Device Farm is an app testing service and is not used to push
+notifications to various mobile devices. It only lets you test and interact with your Android,
+iOS, and web apps on many devices at once, or reproduce issues on a device in real time.
+ 
+24. An online gambling site is hosted in two Elastic Compute Cloud (EC2) instances
+inside a Virtual Private Cloud (VPC) in the same Availability Zone (AZ) but in different
+subnets.
+The first EC2 instance is running a database and the other EC2 instance is a
+web application that fetches data from the database.
+You are required to ensure that the two EC2 instances can connect with each other in order
+for your application to work properly. You also need to track historical changes
+to the security configurations associated
+to your instances.
+
+Which of the following options below can meet this requirement? (Choose 2)
+Explanation
+AWS provides two features that you can use to increase security in your VPC: security
+groups and network ACLs. Security groups control inbound and outbound traffic for your
+instances, and network ACLs control inbound and outbound traffic for your subnets.
+In most cases, security groups can meet your needs; however, you can also use network
+ACLs if you want an additional layer of security for your VPC.
+AWS Config is a service that enables you to assess, audit, and evaluate the configurations
+of your AWS resources.Config continuously monitors and records your AWS resource configurations
+and allows you to automate the evaluation of recorded configurations against desired configurations.
+With Config, you can review changes in configurations and relationships between AWS resources,
+dive into detailed resource configuration histories, and determine your overall compliance against
+the configurations specified in your internal guidelines. This enables you to simplify compliance
+auditing, security analysis, change management, and operational troubleshooting.
+Option 2 is incorrect because Route 53 can't be used to connect two subnets. You should use
+Network ACLs and Security Groups instead.
+Option 3 is incorrect because neither a NAT instance nor an Internet gateway is needed for
+the two EC2 instances to communicate.
+Option 5 is incorrect because using AWS Systems Manager is not suitable to track historical
+changes to the security configurations associated to your instances. You have to use AWS Config instead.
+
+25.An online stock trading application is deployed to multiple Availability Zones in
+the us-east-1 region (N. Virginia). Considering the massive financial transactions
+that the trading application handles, the company to make sure that the system is
+scalable, highly-available and disaster resilient.
+In the event of failure, the Recovery Time Objective (RTO) must be less than 2 hours and
+the Recovery Point Objective (RPO) must be 10 minutes to meet the compliance requirements
+set by the regulators. In this scenario, which Disaster Recovery strategy can be used to achieve
+the RTO and RPO requirements in the event of system failure?
+Explanation
+In this scenario, you have to use durable storage and database backups to satisfy
+the RTO and RPO requirements. Hence, the correct answer is Option 2 as this solution
+meets the 2 hour RTO as well as the 10-minute RPO requirement.
+Option 1 is incorrect because an instance store volume is ephemeral and it is not
+suitable to store the database backups.
+Option 3 is wrong because the RTO is at least 3 hours, which means that Amazon Glacier
+is not the ideal solution to use. Note that the standard retrieval time for Glacier is
+3 to 5 hours and with that time, you will surely miss your RTO.
+Option 4 is wrong because it provides a highly available architecture but it doesn't
+provide any durable storage nor DB snapshots.
+
+26. As a best practice in your company, all of the cloud-related deployments should not
+be done manually but through the use of CloudFormation. All of the CloudFormation
+templates should be treated as a code and hence, all of them are committed in a private GIT
+repository. A senior DevOps engineer has recently left your team and your manager asked
+you to take over his tasks and applications. One of the tasks that the outgoing DevOps
+engineer is handling is a distributed system in AWS, in which the architecture is declared
+in a template. The distributed system needs to be migrated to another VPC and you tried to
+read the template to understand the AWS resources that the template will generate. While
+analyzing the CloudFormation template, you stumbled upon this code below.
+
+What does this code snippet do in CloudFormation?
+
+ "SNSTopic" : {
+ "Type" : "AWS::SNS::Topic",
+ "Properties" : {
+ "Subscription" : [{
+ "Protocol" : "sqs",
+ "Endpoint" : { "Fn::GetAtt" : [ "TutorialsDojoQueue", "Arn" ] }
+ }]
+ }
+
+ Option 4 is the correct answer as the code snippet creates an SNS topic and then
+adds a subscription using the ARN attribute name for the SQS resource, which is
+created under the logical name "TutorialsDojoQueue" using the GetAtt intrinsic function.
+Conversely, Options 1, 2 and 3 are all incorrect because these options incorrectly described what the code snippet does.
+AWS CloudFormation provides several built-in functions that help you manage your
+stacks, which are called "intrinsic functions". These functions can be used in your
+templates to assign values to properties that are not available until runtime. You can
+use intrinsic functions only in specific parts of a template. Currently, you can use intrinsic
+functions in resource properties, outputs, metadata attributes, and update policy attributes.
+You can also use intrinsic functions to conditionally create stack resources.
+The Fn::GetAtt intrinsic function returns the value of an attribute from a resource in the template.
+It has 2 parameters: the logicalNameOfResource and the attributeName. The logical name (also called logical ID)
+of the resource contains the attribute that you want to use. The attributeName is the name of the resource-specific
+attribute whose value you want utilize.
+
+
+27. As part of the Corporate Social Responsibility of the tech company that you are working for,
+your team has developed an online learning system for a public university. The application architecture
+uses an Application Load Balancer infront of two On-Demand EC2 instances located in one Availability Zone.
+The only remaining requirement is to secure the new site with HTTPS. Which of the following option is the
+most cost-effective and easiest way to complete the online learning system?
+With AWS Certificate Manager, you can generate public or private SSL/TLS certificates that you can use to secure your site.
+You pay only for the AWS resources you create to run your application.
+Public SSL/TLS certificates provisioned through AWS Certificate Manager are free.
+For private certificates, the ACM Private Certificate Authority (CA) is priced along two dimensions:
+1) You pay a monthly fee for the operation of each private CA until you delete it and
+2) you pay for the private certificates you issue each month.
+Public certificates generated from ACM can be used on Amazon CloudFront, Elastic Load Balancing,
+or Amazon API Gateway but not directly on EC2 instances unlike private certificates.
+Option 1 is correct in this scenario as a public certificate does not cost anything and
+you can configure this certicate with the Application Load Balancer.
+
+28. In a major investment bank at Wall Street, a developer requested for a temporary credential to access an S3 bucket.
+You generated the temporary credential from STS and gave it to the developer.
+However, your manager informed you that the credential you provided is too much and allows
+the developer to access all AWS resources. What should you do to immediately revoke the
+access you have recently given to the developer?
+
+When you enable users to access the AWS Management Console with a long session duration
+time (such as 12 hours), their temporary credentials do not expire as quickly. If users
+inadvertently expose their credentials to an unauthorized third party, that party has access
+for the duration of the session. However, you can immediately revoke all permissions to the
+role's credentials issued before a certain point in time if you need to. All temporary credentials
+for that role issued before the specified time becomes invalid. This forces all users to
+reauthenticate and request new credentials.
+
+29. In S3, data protection can be done while the data is in-transit or at rest.
+Data protection in-transit simply means that the data should be secured while it travels
+to and from Amazon S3 while data protection at rest means that the the stored data on disk
+must be secured in Amazon S3 data centers. You can protect data in transit by using SSL or by
+using client-side encryption. To secure data at rest, you can choose from a variety of available
+Server-Side Encryption in S3. Which of the following best describes how Amazon S3-Managed Keys
+(SSE-S3) encryption method works?
+Server-side encryption with Amazon S3-managed encryption keys (SSE-S3) use strong
+multi-factor encryption. Amazon S3 encrypts each object with a unique key. As an additional
+safeguard, it encrypts the key itself with a master key that it rotates regularly. Amazon S3
+server-side encryption uses one of the strongest block ciphers available, 256-bit Advanced Encryption
+Standard (AES-256), to encrypt your data.
+Option 1 is incorrect because SSE-S3 does not use API keys but rather encryption keys.
+Option 3 is incorrect because customer master keys (CMKs) are being used in SSE-KMS and not in SSE-S3.
+Option 4 is incorrect because SSE-S3 does not use a randomly generated data encryption key.
+
+30. S.I.G.A Hackers United, a new international hacktivist group, has announced that
+they will launch wide-scale cyber attacks such as SQL Injection, cross-site scripting (XSS)
+and DDoS attacks, to multiple government websites which are hosted in AWS. You are hired as an
+IT consultant to reinforce the security of these government websites. Which of the following
+approach provides a cost-effective and scalable mitigation from cyber attacks?
+
+In this scenario, the best option to use is a WAF instead of IDS/IPS, as it provides more protection
+against common cyber attack patterns. IDS is mostly concerned about detection of unauthorized access and
+IPS is basically similar to IDS, but provides a prevention mechanism for your network.
+
+AWS WAF is a web application firewall that helps protect your web applications from common web exploits
+that could affect application availability, compromise security, or consume excessive resources.
+AWS WAF gives you control over which traffic to allow or block to your web applications by defining
+customizable web security rules. You can use AWS WAF to create custom rules that block common attack
+patterns, such as SQL injection or cross-site scripting, and rules that are designed for your specific
+application. New rules can be deployed within minutes, letting you respond quickly to changing traffic patterns.
+
+Intrusion Detection Systems (IDS) monitor networks and/or systems for malicious activity or policy violation,
+and report them to systems administrators or to a security information and event management (SIEM) system.
+Intrusion Prevention Systems (IPS) are positioned behind firewalls and provide an additional layer of
+security by scanning and analyzing suspicious content for potential threats. Placed in the direct
+communication path, an IPS will take automatic action on suspicious traffic within the network.
+
+Option 1 is incorrect as IDS alone is not enough to provide protection against cyber attacks.
+It only detects malicious activities or policy violations in your network but it doesn't do anything about
+those security flaws. WAF is a better option to choose for this scenario.
+
+Option 2 is incorrect as IPS is also not enough to provide complete protection against cyber attacks.
+It only prevents malicious activities or policy violations in your network and you need to have WAF to
+fully secure your network. WAF is a better option to choose for this scenario.
+
+Option 3 is correct as AWS WAF provides protection against common attack patterns, such as SQL injection,
+DDoS or cross-site scripting.
+
+Option 4 is incorrect as even though you have both IDS and IPS, you still need a WAF for better security
+against cyber attacks.

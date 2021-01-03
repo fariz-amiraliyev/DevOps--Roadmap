@@ -1,0 +1,4 @@
+Status checks are made up of instance status checks and system status checks. 
+Errors in these indicate different issues and should, therefore, be recovered
+differently. This lesson discusses AWS system and instance status checks and
+how to recover from an error in these checks.

@@ -1,0 +1,31 @@
+---
+- name: Create/Update elasticache subnet groups
+  elasticache_subnet_group:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.cache_subnet_group }}"
+    description: "{{ item.description }}"
+    state: present
+    subnets:
+      - "{{ aws_vpc_primary_private_subnet_ids[0] }}"
+  with_items: "{{ elasticache }}"
+  run_once: yes
+
+- name: Create/Update elasticache clusters
+  elasticache:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    engine: "{{ item.engine }}"
+    cache_engine_version: "{{ item.cache_engine_version }}"
+    node_type: "{{ item.node_type }}"
+    num_nodes: "{{ item.num_nodes }}"
+    cache_port: "{{ item.cache_port }}"
+    cache_subnet_group: "{{ item.cache_subnet_group }}"
+    security_group_ids: "{{ item.security_group_ids }}"
+    zone: "{{ item.zone }}"
+    wait: no
+  with_items: "{{ elasticache }}"
+
+  

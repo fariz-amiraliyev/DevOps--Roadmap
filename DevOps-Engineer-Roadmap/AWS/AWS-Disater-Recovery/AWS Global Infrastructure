@@ -1,0 +1,11 @@
+1. AWS Regions and Availability Zones
+An AWS Region is a geographical area of the world. Each AWS Region is a collection of data centers
+that are logically grouped into what we call Availability Zones.
+2. High Availability Through Multiple Availability Zones
+3. You can achieve high availability by deploying your applications to span across multiple Availability
+Zones. For each application tier (that is, web, application, and database), placing multiple, redundant
+instances in distinct AZs creates a multi-site solution. Using Elastic Load Balancing (ELB), you get
+improved fault tolerance as the ELB service automatically balances traffic across multiple instances in
+multiple Availability Zones, ensuring that only healthy instances receive traffic. The desired goal is to
+have an independent copy of each application stack in two or more AZs, with automated traffic routing
+to healthy resources.

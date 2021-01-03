@@ -1,0 +1,7 @@
+1. What is the main difference between containerization and virtualization ?
+2. What is the benefits of providing an application as a Docker image ?
+3. What is the difference between docker image and docker container ?
+4. What is the layers of docker ?
+5. What is the command to create docker image from Dokerfile ?
+6. What is the command run docker container from docker image ?
+7. What is the docker volume ? 

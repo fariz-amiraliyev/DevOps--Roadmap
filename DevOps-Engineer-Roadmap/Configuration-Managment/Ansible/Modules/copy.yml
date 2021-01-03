@@ -1,0 +1,17 @@
+
+
+- name: Copy a new "ntp.conf file into place, backing up the original if it differs from the copied version
+  copy:
+    src: /mine/ntp.conf
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+
+    - name: If follow=no, /path/to/link will become a file and be overwritten by contents of foo.conf
+      copy:
+        src: /etc/foo.conf
+        dest: /path/to/link  # link to /path/to/file
+        follow: no

@@ -1,0 +1,8 @@
+If someone wants data, you can deliver that data much faster if it's cached.
+That's true whether it's for a webpage or a report that drives business decisions.
+Can your business afford to not cache your webpages so as to deliver them with the shortest latency possible?
+
+Even the most optimized database query or remote API call is noticeably slower than retrieving a flat key from an in-memory cache.
+
+it doesn't make sense to cache data that changes quickly or is seldom accessed.
+For caching to provide a real benefit, the data should be relatively static and frequently accessed.

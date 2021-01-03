@@ -1,0 +1,14 @@
+CloudWatch: 
+
+CPUUtilization
+DiskReadBytes
+DiskReadOps
+DiskWriteBytes
+DiskWriteOps
+EBSReadBytes
+EBSReadOps
+EBSWriteBytes
+EBSWriteOps
+MetadataNoToken
+NetworkIn
+NetworkOut

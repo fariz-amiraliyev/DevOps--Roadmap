@@ -1,0 +1,178 @@
+1. How to set outbound access only for specific urls from ec2 in public subnet ?
+  Set up web proxy server which allow to required urls.
+  Proxy servers usually act as a relay between internal resources
+  (servers, workstations, etc.) and the Internet, and to filter, accelerate and
+  log network activities leaving the private network.
+  One must not confuse proxy servers (also called forwarding proxy servers) with reverse proxy servers,
+  which are used to control and sometimes load-balance network activities entering the private network.
+
+
+2. How will you provide the auditor access to the logs of your AWS resources?
+  AWS CloudTrail is a service that enables governance, compliance, operational auditing,
+  and risk auditing of your AWS account. With CloudTrail, you can log, continuously monitor,
+  and retain events related to API calls across your AWS infrastructure. CloudTrail provides
+  a history of AWS API calls for your account, including API calls made through the
+  AWS Management Console, AWS SDKs, command line tools, and other AWS services.
+  This history simplifies security analysis, resource change tracking, and troubleshooting.
+
+3. A global enterprise web application is using a private S3 bucket, named MANILATECH-CONFIG,
+   which has a Server-Side Encryption with Amazon S3-Managed Encryption Keys (SSE-S3)
+   to store its configuration files for different regions in North America, Latin America,
+   Europe, and Asia. There has been a lot of database changes and feature toggle switching
+   for the past few weeks. Your CTO assigned you the task of enabling versioning on this bucket
+   to track any changes made to the configuration files and have the ability to use the old settings if needed.
+   In the coming days ahead, a new region in Oceania will be supported by the web application and thus,
+   a new configuration file will be added soon. Currently, there are already four files in the bucket,
+   namely: MNL-NA.config, MNL-LA.config, MNL-EUR.config and MNL-ASIA.config which are updated regularly.
+   As instructed, you enabled the versioning in the bucket and after a few days, the new MNL-O.config configuration
+   file for the Oceania region has been uploaded. A week after, a configuration has been done on MNL-NA.config,
+    MNL-LA.config and MNL-O.config files.
+
+In this scenario, which of the following is correct about files inside the MANILATECH-CONFIG S3 bucket? (Choose 2)
+
+Explanation
+Versioning is a means of keeping multiple variants of an object in the same bucket.
+You can use versioning to preserve, retrieve, and restore every version of every object stored in your Amazon S3 bucket.
+With versioning, you can easily recover from both unintended user actions and application failures.
+In this scenario, there are already 4 configuration files existing in the MANILATECH-CONFIG bucket.
+Once the S3 Versioning is enabled, all of the existing files will have a VERSION ID of NULL.
+The new files that will be added will have an alphanumeric VERSION ID, as well as any new updates for the first 4 files.
+
+
+4.  Which of the following is the most suitable and cost-effective connectivity option to use multipe VPN connections ?
+VPN Hub If you have multiple VPN connections, you can provide secure communication between sites using the AWS VPN CloudHub.
+This enables your remote sites to communicate with each other, and not just with the VPC.
+The VPN CloudHub operates on a simple hub-and-spoke model that you can use with or without a VPC.
+This design is suitable for customers with multiple branch offices and existing internet connections
+who'd like to implement a convenient, potentially low-cost hub-and-spoke model for primary or
+backup connectivity between these remote offices.
+
+5. A government organization is currently developing a multi-tiered web application prototype which
+consists of various components for registration, transaction processing, and reporting. All of the
+components will be using different IP addresses and they are all hosted on one, extra large EC2
+instance as its main server. They will be using S3 as a durable and scalable storage service.
+For security purposes, the IT manager wants to implement 2 separate SSL certificates for the
+separate components. How can the government organization achieve this with a single EC2 instance?
+Explanation
+In this scenario, you basically need to provide multiple IP addresses to a single EC2 instance.
+This can be easily achieved by using an Elastic Network Interface (ENI). An elastic network
+interface is a logical networking component in a VPC that represents a virtual network card.
+
+7.A health insurance company has recently adopted a hybrid cloud architecture which connects their
+on-premises network and their cloud infrastructure in AWS. They have an ELB which has a set of EC2
+instances behind them. As the cloud engineer of the company, your manager instructed you to ensure
+that the SSL key used to encrypt data is always kept secure at all times. In addition, the application
+logs should only be decrypted by a handful of key users. In this scenario, which of the following
+meets all of the requirements?
+In this scenario, the best choice is Option 4 because it uses CloudHSM and the
+application server logs are persisted in an S3 bucket with a Server Side Encryption (SSE).
+CloudHSM provides a better and more secure way of offloading the SSL processing for the web
+servers and ensures the the application logs are durably and securely stored.
+
+AWS CloudHSM is a cloud-based hardware security module (HSM) that enables you to easily
+generate and use your own encryption keys on the AWS Cloud. With CloudHSM, you can manage
+your own encryption keys using FIPS 140-2 Level 3 validated HSMs. CloudHSM offers you the
+flexibility to integrate with your applications using industry-standard APIs, such as PKCS#11,
+Java Cryptography Extensions (JCE), and Microsoft CryptoNG (CNG) libraries.
+
+You can use AWS CloudHSM to offload SSL/TLS processing for your web servers. Using CloudHSM
+for this processing reduces the burden on your web server and provides extra security by
+storing your web server's private key in CloudHSM. Secure Sockets Layer (SSL) and Transport
+Layer Security (TLS) are used to confirm the identity of web servers and establish secure
+HTTPS connections over the Internet.
+
+Options 1 and 3 are incorrect because ephemeral volume is just a temporary storage and
+hence, not a suitable option for durable storage.
+
+Option 2 is incorrect because you should never store sensitive private keys in S3.
+
+
+8. A hospital in New York has hosted its web-based medical records portal entirely
+in AWS using EC2 instances for its web-tier and an RDS database for its data tier.
+In compliance with HIPAA (Health Insurance Portability and Accountability Act of 1996),
+the hospital hired an IT security professional to check their systems. It was found that
+there are a lot of unauthorized requests coming from a set of IP addresses originating
+from a country in South East Asia. What can you do to ensure that this type of attack
+is properly mitigated?
+
+Explanation
+In this scenario, the cyber attack is coming from a set of certain IP addresses over specific
+port from a specific country. Always think about Security groups and Network Access Control List (NACL)
+in this scenario. Security Groups operate at the individual instance level while NACL operates at subnet level.
+ The first one that you should always fortify is the NACL, as it is the first layer where traffic will pass
+ through during the communication with the EC2 instances in the VPC.
+
+Network ACLs can be effective as a secondary control for denying a specific subset of traffic or providing
+high-level guard rails for a subnet. By implementing both network ACLs and security groups as a defense-in-depth
+means of controlling traffic, a mistake in the configuration of one of these controls will not expose the host to unwanted traffic.
+
+Option 1 is incorrect because you cannot block IP addresses using the main route table or IGW. Better use
+Security Groups or NACLs instead.
+
+Option 2 is incorrect because you cannot deny access to a specific IP addresses using security groups.
+ By default, all requests are denied in the security group and you can create a rule that will open
+ access for a particular IP address or range.
+
+Option 3 is incorrect because enhanced networking is only used to provide higher bandwidth,
+higher packet per second (PPS) performance, and consistently lower inter-instance latencies
+for EC2 instances. Enhanced networking does not have the capability to block certain IP addresses.
+
+Option 4 is correct because you can add deny rules in NACL and block access to certain IP addresses.
+
+
+9. An international humanitarian aid organization has a requirement to store 20 TB worth of scanned
+files for their relief operations which can grow to up to a total of 50 TB of data.
+There is also a requirement to have a search feature in place that can be used to easily
+find a certain item through the thousands of scanned files. The new system is expected
+to run for more than 3 years.
+
+Which of the following is the most cost-effective option in implementing the search feature in their system?
+
+Explanation
+Always remember that S3 is an excellent object-based storage that is highly durable and scalable.
+However, its native search capability is not effective. Hence, you need to have a separate service
+to handle the search feature.
+
+Amazon CloudSearch is a managed service in the AWS Cloud that makes it simple and cost-effective
+to set up, manage, and scale a search solution for your website or application. Amazon CloudSearch
+supports 34 languages and popular search features such as highlighting, autocomplete, and geospatial search.
+
+Option 1 is incorrect because the scenario says that the new system is expected to run for more than 3
+years which means that using Reserved EC2 instances would be a more cost-effective choice than using
+On-Demand instances. In addition, purchasing and installing a 3rd-party search software might be more
+expensive than just using Amazon CloudSearch.
+
+Option 2 is incorrect because a system composed of RAID configuration of EBS volumes is not a durable
+and scalable solution compared to S3.
+
+Option 3 is correct because it uses S3 to store the images which is a durable and a scalable solution.
+It also uses CloudSearch for query processing, and with a multi-AZ implementation, it achieves high availability.
+
+Option 4 is incorrect as the native search capability of S3 is not effective. It is better to use
+CloudSearch or another service that provides search functionality.
+
+
+
+10.A leading aerospace company wants to utilize AWS as its secondary storage. The project only has a
+limited funding hence, they are looking for the most cost-effective storage solution. The data being
+stored is rarely retrieved and in case it is requested, it is not required to have a fast
+retrieval time and the requestor can wait for 24 hours. In this scenario, what is the best
+ and most cost-effective storage option to use?
+Explanation
+In this scenario, the data being stored is rarely retrieved and the requester can wait for
+24 hours to retrieve the data. Option 1: Amazon Glacier, is the most cost-effective service
+to use in this kind of situation where the required retrieval time is not urgent and the
+requestor can wait for 3-5 hours.
+
+Amazon Glacier is a secure, durable, and extremely low-cost cloud storage service for data
+archiving and long-term backup. It is designed to deliver 99.999999999% durability, and provides
+comprehensive security and compliance capabilities that can help meet even the most stringent regulatory
+requirements. Amazon Glacier provides query-in-place functionality, allowing you to run powerful analytics
+directly on your archive data at rest.
+
+Options 2 and 3 are incorrect because both S3 Infrequent Access and S3 One Zone-IA are more suitable for
+data that are accessed less frequently, but requires rapid access when needed. In this particular scenario,
+the requester can wait up to 24 hours to access the data so it is recommended to use Glacier instead.
+
+Option 4 is incorrect because the S3 Standard class is much more expensive than Glacier and in
+this scenario, you don't need the fast retrieval time that the S3 standard class provides.

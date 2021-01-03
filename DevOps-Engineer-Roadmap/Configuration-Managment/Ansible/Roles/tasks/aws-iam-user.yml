@@ -1,0 +1,11 @@
+---
+- iam:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    iam_type: "{{ item.type | default('user') }}"
+    name: "{{ aws_iam_static_string }}-{{ item.name }}-{{ aws_env }}"
+    state: present
+  with_items: "{{ iam }}"
+  when: item.type == "user" or item.type == "group"
+
+  

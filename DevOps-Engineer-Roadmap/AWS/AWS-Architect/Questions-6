@@ -1,0 +1,46 @@
+1. Consolidated Billing offers what potential economy-of-scale benefit?
+   Leveraging tiered pricing.
+   Consolidated Billing allows you to potentially realize lower prices on some services with tiered pricing.
+
+2. What is the primary AWS value proposition around cost?
+   AWS offers agility without large upfront investments.
+
+
+3. Which of the following is not a feature of AWS Organizations?
+   Granular configuration of Security Groups within a VPC
+
+4. Your application has to process a very volatile inconsistent flow of data inbound
+   in order. Which of the following options would be most reliable and cost-effective?
+
+   Use SQS to receive the inbound messages and use a single reserved instance to process them.
+
+5. Your company is evaluating the financial implications of a cloud migration. What should be your first step?
+   Get a clear understanding of current costs
+
+6. You have some extra unused RIs in one AZ but need in another AZ. If you want to make use of them in the other AZ, what can you do?
+   Regional RIs are not specific to an AZ and can be consumed across a region. Zonal RIs can be modified for
+   use in another AZ using the console of ModifyReserveInstances API.
+
+7. Which statement is true about Dedicated Instances and Dedicated Hosts?
+   Dedicated Hosts reserve capacity because you are paying for the whole physical
+   server that cannot be allocated to anyone else. Dedicated Instances are available
+   as on-demand, reserved and spot instances.
+
+
+8. Which of these services can most directly help with right sizing your landscape?
+   Right sizing is using the lowest cost resource that still meets the technical specifications
+   of a specific workload. CloudWatch and Trusted Advisor are the most direct tools for this.
+
+
+9. Choose the features of Consolidated Billing.
+
+ 10. What expectation should you NOT set with your stakeholders about a cloud migration?
+     Overall costs will decrease as soon as we start using cloud assets.
+
+
+11. Which statement is true about Dedicated Instances and Dedicated Hosts?
+Dedicated Instances can run as spot instances.
+Dedicated Hosts reserve capacity.
+
+
+12. 

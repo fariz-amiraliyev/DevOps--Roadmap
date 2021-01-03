@@ -1,0 +1,54 @@
+
+link for installation
+https://docs.ansible.com/ansible/latest/installation_guide/intro_install
+ation.html#:~:text=pkg%20install%20ansible-,Installing%20Ansible%20on%20macOS,the%20Pyt
+hon%20Package%20Index%20securely.
+
+
+Installing Ansible with pip
+
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py --user
+
+
+pip install --user ansible
+pip install --user paramiko
+
+
+
+Ansible can also be installed inside a new or existing virtualenv:
+
+$ python -m virtualenv ansible  # Create a virtualenv if one does not already exist
+$ source ansible/bin/activate   # Activate the virtual environment
+$ pip install ansible
+
+
+
+If you wish to install Ansible globally, run the following commands:
+
+$ sudo python get-pip.py
+$ sudo pip install ansible
+
+pip freeze
+
+
+Can’t find the config file in “/etc/ansible/” on Mac OS X
+
+echo $ANSIBLE_CONFIG
+ansible --version
+
+solve:
+
+git clone https://github.com/ansible/ansible.git --recursive
+cd ansible/
+ls -al
+source ./hacking/env-setup
+
+DONE!
+
+
+
+
+source for ansible.cfg file:
+
+https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg

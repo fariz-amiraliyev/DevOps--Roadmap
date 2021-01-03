@@ -1,0 +1,19 @@
+netfilter kernel hooks
+
+ 3 Iptables component
+1. Rules
+2. Chains
+3. Tables
+
+
+IPVS is alternative for Kubernetes Iptables.
+Large deployments of Kuberenetes services will begin to hit limits when using
+IPtables. To improve performance and the limitations of IPtables, IP Virtual Server,
+IPVS replaces IPtables.
+
+
+3 load balancing mode:
+
+1. NAT
+2. Direct routing
+3. IP tunelling

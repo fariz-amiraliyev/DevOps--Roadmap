@@ -1,0 +1,4 @@
+packer validate packer.json
+packer build --var 'repository=la/express' --var 'tag=0.0.1' packer.jso
+
+

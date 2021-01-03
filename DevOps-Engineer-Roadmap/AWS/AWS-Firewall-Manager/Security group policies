@@ -1,0 +1,11 @@
+AWS Firewall Manager security group policies manage Amazon
+Virtual Private Cloud security groups for your organization in AWS Organizations.
+You can apply centrally controlled security group policies to your entire
+organization or to a select subset of your accounts and resources. You can also
+monitor and manage the security group policies that are in use in your organization,
+with auditing and usage security group policies.
+
+We can use Firewall Manager security group policies to do the following across your AWS organization:
+Apply common security groups to specified accounts and resources.
+Audit security group rules, to locate and remediate noncompliant rules.
+Audit usage of security groups, to clean up unused and redundant security groups.

@@ -1,0 +1,4 @@
+Capacity Reservation requests are granted or denied based on your EC2 instance limits and our available capacity.
+When you create a Capacity Reservation, we reserve the specified capacity for your use.
+The reserved capacity is charged at the selected instance type’s On-Demand rate whether an instance is running
+in it or not. You can also use your regional reserved instances with your Capacity Reservations to benefit from billing discounts.

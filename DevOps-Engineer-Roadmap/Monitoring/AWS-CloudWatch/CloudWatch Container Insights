@@ -1,0 +1,86 @@
+You can use CloudWatch Container Insights to collect, aggregate, and summarize metrics and
+logs from your containerized applications and microservices. Container Insights is available
+ for Amazon Elastic Container Service, Amazon Elastic Kubernetes Service, and Kubernetes platforms
+ on Amazon EC2. The metrics include utilization for resources such as CPU, memory, disk, and network.
+ Container Insights also provides diagnostic information, such as container restart failures, to help
+ you isolate issues and resolve them quickly.
+
+
+ Helm: to install Wordpress on our cluster.
+CloudWatch Container Insights: to collect logs and metrics from our cluster.
+Siege: to load test our Wordpress and EKS Cluster.
+CloudWatch Container Insights Dashboard: to visualize our container performance and load.
+CloudWatch Metrics: to set an alarm for when our WordPress Pod is under heavy load.
+
+
+Add the necessary policy to the IAM role for your worker nodes
+In order for CloudWatch to get the necessary monitoring info, we need to install the CloudWatch Agent to our EKS Cluster.
+
+First, we will need to ensure the Role Name our workers use is set in our environment:
+
+test -n "$ROLE_NAME" && echo ROLE_NAME is "$ROLE_NAME" || echo ROLE_NAME is not set
+If ROLE_NAME is not set, please review the test the cluster section.
+
+We will attach the policy to the nodes IAM Role:
+
+aws iam attach-role-policy \
+  --role-name $ROLE_NAME \
+  --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+Finally, let’s verify that the policy has been attached to the IAM ROLE:
+
+aws iam list-attached-role-policies --role-name $ROLE_NAME | grep CloudWatchAgentServerPolicy || echo 'Policy not found'
+
+
+
+INSTALLING CONTAINER INSIGHTS:
+curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/eksworkshop-eksctl/;s/{{region_name}}/${AWS_REGION}/" | kubectl apply -f -
+The command above will:
+
+Create the Namespace amazon-cloudwatch.
+Create all the necessary security objects for both DaemonSet:
+SecurityAccount.
+ClusterRole.
+ClusterRoleBinding.
+Deploy Cloudwatch-Agent (responsible for sending the metrics to CloudWatch) as a DaemonSet.
+Deploy fluentd (responsible for sending the logs to Cloudwatch) as a DaemonSet.
+Deploy ConfigMap configurations for both DaemonSets.
+You can find the full information and manual install steps here.
+
+You can verify all the DaemonSets have been deployed by running the following command.
+
+kubectl -n amazon-cloudwatch get daemonsets
+
+
+VERIFY CLOUDWATCH CONTAINER INSIGHTS IS WORKING
+VIEWING OUR COLLECTED METRICS
+VIEWING OUR COLLECTED LOGS
+USING CLOUDWATCH ALARMS
+
+
+
+Cleanup your Environment
+Let’s clean up Wordpress so it’s not running in your cluster any longer.
+
+helm -n wordpress-cwi uninstall understood-zebu
+
+kubectl delete namespace wordpress-cwi
+Run the following command to delete Container Insights from your cluster.
+
+curl -s https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluentd-quickstart.yaml | sed "s/{{cluster_name}}/eksworkshop-eksctl/;s/{{region_name}}/${AWS_REGION}/" | kubectl delete -f -
+Delete the SNS topic and the subscription.
+
+# Delete the SNS Topic
+aws sns delete-topic \
+  --topic-arn arn:aws:sns:${AWS_REGION}:${ACCOUNT_ID}:wordpress-CPU-Alert
+
+# Delete the subscription
+aws sns unsubscribe \
+  --subscription-arn $(aws sns list-subscriptions | jq -r '.Subscriptions[].SubscriptionArn')
+Finally we will remove the CloudWatchAgentServerPolicy policy from the Nodes IAM Role
+
+aws iam detach-role-policy \
+  --policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy \
+  --role-name ${ROLE_NAME}
+
+
+  

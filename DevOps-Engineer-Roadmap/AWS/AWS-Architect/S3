@@ -1,0 +1,49 @@
+Amazon S3 has a simple web services interface that you can use to store and
+retrieve any amount of data, at any time, from anywhere on the web.
+
+This guide describes how you send requests to create buckets, store and
+retrieve your objects, and manage permissions on your resources. The guide
+also describes access control and the authentication process. Access control
+defines who can access objects and buckets within Amazon S3, and the type of
+access (for example, READ and WRITE). The authentication process verifies the
+identity of a user who is trying to access Amazon Web Services (AWS).
+
+Advantages of using Amazon S3:
+1. Creating buckets
+2. Storing data
+3. Downloading data
+4. Permissions
+5. Standard interfaces
+
+
+Amazon S3 concepts:
+
+Buckets
+Objects
+Keys
+Regions
+Amazon S3 data consistency model
+
+
+Amazon S3 features:
+
+Storage classes
+Bucket policies
+AWS identity and access management
+Access control lists
+Versioning
+Operations
+
+Operations:
+
+Common operations
+
+Create a bucket – Create and name your own bucket in which to store your objects.
+
+Write an object – Store data by creating or overwriting an object. When you write an object, you specify a unique key in the namespace of your bucket. This is also a good time to specify any access control you want on the object.
+
+Read an object – Read data back. You can download the data via HTTP or BitTorrent.
+
+Delete an object – Delete some of your data.
+
+List keys – List the keys contained in one of your buckets. You can filter the key list based on a prefix.

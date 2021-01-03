@@ -1,0 +1,13 @@
+VPC peering is a tool we can use when we want our VPCs to communicate using private
+IP addresses as if they are on the same network. We also have the newly released
+ability to peer VPCs across regions.
+
+UPDATE: Amazon Virtual Private Cloud (VPC) now supports IPv6 traffic over Inter-Region
+ VPC Peering. With this launch, your resources in different AWS regions,
+ can communicate with each other using IPv6 addresses without requiring gateways,
+ VPN connections, or separate physical hardware. Inter-Region VPC Peering encrypts
+ inter-region traffic with no single point of failure or bandwidth bottleneck. Traffic
+ using Inter-Region VPC Peering always stays on the AWS global network and never traverses
+ the public internet.
+
+ Read more: https://aws.amazon.com/about-aws/whats-new/2019/11/inter-region-vpc-peering-supports-ipv6-traffic/

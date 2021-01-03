@@ -1,0 +1,17 @@
+Managing Your ElastiCache for Redis Implementation:
+
+Engine Versions and Upgrading
+Choosing Regions and Availability Zones
+Using Local Zones with ElastiCache
+Managing Maintenance
+Managing Nodes
+Managing Your ElastiCache Clusters
+Using Outposts
+Accessing Your Cluster or Replication Group
+Working with Shards
+Replication Across AWS Regions Using Global Datastores
+High Availability Using Replication Groups
+Finding Connection Endpoints
+Backup and Restore for ElastiCache for Redis
+Scaling ElastiCache for Redis Clusters
+Configuring Engine Parameters Using Parameter Groups

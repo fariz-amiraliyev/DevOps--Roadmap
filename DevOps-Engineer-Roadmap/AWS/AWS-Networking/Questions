@@ -1,0 +1,50 @@
+1. What is private addressing space ?
+2. how to choose VPC CIDR blocks ?
+3. can we change CIDR blocks after creating VPC ? NO
+4. how to plan subnetting ?
+5. How is connected subnets and AZ's ?
+6. How many tiers need in each subnet ? DB, WEBserver, Managment
+7. how to achieve efficiency of subnet CIDRs ?
+8. How aws vpc router connect with subnets ? with DHCP
+9. what is prefix list in VPC ?
+10. when have to use custom route table not main route table ?
+11. how many subnets can we crate in one AZs ?
+12. how mane IP address reserved by AWS in each CIDR block ? 5
+13. Which IP address are reserved by AWS in each CIDR block ?
+14. https://cidr.xyz/  ?
+15. Do i have to create route table for each subnet separatly ?
+   A subnet can only be associated with one route table at a time,
+   but you can associate multiple subnets with the same subnet route table.
+16. can I add on route table to 2 subnet ?
+17. what networking contructs have in VPC ?
+18. how works subnet security ?
+19. how instance get IP address ?
+20. how many ENI can be attached to EC2 ?
+21. does AWS support NIC teaming ? not
+22. why we use elastik IP ?
+23. when we use egress only internet gateway ?
+24. how connect subents with IGW ? with creating route table and adding
+    IGW as a target
+25. what is security group self referncing ?
+26. how many security groups can be attacehd to one ec2 ?
+27. what does it mean statfull of security groups ?
+28. how works NACLS with role numbers ?
+29. what is mandatory NACLS roles ?
+30. what does it mean statless NACLS ?
+31. can we assign multiple sg's to one ENI ? yes
+32. security groups work only with allow ? yes
+33. What are AWS WAF, AWS Shield, and AWS Firewall Manager?
+34. what is Enhanced Network?
+35. what is placement groups ?
+36. what is local, static and dynamic route tables ?
+37. what is the difference between elastik Ip and private IP ?
+38. when using NAT gateway ?
+39. what is ClassicLink DNS Support ?
+40. how many route tables need to create in VPC ?
+41. how can add IGW to VPC ? attached
+42. why we use NAT gateways ?
+43. can we add security group to subnet ?
+44. how dns works ?
+45. what is route53 alias record ?
+46. what is route53 health checks ?
+47. 

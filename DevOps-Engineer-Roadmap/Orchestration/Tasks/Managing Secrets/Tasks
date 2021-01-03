@@ -1,0 +1,9 @@
+Managing Secrets
+Managing Secret using kubectl
+Creating Secret objects using kubectl command line.
+
+Managing Secret using Configuration File
+Creating Secret objects using resource configuration file.
+
+Managing Secret using Kustomize
+Creating Secret objects using kustomization.yaml file.

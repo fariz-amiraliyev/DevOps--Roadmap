@@ -1,0 +1,67 @@
+1. An electromagnetic pulse (EMP) from a sun flare takes out the electrical grid. What type of disaster is this?
+   Data Induced
+  Failure of utilities or adverse environmental conditions are considered Infrastructure disasters.
+
+
+2. You are reviewing the disaster recovery plan for a client. Which of the following statements would you suggest your client review?
+   Because Aurora PostgreSQL cannot support regional failover, we must manually promote a remote Read Replica in the case of a regional failure.
+
+3. For a new EC2 file server, you want RAID fault-tolerance for 1 TB of data. Which option should you choose?
+   RAID1 with two EBS volumes of not less than 1 TB each.
+
+4. Which of the following provide the highest write performance?
+
+RAID0, sometimes known as striping, provides the highest write performance of
+these options because writes are distributed across disks and no parity is required.
+
+5. What is the relationship between RPO and BC?
+   Recovery Point Objective will define the potential for data loss during a disaster.
+   This can inform an expectation of manual data re-entry for BC planners.
+   RPO provides an expectation of potential manual data re-entry for recovery plans.
+
+6. Your client has defined an RPO and RTO of 24 hours for their 2GB database. What general approach would you
+    recommend to fulfill these requirements most cost-effectively?
+    Backup and Restore
+    With the relatively small data size and generous RTO/RPO, a simple backup and restore process would work well.
+
+7. You need an in-memory cache but you want it to be able to survive an AZ failure. Which option is best?
+   Elasticache for Redis
+
+8. Which is false about Redshift in the context of fault tolerance?
+   Redshift multi-node clusters are multi-AZ by default.
+
+9. Your client is seeking recommendations to help reduce the risk of underlying hardware failure on AWS. Which might you recommend?
+   Make use spread placement groups
+   Make use of horizontal scaling over vertical scaling where possible
+
+10.Creating a new AMI, assigning it to a new Launch Configuration and then updating an existing Auto Scaling Group is an example of this upgrade method:
+   Disposable Upgrade
+  A Disposable Upgrade is one were a new release is deployed on new instances while instances containing the old version are terminated.
+
+11. You are responsible for managing landscapes in multiple regions. You want to use OpsWorks Stacks to
+    help in that management. Which of the following are false?
+    OpsWorks allows you to clone stacks within the same region and to other regions.
+
+12. You are helping a customer build a CloudFormation template. During the stack creation,
+   you need to get a software license key from a third-party via API call. What resource would you use?
+    AWS::CloudFormation::CustomResource
+    There are a few ways to call an API but among these choices, AWS:CloudFormation::CustomResource
+    is the only one that can be used to call out to fetch a value from a third-party API.
+
+13. Which of these are NOT benefits of Continuous Delivery?
+    Automated software releases to production
+
+14. Your organization does not have a good software QA process in place and its difficult to
+    anticipate how your app will perform in production. What deployment method presents the lowest risk in this situation?
+    Canary Release
+15. Which AWS service can help orchestration of a continuous delivery process?
+   AWS CodePipeline
+   AWS CodePipeline is a continuous delivery service that enables you to model, visualize, and automate the steps required to release your software.
+
+  16. Your company has strict change management processes in place that require extensive review of potential
+       impacts of changes. What CloudFormation feature would be useful for this?
+      Change Sets
+
+  17. Your client has decided to use Elastic Beanstalk to facilitate deployments.
+      They want shortest deployment time above all other considerations. Which deployment option should they choose?
+      All at Once

@@ -1,0 +1,89 @@
+Simplify DNS management in a multi-account environment with Route 53 Resolver.
+
+
+How to centralize DNS management in a multi-account environment;
+
+The most common solution is to implement local DNS in each account and use
+conditional forwarders for DNS resolutions outside of this account.
+While this solution might be efficient for a single-account environment,
+it becomes complex in a multi-account environment.
+
+In this post, I will provide a solution to implement central DNS for
+multiple accounts. This solution reduces the number of DNS servers and
+forwarders needed to implement cross-account domain resolution.
+I will show you how to configure this solution in four steps:
+
+Set up your Central DNS account.
+Set up each participating account.
+Create Route53 associations.
+Configure on-premises DNS (if applicable).
+
+
+The DNS service included in AWS Managed Microsoft AD uses conditional forwarders to
+\forward domain resolution to either Amazon Route 53 (for domains in the awscloud.com zone) or
+to on-premises DNS servers (for domains in the example.com zone). You’ll use AWS Managed Microsoft
+AD as the primary DNS server for other application accounts in the multi-account environment
+(participating accounts).
+
+A participating account is any application account that hosts a VPC and uses the
+centralized AWS Managed Microsoft AD as the primary DNS server for that VPC.
+
+You associate the DNS-VPC with the unique hosted zone in each of the participating accounts,
+this allows AWS Managed Microsoft AD to use Route 53 to resolve all registered domains
+in private, hosted zones in participating accounts.
+
+In this diagram, all VPCs in participating accounts use Dynamic Host Configuration
+ Protocol (DHCP) option sets. The option sets configure EC2 instances to use the
+ centralized AWS Managed Microsoft AD in DNS-VPC as their default DNS Server.
+ You also configure AWS Managed Microsoft AD to use conditional forwarders to
+ send domain queries to Route53 or on-premises DNS servers based on query zone.
+ For domain resolution across accounts to work, we associate DNS-VPC with each
+ hosted zone in participating accounts.
+
+ The VPC that hosts AWS Managed Microsoft AD (DNS-VPC) will be associated with all
+ private hosted zones in participating accounts.
+To be able to resolve domain names across AWS and on-premises,
+connectivity through Direct Connect or VPN must be in place.
+
+
+Step 1: Set up a centralized DNS account
+In previous AWS Security Blog posts, Drew Dennis covered a couple of options for establishing DNS resolution between on-premises networks and Amazon VPC. In this post, he showed how you can use AWS Managed Microsoft AD (provisioned with AWS Directory Service) to provide DNS resolution with forwarding capabilities.
+
+To set up a centralized DNS account, you can follow the same steps in Drew’s post to create AWS Managed Microsoft AD and configure the forwarders to send DNS queries for awscloud.com to default, VPC-provided DNS and to forward example.com queries to the on-premise DNS server.
+
+Here are a few considerations while setting up central DNS:
+
+The VPC that hosts AWS Managed Microsoft AD (DNS-VPC) will be associated with all private hosted zones in participating accounts.
+To be able to resolve domain names across AWS and on-premises, connectivity through Direct Connect or VPN must be in place.
+Step 2: Set up participating accounts
+The steps I suggest in this section should be applied individually in each application account that’s participating in central DNS resolution.
+
+Create the VPC(s) that will host your resources in participating account.
+Create VPC Peering between local VPC(s) in each participating account and DNS-VPC.
+Create a private hosted zone in Route 53. Hosted zone domain names must be unique across all accounts. In the diagram above, we used pa1.awscloud.com / pa2.awscloud.com / pa3.awscloud.com. You could also use a combination of environment and business unit: for example, you could use pa1.dev.awscloud.com to achieve uniqueness.
+Associate VPC(s) in each participating account with the local private hosted zone.
+
+
+The next step is to change the default DNS servers on each VPC using DHCP option set:
+
+Follow these steps to create a new DHCP option set. Make sure in the DNS Servers to put the private IP addresses of the two AWS Managed Microsoft AD servers that were created in DNS-VPC:
+
+
+Step 3: Associate DNS-VPC with private hosted zones in each participating account
+The next steps will associate DNS-VPC with the private, hosted zone in each participating account. This allows instances in DNS-VPC to resolve domain records created in these hosted zones. If you need them, here are more details on associating a private, hosted zone with VPC on a different account.
+
+In each participating account, create the authorization using the private hosted zone ID from the previous step, the region, and the VPC ID that you want to associate (DNS-VPC).
+
+aws route53 create-vpc-association-authorization –hosted-zone-id <hosted-zone-id> –vpc VPCRegion=<region>,VPCId=<vpc-id>
+
+In the centralized DNS account, associate DNS-VPC with the hosted zone in each participating account.
+
+aws route53 associate-vpc-with-hosted-zone –hosted-zone-id <hosted-zone-id> –vpc VPCRegion=<region>,VPCId=<vpc-id>
+
+After completing these steps, AWS Managed Microsoft AD in the centralized DNS account should be able to resolve domain records in the private, hosted zone in each participating account.
+
+
+Step 4: Setting up on-premises DNS servers
+This step is necessary if you would like to resolve AWS private domains from on-premises servers and this task comes down to configuring forwarders on-premise to forward DNS queries to AWS Managed Microsoft AD in DNS-VPC for all domains in the awscloud.com zone.
+
+The steps to implement conditional forwarders vary by DNS product. Follow your product’s documentation to complete this configuration.

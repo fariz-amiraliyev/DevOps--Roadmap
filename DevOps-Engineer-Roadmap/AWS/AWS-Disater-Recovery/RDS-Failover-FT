@@ -1,0 +1,15 @@
+
+
+ Techniques available to configure cross-region failover and fault
+ tolerance with RDS. We then use the AWS Management Console and whiteboarding
+ to detail some scenarios for failover and fault tolerance.
+
+
+Common tools in RDS Disaster Recovery:
+
+1. Automted backups
+2. Manual Snapshots
+3. Read replicas
+
+
+Asyncroize DB in different regions.

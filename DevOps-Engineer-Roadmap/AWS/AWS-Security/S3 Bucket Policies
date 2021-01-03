@@ -1,0 +1,54 @@
+You can use the AWS Policy Generator to create a bucket policy for your Amazon S3 bucket.
+
+
+Granting Permissions to Multiple Accounts with Added Conditions:
+
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AddCannedAcl",
+      "Effect":"Allow",
+      "Principal": {"AWS": ["arn:aws:iam::111122223333:root","arn:aws:iam::444455556666:root"]},
+      "Action":["s3:PutObject","s3:PutObjectAcl"],
+      "Resource":"arn:aws:s3:::awsexamplebucket1/*",
+      "Condition":{"StringEquals":{"s3:x-amz-acl":["public-read"]}}
+    }
+  ]
+}
+
+
+Granting Read-Only Permission to an Anonymous User:
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"PublicRead",
+      "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:GetObject","s3:GetObjectVersion"],
+      "Resource":["arn:aws:s3:::awsexamplebucket1/*"]
+    }
+  ]
+}
+
+Limiting Access to Specific IP Addresses:
+{
+  "Version": "2012-10-17",
+  "Id": "S3PolicyId1",
+  "Statement": [
+    {
+      "Sid": "IPAllow",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+	 "arn:aws:s3:::awsexamplebucket1",
+         "arn:aws:s3:::awsexamplebucket1/*"
+      ],
+      "Condition": {
+	 "NotIpAddress": {"aws:SourceIp": "54.240.143.0/24"}
+      }
+    }
+  ]
+}

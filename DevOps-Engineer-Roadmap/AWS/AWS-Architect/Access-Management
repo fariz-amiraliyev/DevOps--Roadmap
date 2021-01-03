@@ -1,0 +1,12 @@
+1. Principal
+2. Authentication
+3. Identity
+4. Authorization
+
+
+Policies and permissions in IAM:
+
+Permissions in the policies determine whether the request is allowed or denied.
+Most policies are stored in AWS as JSON documents. AWS supports six types of policies:
+identity-based policies, resource-based policies, permissions boundaries, Organizations
+SCPs, ACLs, and session policies.

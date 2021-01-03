@@ -1,0 +1,140 @@
+We can expand your VPC network by adding additional CIDR ranges.
+This capability can be used if you are running out of IP ranges within your existing VPC or if
+you have consumed all available RFC 1918 CIDR ranges within your corporate network.
+
+EKS supports additional IPv4 CIDR blocks in the 100.64.0.0/10 and 198.19.0.0/16 ranges.
+
+1. Add secondary CIDRs to your VPC
+2. You can use below commands to add 100.64.0.0/16 to your EKS cluster VPC.
+  Please note to change the Values parameter to EKS cluster name if you used different
+  name than eksctl-eksworkshop
+
+3. VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=eksctl-eksworkshop* | jq -r '.Vpcs[].VpcId')
+4. aws ec2 associate-vpc-cidr-block --vpc-id $VPC_ID --cidr-block 100.64.0.0/16
+5. Next step is to create subnets:
+
+   aws ec2 describe-instances --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*" --query
+   'Reservations[*].Instances[*].[PrivateDnsName,Tags[?Key==`eks:nodegroup-name`].Value|[0],Placement.AvailabilityZone,PrivateIpAddress,PublicIpAddress]'
+   --output table
+
+ export AZ1=us-east-2a
+ export AZ2=us-east-2b
+ export AZ3=us-east-2c
+ CGNAT_SNET1=$(aws ec2 create-subnet --cidr-block 100.64.0.0/19 --vpc-id $VPC_ID --availability-zone $AZ1 | jq -r .Subnet.SubnetId)
+ CGNAT_SNET2=$(aws ec2 create-subnet --cidr-block 100.64.32.0/19 --vpc-id $VPC_ID --availability-zone $AZ2 | jq -r .Subnet.SubnetId)
+ CGNAT_SNET3=$(aws ec2 create-subnet --cidr-block 100.64.64.0/19 --vpc-id $VPC_ID --availability-zone $AZ3 | jq -r .Subnet.SubnetId)
+
+ aws ec2 describe-subnets --filters Name=cidr-block,Values=192.168.0.0/19 --output text
+
+
+ 6. Here are the commands to add tags to both the subnets
+
+aws ec2 create-tags --resources $CGNAT_SNET1 --tags Key=eksctl.cluster.k8s.io/v1alpha1/cluster-name,Value=eksworkshop-eksctl
+aws ec2 create-tags --resources $CGNAT_SNET1 --tags Key=kubernetes.io/cluster/eksworkshop-eksctl,Value=shared
+aws ec2 create-tags --resources $CGNAT_SNET1 --tags Key=kubernetes.io/role/elb,Value=1
+aws ec2 create-tags --resources $CGNAT_SNET2 --tags Key=eksctl.cluster.k8s.io/v1alpha1/cluster-name,Value=eksworkshop-eksctl
+aws ec2 create-tags --resources $CGNAT_SNET2 --tags Key=kubernetes.io/cluster/eksworkshop-eksctl,Value=shared
+aws ec2 create-tags --resources $CGNAT_SNET2 --tags Key=kubernetes.io/role/elb,Value=1
+aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=eksctl.cluster.k8s.io/v1alpha1/cluster-name,Value=eksworkshop-eksctl
+aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=kubernetes.io/cluster/eksworkshop-eksctl,Value=shared
+aws ec2 create-tags --resources $CGNAT_SNET3 --tags Key=kubernetes.io/role/elb,Value=1
+
+
+SNET1=$(aws ec2 describe-subnets --filters Name=cidr-block,Values=192.168.0.0/19 | jq -r '.Subnets[].SubnetId')
+RTASSOC_ID=$(aws ec2 describe-route-tables --filters Name=association.subnet-id,Values=$SNET1 | jq -r '.RouteTables[].RouteTableId')
+aws ec2 associate-route-table --route-table-id $RTASSOC_ID --subnet-id $CGNAT_SNET1
+aws ec2 associate-route-table --route-table-id $RTASSOC_ID --subnet-id $CGNAT_SNET2
+aws ec2 associate-route-table --route-table-id $RTASSOC_ID --subnet-id $CGNAT_SNET3
+
+
+
+7. CONFIGURE CNI
+
+Before we start making changes to VPC CNI, let’s make sure we are using latest CNI version
+Run this command to find CNI version:
+kubectl describe daemonset aws-node --namespace kube-system | grep Image | cut -d "/" -f 2
+Upgrade to the latest v1.7 config if you have an older version:
+kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.7/config/v1.7/aws-k8s-cni.yaml
+Wait until all the pods are recycled. You can check the status of pods by using this command
+kubectl get pods -n kube-system -w
+
+
+8. Configure Custom networking:
+
+Edit aws-node configmap and add AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG environment variable to the node container spec and set it to true
+Note: You only need to set one environment variable in the CNI daemonset configuration:
+
+kubectl set env ds aws-node -n kube-system AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG=true
+kubectl describe daemonset aws-node -n kube-system | grep -A5 Environment
+
+
+
+9. Terminate worker nodes so that Autoscaling launches newer nodes that come bootstrapped with custom network config:
+INSTANCE_IDS=(`aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*" --output text` )
+for i in "${INSTANCE_IDS[@]}"
+do
+echo "Terminating EC2 instance $i ..."
+aws ec2 terminate-instances --instance-ids $i
+done
+10. Create custom resources for ENIConfig CRD:
+    we will add custom resources to ENIConfig custom resource definition (CRD).
+     CRDs are extensions of Kubernetes API that stores collection of API objects of certain kind.
+     In this case, we will store VPC Subnet and SecurityGroup configuration information in these
+     CRDs so that Worker nodes can access them to configure VPC CNI plugin.
+
+     You should have ENIConfig CRD already installed with latest CNI version (1.3+). You can check if its installed by running this command:
+     kubectl get crd
+
+
+11. If you don’t have ENIConfig installed, you can install it by using this command
+    kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/release-1.7/config/v1.7/aws-k8s-cni.yaml
+
+12. Check the AZs and Subnet IDs for these subnets. Make note of AZ info as you will need this when you apply annotation to Worker nodes using custom network config
+
+aws ec2 describe-subnets  --filters "Name=cidr-block,Values=100.64.*" --query 'Subnets[*].[CidrBlock,SubnetId,AvailabilityZone]' --output table
+
+
+Check your Worker Node SecurityGroup
+INSTANCE_IDS=(`aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*" --output text`)
+for i in "${INSTANCE_IDS[@]}"
+do
+  echo "SecurityGroup for EC2 instance $i ..."
+  aws ec2 describe-instances --instance-ids $i | jq -r '.Reservations[].Instances[].SecurityGroups[].GroupId'
+done
+
+
+aws ec2 describe-instances --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*"
+ --query 'Reservations[*].Instances[*].[PrivateDnsName,Tags[?Key==`eks:nodegroup-name`].Value|[0],Placement.AvailabilityZone,PrivateIpAddress,PublicIpAddress]' --output table
+kubectl annotate node <nodename>.<region>.compute.internal k8s.amazonaws.com/eniConfig=group1-pod-netconfig
+
+
+kubectl annotate node ip-192-168-33-135.us-east-2.compute.internal k8s.amazonaws.com/eniConfig=group1-pod-netconfig
+
+Additional notes on ENIConfig naming and automatic matching
+Optionally, you specify which node label will be used to match the ENIConfig name. Consider the following example: you have one ENIConfig per availability zone, named after the AZ (us-east-2a, us-east-2b, us-east-2c). You can then use a label already applied to your nodes, such as topology.kubernetes.io/zone where the value of the label matches the ENIConfig name.
+
+
+$ kubectl describe nodes | grep 'topology.kubernetes.io/zone'
+                    topology.kubernetes.io/zone=us-east-2a
+                    topology.kubernetes.io/zone=us-east-2c
+                    topology.kubernetes.io/zone=us-east-2b
+
+kubectl set env daemonset aws-node -n kube-system ENI_CONFIG_LABEL_DEF=topology.kubernetes.io/zone
+
+INSTANCE_IDS=(`aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters "Name=tag-key,Values=eks:cluster-name" "Name=tag-value,Values=eksworkshop*" --output text` )
+for i in "${INSTANCE_IDS[@]}"
+do
+	echo "Terminating EC2 instance $i ..."
+	aws ec2 terminate-instances --instance-ids $i
+done
+
+
+
+Delete secondary CIDR from your VPC
+
+VPC_ID=$(aws ec2 describe-vpcs --filters Name=tag:Name,Values=eksctl-eksworkshop* | jq -r '.Vpcs[].VpcId')
+ASSOCIATION_ID=$(aws ec2 describe-vpcs --vpc-id $VPC_ID | jq -r '.Vpcs[].CidrBlockAssociationSet[] | select(.CidrBlock == "100.64.0.0/16") | .AssociationId')
+aws ec2 delete-subnet --subnet-id $CGNAT_SNET1
+aws ec2 delete-subnet --subnet-id $CGNAT_SNET2
+aws ec2 delete-subnet --subnet-id $CGNAT_SNET3
+aws ec2 disassociate-vpc-cidr-block --association-id $ASSOCIATION_ID

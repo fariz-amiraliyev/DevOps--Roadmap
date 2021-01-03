@@ -1,0 +1,9 @@
+Amazon EMR supports many applications, such as Hive, Pig, and the Spark Streaming
+library to provide capabilities such as using higher-level languages to create processing workloads,
+leveraging machine learning algorithms, making stream processing applications, and building data warehouses.
+ In addition, Amazon EMR also supports open-source projects that have their own cluster management
+ functionality instead of using YARN.
+
+You use various libraries and languages to interact with the applications that you run in Amazon EMR.
+For example, you can use Java, Hive, or Pig with MapReduce or Spark Streaming, Spark SQL, MLlib,
+and GraphX with Spark.

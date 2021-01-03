@@ -1,0 +1,56 @@
+Cluster Autoscaler for AWS provides integration with Auto Scaling groups.
+It enables users to choose from four different options of deployment:
+
+
+Horizontal Pod Autoscaler (HPA) scales the pods in a deployment or replica set.
+It is implemented as a K8s API resource and a controller. The controller manager
+queries the resource utilization against the metrics specified in each HorizontalPodAutoscaler
+definition. It obtains the metrics from either the resource metrics API (for per-pod resource metrics),
+ or the custom metrics API (for all other metrics).
+
+Cluster Autoscaler (CA) a component that automatically adjusts the size of a Kubernetes
+Cluster so that all pods have a place to run and there are no unneeded nodes.
+
+One Auto Scaling group
+Multiple Auto Scaling groups
+Auto-Discovery
+Control-plane Node setup
+Auto-Discovery is the preferred method to configure Cluster Autoscaler. Click here for
+more information.
+
+Cluster Autoscaler will attempt to determine the CPU, memory, and GPU resources provided
+ by an Auto Scaling Group based on the instance type specified in its Launch Configuration
+ or Launch Template.
+
+Configure the ASG
+aws autoscaling \
+    describe-auto-scaling-groups \
+    --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].[AutoScalingGroupName, MinSize, MaxSize,DesiredCapacity]" \
+    --output table
+
+    eksctl utils associate-iam-oidc-provider \
+    --cluster eksworkshop-eksctl \
+    --approve
+
+
+
+    eksctl create iamserviceaccount \
+    --name cluster-autoscaler \
+    --namespace kube-system \
+    --cluster eksworkshop-eksctl \
+    --attach-policy-arn "arn:aws:iam::${ACCOUNT_ID}:policy/k8s-asg-policy" \
+    --approve \
+    --override-existing-serviceaccounts
+
+
+
+    kubectl apply -f https://www.eksworkshop.com/beginner/080_scaling/deploy_ca.files/cluster-autoscaler-autodiscover.yaml
+
+
+
+    kubectl -n kube-system \
+    annotate deployment.apps/cluster-autoscaler \
+    cluster-autoscaler.kubernetes.io/safe-to-evict="false"
+
+
+    kubectl -n kube-system logs -f deployment/cluster-autoscaler

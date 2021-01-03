@@ -1,0 +1,8 @@
+How can we restore a snapshot to an RDS instance that is managed by terraform?
+There is a way to restore the snapshot to a new RDS instance, but when we do a
+terraform apply later, this instance is destroyed.
+
+This is how we do it now:
+We’ve written a TF code to restore the RDS from a snapshot using the parameter snapshot_identifier.
+
+  snapshot_identifier         = "${var.db_snapshot_identifier}"

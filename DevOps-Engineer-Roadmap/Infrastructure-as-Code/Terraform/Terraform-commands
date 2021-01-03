@@ -1,0 +1,2 @@
+1. terraform state list
+2. terraform plan/apply --var-file=filename.tf --target=module.module-name  

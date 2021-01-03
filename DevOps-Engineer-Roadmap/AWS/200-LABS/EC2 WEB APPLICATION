@@ -1,0 +1,18 @@
+https://www.wellarchitectedlabs.com/security/200_labs/200_automated_deployment_of_ec2_web_application/
+
+
+This lab will create the web application and all components using the example
+CloudFormation template, inside the VPC you have created previously. The components created include:
+Auto scaling group of web instances
+Application load balancer
+Security groups for load balancer and web instances
+Custom CloudWatch metrics and logs for web instances
+IAM role for web instances that grants permission to Systems Manager and CloudWatch
+Instances are configured from the latest Amazon Linux 2 Amazon Machine Image at
+boot time using user data to install agents and configure servicess.
+Get temporary security credentials securely by using a role attached to the auto-scaled instances.
+Restrict network traffic allowed through security groups.
+CloudFormation to automate configuration management.
+Instances do not allow for SSH, instead Systems Manager may be used for administration.
+AWS Key Management Service is used for key management of Aurora database.
+Allow for Systems Manager to be used for management instead of SSH

@@ -1,0 +1,12 @@
+---
+- name: Create/Update security groups
+  ec2_group:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    vpc_id: "{{ aws_vpc_id }}"
+    rules: "{{ item.rules }}"
+    purge_rules: "{{ item.purge_rules }}"
+  register: security_group_status
+  with_items: "{{ security_groups }}"

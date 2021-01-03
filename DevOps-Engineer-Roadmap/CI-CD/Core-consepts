@@ -1,0 +1,9 @@
+Continuous integration (CI) is a software development practice where developers regularly merge their
+code changes into a central repository, after which automated builds and tests are run.
+
+
+Continuous deployment/delivery (CD) is a software development practice where code changes are
+automatically built, tested, and prepared for production release. It expands on continuous integration
+by deploying all code changes to a testing environment, a production environment, or both after the
+build stage has been completed. Continuous delivery can be fully automated with a workflow process or
+partially automated with manual steps at critical points.

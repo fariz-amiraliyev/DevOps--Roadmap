@@ -1,0 +1,33 @@
+The owner of the requester VPC sends a request to the owner of the accepter
+VPC to create the VPC peering connection. The accepter VPC can be owned by you,
+or another AWS account, and cannot have a CIDR block that overlaps with the
+requester VPC's CIDR block.
+
+The owner of the accepter VPC accepts the VPC peering connection request
+to activate the VPC peering connection.
+
+To enable the flow of traffic between the VPCs using private IP addresses,
+the owner of each VPC in the VPC peering connection must manually add a
+route to one or more of their VPC route tables that points to the IP address
+range of the other VPC (the peer VPC).
+
+If required, update the security group rules that are associated with your
+instance to ensure that traffic to and from the peer VPC is not restricted.
+If both VPCs are in the same region, you can reference a security group from
+the peer VPC as a source or destination for ingress or egress rules in your
+security group rules.
+
+By default, if instances on either side of a VPC peering connection address
+each other using a public DNS hostname, the hostname resolves to the instance's
+public IP address. To change this behavior, enable DNS hostname resolution for
+your VPC connection. After enabling DNS hostname resolution, if instances on
+either side of the VPC peering connection address each other using a public
+DNS hostname, the hostname resolves to the private IP address of the instance.
+
+
+VPC peering connection lifecycle:
+
+A VPC peering connection is a one to one relationship between two VPCs.
+You can create multiple VPC peering connections for each VPC that you own,
+but transitive peering relationships are not supported. You do not have any
+peering relationship with VPCs that your VPC is not directly peered with.

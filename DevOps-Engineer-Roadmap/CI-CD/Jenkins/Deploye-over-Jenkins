@@ -1,0 +1,75 @@
+How to Deploy to SLODEV and Push Button Environments with UI Crane
+A number of Earnest UI apps are deployed as static assets to AWS S3 buckets via our
+ui-crane tool. Developers call the uiCrane() function from the jenkins-pipeline-library
+groovy code within a Jenkins pipeline, and this in turn pulls in the ui-crane-cli from
+the ui-crane repository, and uses it to package and publish the assets.
+
+The publication process works nearly the same way for Push Button Environments and the
+SLODEV environments, however there are a few minor changes, which this document covers.
+ Note that some repositories may have slightly different implementation than others.
+
+Steps:
+
+Write a “Deploy to PBE” (or similar naming convention) stage.
+
+Identify the environment name of an existing PBE environment, or use the string slodev
+for SLODEV (ideally this would be a Jenkins job parameter, but a static value can also work).
+
+Provide the environment name as the environment parameter to the uiCrane() function
+call as demonstrated in the following stage, and UI_CRANE_PBE_AWS_CREDENTIALS in lieu
+of UI_CRANE_STAGINGor similar that a legacy environment would use.
+
+    stage("DEPLOY TO PUSH BUTTON ENVIRONMENT") {
+
+      environment {
+        RUNDECK_AUTH_TOKEN = credentials("RUNDECK_AUTH_TOKEN")
+        UI_CRANE = credentials("UI_CRANE_PBE_AWS_CREDENTIALS")
+      }
+
+      steps {
+        script {
+          prepareNpmEnv()
+          prepareDockerEnv()
+          printEnvSorted()
+
+          sh "./scripts/ci/build-storybook"
+
+          uiCrane(
+            environment: "slodev",
+            applicationName: "maui",
+            artifactFileName: "${env.WORKSPACE}/storybook/maui-storybook.slodev.zip"
+          )
+        }
+      }
+      post {
+        always {
+          chown()
+          sh "scripts/ci/stop"
+        }
+      }
+    }
+4. Either parametrize ./scripts/ci/build-storybook to receive different environment
+names, or create a copy of it that is parametrized or passes the correct value. In
+this example, ./scripts/ci/build-storybook is unchanged, and the value is hardcoded into the build file.
+
+5. Ideally, pass the parameter into the build script, so that it refers to the correct
+environment in the artifact name, and the same script can be used for legacy or PBE/SLODEV
+environments. The example below hardcodes the correct value into the artifact name, but
+does not show you how to pass the parameter.
+
+#!/bin/bash
+
+set -eou pipefail
+
+rm -Rf ./dist
+build-storybook -c .storybook -o dist
+pushd ./dist
+zip ../maui-storybook.slodev.zip -r .
+popd
+6. Push these changes to your branch and hit Build Now (or Build With Parameters)
+if your build is not configured to trigger automatically.
+
+7. Assuming any other application dependencies are properly deployed, you should
+be able to confirm that the assets have been published by navigating to the app.
+If that isn’t the case, you can confirm publication by checking the dates in the
+S3 bucket itself in the target account, for example, arn:aws:s3:::pbe-slodev-ui-crane-s3-bucket.

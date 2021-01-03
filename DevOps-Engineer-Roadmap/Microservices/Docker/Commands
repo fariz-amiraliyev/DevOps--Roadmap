@@ -1,0 +1,26 @@
+1.  docker login:
+   username
+   password
+2.  docker pull earnest/aws-sts-token-generator
+3.  docker pull earnest/aws-sts-token-generator
+4.  aws-token.sh --account earnest
+5.  brew cask install docker-toolbox
+6.  docker image ls
+7.  docker run -it  image_name
+8.  docker image history --no-trunc image_name > image_history
+9.  docker image inspect image_name
+10. docker run -it ubuntu bash
+11. docker version
+12. docker run hello-world
+13. docker run --rm -it amazon/aws-cli --version
+14. docker run -it --rm --entrypoint /bin/bash -v $HOME/.aws/:/root/.aws/ earnest/aws-sts-token-generator:2.0.0 "$@"
+15. docker image tag MyApp:latest myrepo/MyApp:latest
+16. docker login
+17. docker push myrepo/MyApp:latest
+18. docker info
+19. docker run hello-world
+20. docker search (mongo for example)
+21. docker run mongo
+22. docker images
+23. docker inspect
+24. docker network ls

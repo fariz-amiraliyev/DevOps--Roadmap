@@ -1,0 +1,6 @@
+A nodegroup can be scaled by using the eksctl scale nodegroup command:
+
+eksctl scale nodegroup --cluster=<clusterName> --nodes=<desiredCount> --name=<nodegroupName> [ --nodes-min=<minSize> ] [ --nodes-max=<maxSize> ]
+
+For example, to scale nodegroup ng-a345f4e1 in cluster-1 to 5 nodes, run:
+eksctl scale nodegroup --cluster=cluster-1 --nodes=5 ng-a345f4e1

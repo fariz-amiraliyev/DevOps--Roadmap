@@ -1,0 +1,15 @@
+nodeSelector is the simplest recommended form of node selection constraint.
+nodeSelector is a field of PodSpec. It specifies a map of key-value pairs. For
+the pod to be eligible to run on a node, the node must have each of the indicated
+key-value pairs as labels (it can have additional labels as well). The most common
+usage is one key-value pair.
+Attach a label to the node
+Run kubectl get nodes to get the names of your cluster’s nodes.
+
+kubectl label nodes <node-name> <label-key>=<label-value>
+
+
+For example, if my node name is ‘ip-192-168-15-64.us-west-2.compute.internal’ and my desired label is ‘disktype=ssd’, then I can run
+kubectl label nodes ip-192-168-15-64.us-west-2.compute.internal disktype=ssd
+
+kubectl get nodes --show-labels

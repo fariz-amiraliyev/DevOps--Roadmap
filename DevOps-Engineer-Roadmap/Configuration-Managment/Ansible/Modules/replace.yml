@@ -1,0 +1,19 @@
+- name: Before Ansible 2.3, option 'dest', 'destfile' or 'name' was used instead of 'path'
+  replace:
+    path: /etc/hosts
+    regexp: '(\s+)old\.host\.name(\s+.*)?$'
+    replace: '\1new.host.name\2'
+
+- name: Replace after the expression till the end of the file (requires Ansible >= 2.4)
+  replace:
+    path: /etc/apache2/sites-available/default.conf
+    after: 'NameVirtualHost [*]'
+    regexp: '^(.+)$'
+    replace: '# \1'
+
+- name: Replace before the expression till the begin of the file (requires Ansible >= 2.4)
+  replace:
+    path: /etc/apache2/sites-available/default.conf
+    before: '# live site config'
+    regexp: '^(.+)$'
+    replace: '# \1'

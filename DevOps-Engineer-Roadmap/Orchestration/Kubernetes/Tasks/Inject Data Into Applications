@@ -1,0 +1,8 @@
+Inject Data Into Applications:
+Define a Command and Arguments for a Container
+Define Dependent Environment Variables
+Define Environment Variables for a Container
+Expose Pod Information to Containers Through Environment Variables
+Expose Pod Information to Containers Through Files
+Distribute Credentials Securely Using Secrets
+Inject Information into Pods Using a PodPreset

@@ -1,0 +1,22 @@
+yum update
+yum update --nogpgcheck   # Update without gpg checking
+      You can use the GPG keys to verify the authenticity of an RPM package.
+      The –nogpgcheck option in yum will instruct it to skip checking GPG signatures on packages.
+      This is useful in cases where you have an unsigned package, or you just don’t have the GPG key.
+
+yum clean all
+yum update name-of-package  # update a single package
+yum check-update
+yum update --exclude=kernel*  or yum update -x 'kernel*'
+yum update --exclude=kernel* --exclude=httpd   # Exclude multiple packages
+yum history     #Check when last yum update ran
+yum history undo 7   # Rollback (revert) update
+yum clean all     #Clean up a failed yum update
+yum update --skip-broken
+
+Get a list of packages that need an update:
+yum update
+yum updateinfo
+yum upgrade # . Yum update will update the packages on your system, but skip removing obsolete packages.
+                Yum upgrade will also update all the packages on your system, but it will also remove
+                the obsolete packages.

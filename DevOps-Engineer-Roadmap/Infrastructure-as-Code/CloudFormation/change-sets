@@ -1,0 +1,8 @@
+When need to update your stack's resources, can modify the stack's template.
+Don't need to create a new stack and delete the old one. To update a stack,
+create a change set by submitting a modified version of the original stack template,
+different input parameter values, or both. AWS CloudFormation compares the modified
+template with the original template and generates a change set. The change set
+lists the proposed changes. After reviewing the changes, can execute
+the change set to update stack or can create a new change set.
+The following diagram summarizes the workflow for updating a stack.

@@ -1,0 +1,16 @@
+Lock Away Your AWS Account Root User Access Keys
+Create Individual IAM Users
+Use Groups to Assign Permissions to IAM Users
+Grant Least Privilege
+Get Started Using Permissions with AWS Managed Policies
+Use Customer Managed Policies Instead of Inline Policies
+Use Access Levels to Review IAM Permissions
+Configure a Strong Password Policy for Your Users
+Enable MFA
+Use Roles for Applications That Run on Amazon EC2 Instances
+Use Roles to Delegate Permissions
+Do Not Share Access Keys
+Rotate Credentials Regularly
+Remove Unnecessary Credentials
+Use Policy Conditions for Extra Security
+Monitor Activity in Your AWS Account

@@ -1,0 +1,56 @@
+Difference between NACLs and SGs
+NACL and SG are both firewall rules, however they have notable differences that I have summarized in the following table:
+
+ 	NACL	SG
+Scopes	subnet or VPC - applies to all instances in the subnet or VPC	instance - applies to all instances linked to the SG
+Cardinality	1 NACL per subnet or VPC	1 to many SG per instance or instance group
+Actions	allow or deny	allow - every unspecified rule defaults to deny
+States	stateless - i.e. NACLs allow traffic looking at the IP and port regardless of the fact that it is a reply request	statefull - i.e. SGs automatically allow a reply to be returned. They maintain a state table that tracks the origin and destination IP and port. Only one rule (inbound or outbound) is required
+Rule order	rules are applied in order	rules are applied simultaneously
+
+
+Note that inbound traffic first passes through the NACL firewalls then to the SG firewalls. Outbound traffic goes the opposite way.
+
+Firewall requirement for EKS
+The AWS documentation specifies the following requirements:
+
+traffic needs to be allowed between the control plane and managed node groups
+traffic needs to be allowed between nodes
+nodes and control plane should have outbound access to the internet.
+Note that one of the possibilities your nodes might not join your cluster is if they do not have access to the internet. Indeed, they need access to the Amazon EKS API.
+
+SG configuration for EKS
+Taking into account above consideration, here is an SG proposition for EKS.
+
+Inbound
+
+Protocol	Port	Source
+TCP	443	self
+TCP	1024 - 65535	self
+
+
+Outbound
+
+Protocol	Port	Destination
+TCP	443	0.0.0.0/0
+TCP	80	0.0.0.0/0
+TCP	1024 - 65535	0.0.0.0/0
+NACL configuration for EKS
+Taking into account above consideration, here is a NACL proposition for EKS.
+
+Inbound
+
+Rule #	Protocol	Port	Source	Allow / Deny
+100	TCP	All	self	Allow
+200	TCP	1024 - 65535	0.0.0.0/0	Allow
+9000	All	All	All	Deny
+
+
+Outbound
+
+Rule #	Protocol	Port	Destination	Allow / Deny
+100	TCP	All	self	Allow
+200	TCP	1024 - 65535	0.0.0.0/0	Allow
+300	TCP	80	0.0.0.0/0	Allow
+400	TCP	443	0.0.0.0/0	Allow
+9000	All	All	All	Deny

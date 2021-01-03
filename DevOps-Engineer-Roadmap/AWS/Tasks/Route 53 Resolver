@@ -1,0 +1,15 @@
+I’ll show you a modernized solution to centralize DNS management in
+a multi-account environment by using Route 53 Resolver. This solution
+allows you to resolve domains across multiple accounts and between workloads running on
+AWS and on-premises without the need to run a domain controller in AWS.
+
+
+My solution will show you how to solve three primary use-cases for domain resolution:
+
+Resolving on-premises domains from workloads running in your VPCs.
+Resolving private domains in your AWS environment from workloads running on-premises.
+Resolving private domains between workloads running in different AWS accounts.
+The following diagram explains the high-level full architecture.
+
+
+https://aws.amazon.com/blogs/security/simplify-dns-management-in-a-multiaccount-environment-with-route-53-resolver/

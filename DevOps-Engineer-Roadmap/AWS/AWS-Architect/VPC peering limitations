@@ -1,0 +1,33 @@
+You cannot create a VPC peering connection between VPCs that have matching or
+overlapping IPv4 or IPv6 CIDR blocks. Amazon always assigns your VPC a unique I
+Pv6 CIDR block. If your IPv6 CIDR blocks are unique but your IPv4 blocks are not,
+ you cannot create the peering connection.
+
+ You have a quota on the number of active and pending VPC peering connections:
+ Active VPC peering connections per VPC :50
+ Outstanding VPC peering connection requests : 25
+
+
+ VPC peering does not support transitive peering relationships. In a
+ VPC peering connection, your VPC does not have access to any other VPCs
+ with which the peer VPC may be peered. This includes VPC peering connections
+ that are established entirely within your own AWS account.
+
+You cannot have more than one VPC peering connection between the same two VPCs at the same time.
+
+An inter-region VPC peering connection has additional limitations:
+
+You cannot create a security group rule that references a peer VPC security group.
+
+You cannot enable support for an EC2-Classic instance that's linked to a VPC via
+ClassicLink to communicate with the peer VPC.
+
+The Maximum Transmission Unit (MTU) across the VPC peering connection is 1500 bytes
+(jumbo frames are not supported).
+
+You must enable DNS resolution support for the VPC peering connection to resolve private
+DNS hostnames of the peered VPC to private IP addresses, even if the IPv4 CIDR for the VPC
+falls into the private IPv4 address ranges specified by RFC 1918.
+
+Inter-region peering in China is only allowed between the China (Beijing) Region,
+operated by SINNET and the China (Ningxia) Region, operated by NWCD.

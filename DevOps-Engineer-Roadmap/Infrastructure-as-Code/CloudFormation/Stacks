@@ -1,0 +1,11 @@
+AWS CloudFormation manage related resources as a single unit called a stack.
+AWS CloudFormation create, update, and delete a collection of resources
+by creating, updating, and deleting stacks.
+
+All the resources in a stack are defined by the stack's AWS CloudFormation template.
+When creating a template that includes an Auto Scaling group, Elastic Load Balancing load
+balancer, and an Amazon Relational Database Service (Amazon RDS) database
+instance. To create those resources, you create a stack by submitting the
+template that you created, and AWS CloudFormation provisions all those resources
+for you. You can work with stacks by using the AWS CloudFormation console,
+API, or AWS CLI.

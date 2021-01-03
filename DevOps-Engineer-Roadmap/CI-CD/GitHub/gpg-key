@@ -1,0 +1,9 @@
+1. brew install gnupg
+2. gpg --gen-key
+3. gpg --list-secret-keys --keyid-format LONG
+4. gpg --export-secret-keys ID > my-private-key.asc
+5. git config --global user.signingkey 3AA5C34371567BD2
+6. git config commit.gpgsign true
+7. gpg --version
+8. echo "test" | gpg --clearsign
+9. export GPG_TTY=$(tty)

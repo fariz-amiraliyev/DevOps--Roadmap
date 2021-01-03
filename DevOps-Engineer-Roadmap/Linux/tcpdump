@@ -1,0 +1,6 @@
+yum install tcpdump
+
+# You will want to apply a capture filter so that you're only getting web requests:
+
+tcpdump port 80 -w capture.pcap
+tcpdump -r capture.pcap

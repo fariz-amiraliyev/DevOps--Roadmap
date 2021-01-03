@@ -1,0 +1,6 @@
+brew install groovy
+
+groovysh
+groovyConsole
+
+groovyConsole --help

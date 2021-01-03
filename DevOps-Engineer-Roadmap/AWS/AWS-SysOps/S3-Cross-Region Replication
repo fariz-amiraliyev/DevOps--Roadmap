@@ -1,0 +1,4 @@
+It may seem strange that we are discussing backups for S3 because it has some
+impressive numbers for durability and availability. The issue with S3 buckets
+s that, even though the names are global, they exist in a particular region.
+If that region were to fail, we would not be able to access our objects.

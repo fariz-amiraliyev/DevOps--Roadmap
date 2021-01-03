@@ -1,0 +1,63 @@
+1. High availability practice in aws ?
+2. Fault tolerance practices ?
+3. Which statements are true when speaking of RPO and RTO?
+4. What are the two types of encryption architecture ?
+5. What is the difference between authorization and authentication?
+6. What is fault-tolerance?
+7. What is vertical  and horizontal scaling?
+8. When would it be appropriate to scale vertically?
+9. What are the benefits of horizontal scaling?
+10. What is the concept behind AWS' Well-Architected Framework ?
+11. What are Points of Presence?
+12. What is the AWS definition of Elasticity?
+13. Four servers are needed to optimally run an application under normal and
+    heavy operations. What architecture layout ensures fault tolerance and
+     cost efficiency if an Availability Zone has a failure?
+14. Why is the notification menu important?
+    Notifies of scheduled changes that affect your AWS account
+    Alerts customers to account level issues
+    Provides alerts for service outages
+15. What type of storage is Amazon's S3 product?
+16. When dealing with CloudFormation, where can you find information that tracks
+    when a resource is created, updated, or deleted from a stack?
+    In CloudFormation's Stack details section under the Events tab
+17. Which are characteristics of the CloudFormation service?
+    CloudFormation can be used to reduce RTO
+    A CloudFormation template can create up to 200 resources
+    CloudFormation reduces the time it takes to deploy infrastructure
+18.  When using CloudFormation, what is the primary job of a stack?
+     Manages physical resources based on a logical resource template
+19. what is Implicity deny ?
+20. what is difference between authentication and authorization ?
+21. how we can refer to IAM user ? with arn of user
+22. How to use inline policy ?
+23. what is permissions boundry ?
+24. IAM users limits ?
+25. Why using IAM roles ?
+26. what is Assume role ?
+27. If an IAM User's access is adjusted, will AWS automatically adjust
+    the permissions to their access keys to match?
+    Yes, access keys' permissions are updated to match an IAM User's access.
+28. What are two ways inline policies differ from AWS managed policies?
+29. Which are  difference between the two types of policies in an IAM Role?
+30. What entities are allowed to assume IAM Roles?
+31. What is the max limit of access keys an IAM User may possess at a time?
+32. What kind of IAM credentials are available for use?
+33. how to create VPN connection ?
+34. what is placement groups ?
+35. how to share ec2 instance ? with snapshot
+36. how snapshots work ?
+37. when using EFS ?
+38. what is RDS anti-patterns ?
+39. what is RDS sync and async replication ?
+40. when we use Redis and Elasticsearch ?
+41. best practices of cross account managment ?
+42. how roles and trust are used for cross-account relations ?
+43. what is difference betwqeen NACs and SGs ?
+44. best practices of DDods Attacks ?
+45. what is difference IDS and IPS ?
+46. which serivces work with autoscaling ?
+47. how to set up ebs termination false or true and why ?
+50. what is two base for creating Cloudwatch role ? event pattern and schedule time based
+51. What DynamoDB features can be utilised to increase the speed of read operations?
+52. 

@@ -1,0 +1,26 @@
+---
+# This task attaches a custom IAM Policy as an inline policy to an IAM user
+- iam_policy:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    iam_type: "{{ item.type }}"
+    iam_name: "{{ aws_iam_static_string }}-{{ item.name }}-{{ aws_env }}"
+    policy_name: "{{ aws_iam_static_string }}-{{ item.name }}-{{ aws_env }}"
+    state: present
+    policy_json: "{{ lookup('file', aws_env + '/iam/' + item.name + '.policy.json') }}"
+  with_items: "{{ iam }}"
+  when: item.policy_type == "custom" and item.type == "user"
+# This task attaches a custom IAM Policy as an inline policy to an IAM role
+- iam_policy:
+    profile: "{{ aws_profile }}"
+    region: "{{ aws_region }}"
+    iam_type: "{{ item.type }}"
+    iam_name: "{{ item.role_name }}"
+    policy_name: "{{ aws_iam_static_string }}-{{ item.name }}-{{ aws_env }}"
+    state: present
+    policy_json: "{{ lookup('file', aws_env + '/iam/' + item.name + '.policy.json') }}"
+  with_items: "{{ iam }}"
+  when: item.policy_type == "custom" and item.type == "role"
+
+
+  

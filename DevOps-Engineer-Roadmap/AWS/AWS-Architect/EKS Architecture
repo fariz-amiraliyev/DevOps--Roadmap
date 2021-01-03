@@ -1,0 +1,21 @@
+A highly available architecture that spans three Availability Zones.*
+ A VPC configured with public and private subnets according to AWS best practices, to
+provide you with your own virtual network on AWS.*
+ In the public subnets, managed NAT gateways to allow outbound internet access for
+resources in the private subnets.*
+ In one public subnet, a Linux bastion host in an Auto Scaling group to allow inbound
+Secure Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in
+private subnets. The bastion host is also configured with the Kubernetes kubectl
+command line interface (CLI) for managing the Kubernetes cluster.
+ An Amazon EKS cluster, which provides the Kubernetes control plane.
+ In the private subnets, a group of Kubernetes nodes.
+
+This deployment enables users of the Amazon EKS cluster to be able to create ELB load
+balancers and Amazon EBS volumes as part of their Kubernetes applications. As these carry
+additional costs, we recommend that you grant users of the Amazon EKS cluster only the
+permissions they require via Kubernetes Role Based Access Control (RBAC) and that you
+monitor the resource usage by using the Kubernetes CLI or the Kubernetes API to describe
+the persistent volume claims (PVC) and LoadBalancer resources across all namespaces. To
+disable this functionality, you can update the ControlPlaneRole IAM role created in the
+IAM child stack to deny the Kubernetes control plane access to specific AWS APIs like
+ec2:CreateVolume or elb:CreateLoadBalancer.

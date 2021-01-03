@@ -1,0 +1,10 @@
+An Elastic IP address is a static, public, IPv4 address allocated to your AWS account. With an Elastic IP
+address, you can mask the failure of an instance or software by rapidly remapping the address to another
+instance in your account. Elastic IPs do not change and remain allocated to your account until you delete
+them.
+Elastic IP addresses are one method for handling failover, especially for legacy type applications that
+cannot be scaled horizontally. In the event of a failure of a single server with an associated Elastic IP
+address, the failover mechanism can re-associate the Elastic IP address to a replacement instance, ideally
+in an automated fashion. While this scenario may experience downtime for the application, the time may
+be limited to the time it takes to detect the failure and quickly re-associate the Elastic IP address to the
+replacement resource.

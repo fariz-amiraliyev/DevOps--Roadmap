@@ -1,0 +1,36 @@
+Method #1: $HOME/.bash_profile file
+The syntax is as follows:
+
+export PATH=$PATH:/new/dir/location1
+export PATH=$PATH:/new/dir1:/dir2:/dir/path/no3
+In this example, add /usr/local/sbin/modemZapp/ directory to $PATH variable. Edit the file $HOME/.bash_profile, enter:
+vi $HOME/.bash_profile
+
+OR
+vi ~/.bash_profile
+
+Append the following export command:
+
+export PATH=$PATH:/usr/local/sbin/modemZapp
+Save and close the file. To apply changes immedialty enter:
+source $HOME/.bash_profile
+
+OR
+. $HOME/.bash_profile
+
+Finally, verify your new path settings, enter:
+echo $PATH
+
+Method #2: /etc/paths.d directory
+Apple recommends the path_helper tool to generate the PATH variable i.e. helper for constructing PATH environment variable. From the man page:
+
+The path_helper utility reads the contents of the files in the directories /etc/paths.d and /etc/manpaths.d and appends their contents to the PATH and MANPATH environment variables respectively.
+
+(The MANPATH environment variable will not be modified unless it is already set in the environment.)
+
+Files in these directories should contain one path element per line.
+
+Prior to reading these directories, default PATH and MANPATH values are obtained from the files /etc/paths and /etc/manpaths respectively.
+
+To list existing path, enter:
+ls -l /etc/paths.d/

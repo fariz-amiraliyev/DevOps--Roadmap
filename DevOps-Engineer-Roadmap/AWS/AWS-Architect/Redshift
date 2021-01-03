@@ -1,0 +1,29 @@
+Amazon Redshift is an enterprise-level, petabyte scale, fully managed data warehousing service.
+Amazon Redshift is not the same as other SQL database systems. To fully realize the
+benefits of the Amazon Redshift architecture, we must specifically design, build,
+and load tables to use massively parallel processing, columnar data storage,
+and columnar data compression.
+
+
+The first step to create a data warehouse is to launch a set of nodes, called an
+Amazon Redshift cluster.
+After you provision your cluster, you can upload your data set and then perform
+data analysis queries. Regardless of the size of the data set, Amazon Redshift
+offers fast query performance using the same SQL-based tools and business
+intelligence applications that you use today.
+
+An Amazon Redshift cluster consists of nodes. Each cluster has a leader node and
+one or more compute nodes. The leader node receives queries from client applications,
+parses the queries, and develops query execution plans.
+The leader node then coordinates the parallel execution of these plans with
+the compute nodes and aggregates the intermediate results from these nodes.
+It then finally returns the results back  to the client applications.
+
+Compute nodes execute the query execution plans and transmit data among themselves
+to serve these queries. The intermediate results are sent to the leader node for
+aggregation before being sent back to the client applications.
+
+
+Amazon Redshift offers different node types to accommodate your workloads, and
+we recommend choosing RA3 or DC2 depending on the required performance, data size,
+and expected data growth.

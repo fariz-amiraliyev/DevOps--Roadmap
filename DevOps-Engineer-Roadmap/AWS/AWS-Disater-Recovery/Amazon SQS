@@ -1,0 +1,17 @@
+Amazon SQS
+ Using Amazon SQS, can send, store, and receive messages between software components at any volume, without losing
+messages or requiring other services to be available.
+Messages are stored in queues that you create. Each queue is defined as a URL, so it can be accessed by
+any server that has access to the Internet, subject to the Access Control List (ACL) of that queue.
+Use Amazon SQS to ensure that your queue is always available; any messages that you send to a queue are
+retained for up to 14 days.
+SQS offers two types of message queues:
+Standard queues offer maximum throughput, best-effort
+ordering, and at-least-once delivery with best-effort ordering.
+SQS FIFO queues offer high throughput
+and are designed to guarantee that messages are processed exactly once, in the exact order that they are
+sent.
+Amazon SQS message queuing can be used with other AWS Services such as Amazon Redshift, Amazon
+DynamoDB, Amazon Relational Database Service (Amazon RDS), Amazon EC2, Amazon Elastic Container
+Service (Amazon ECS), AWS Lambda, and Amazon S3, to make distributed applications more scalable and
+reliable.

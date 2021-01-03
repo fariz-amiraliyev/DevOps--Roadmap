@@ -1,0 +1,42 @@
+Depending on the type of workload, you can create a placement group using one of the following placement strategies:
+
+Cluster – packs instances close together inside an Availability Zone. This strategy enables workloads
+to achieve the low-latency network performance necessary for tightly-coupled node-to-node communication
+that is typical of HPC applications.
+
+Partition – spreads your instances across logical partitions such that groups of instances in one partition
+do not share the underlying hardware with groups of instances in different partitions. This strategy is
+typically used by large distributed and replicated workloads, such as Hadoop, Cassandra, and Kafka.
+
+Spread – strictly places a small group of instances across distinct underlying hardware to reduce correlated failures.
+
+
+Cluster placement groups
+A cluster placement group is a logical grouping of instances within a single Availability Zone.
+A cluster placement group can span peered VPCs in the same Region. Instances in the same cluster
+placement group enjoy a higher per-flow throughput limit for TCP/IP traffic and are placed in the
+same high-bisection bandwidth segment of the network.
+
+Cluster placement groups are recommended for applications that benefit from low network latency,
+high network throughput, or both. They are also recommended when the majority of the network
+traffic is between the instances in the group.
+
+Use a single launch request to launch the number of instances that you need in the placement group.
+
+Use the same instance type for all instances in the placement group.
+
+
+Partition placement groups:
+Partition placement groups help reduce the likelihood of correlated hardware failures for your application.
+When using partition placement groups, Amazon EC2 divides each group into logical segments called partitions.
+Amazon EC2 ensures that each partition within a placement group has its own set of racks.
+Each rack has its own network and power source. No two partitions within a placement group share the same racks,
+allowing you to isolate the impact of hardware failure within your application.
+
+
+Spread placement groups
+A spread placement group is a group of instances that are each placed on distinct racks,
+with each rack having its own network and power source.
+
+The following image shows seven instances in a single Availability Zone that are placed
+into a spread placement group. The seven instances are placed on seven different racks.

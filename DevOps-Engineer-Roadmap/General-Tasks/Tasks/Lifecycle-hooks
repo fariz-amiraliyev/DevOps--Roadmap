@@ -1,0 +1,48 @@
+Lifecycle hooks enable you to perform custom actions by pausing instances as an
+Auto Scaling group launches or terminates them. When an instance is paused, it
+remains in a wait state either until you complete the lifecycle action using
+the complete-lifecycle-action command or the CompleteLifecycleAction operation,
+or until the timeout period ends (one hour by default).
+
+For example, let's say that your newly launched instance completes its startup
+sequence and a lifecycle hook pauses the instance. While the instance is in a
+wait state, you can install or configure software on it, making sure that your
+instance is fully ready before it starts receiving traffic. For another example
+ of the use of lifecycle hooks, let's say that when a scale-in event occurs,
+ the terminating instance is first deregistered from the load balancer (if the
+ Auto Scaling group is being used with Elastic Load Balancing). Then, a lifecycle
+ hook pauses the instance before it is terminated. While the instance is in the
+ wait state, you can, for example, connect to the instance and download logs or
+ other data before the instance is fully terminated.
+
+ How lifecycle hooks work?
+
+ After you add lifecycle hooks to your Auto Scaling group, they work as follows:
+
+ 1.The Auto Scaling group responds to scale-out events by launching instances
+ and scale-in events by terminating instances.
+
+
+ 2. The lifecycle hook puts the instance into a wait state (Pending:Wait or Terminating:Wait).
+    The instance is paused until you continue or the timeout period ends.
+
+3. You can perform a custom action using one or more of the following options:
+   Define an EventBridge target to invoke a Lambda function when a lifecycle action occurs.
+   The Lambda function is invoked when Amazon EC2 Auto Scaling submits an event for
+   a lifecycle action to EventBridge. The event contains information about the
+   instance that is launching or terminating, and a token that you can use to
+   control the lifecycle action.
+   Define a notification target for the lifecycle hook. Amazon EC2 Auto Scaling
+   sends a message to the notification target. The message contains information
+   about the instance that is launching or terminating, and a token that you can
+   use to control the lifecycle action.
+   Create a script that runs on the instance as the instance starts. The script
+   can control the lifecycle action using the ID of the instance on which it runs.
+
+  5. By default, the instance remains in a wait state for one hour, and then the
+  Auto Scaling group continues the launch or terminate process (Pending:Proceed or
+  Terminating:Proceed). If you need more time, you can restart the timeout period by
+  recording a heartbeat. If you finish before the timeout period ends, you can complete
+  the lifecycle action, which continues the launch or termination process.
+
+  

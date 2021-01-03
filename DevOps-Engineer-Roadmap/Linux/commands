@@ -1,0 +1,10 @@
+1. netstat -tan | grep LIST
+2. netstat -tulpn
+3. netstat -nr  # routing tables
+4. free
+5. vmstate
+6. cat /proc/meminfo
+7. cat /proc/cpuinfo
+8. nproc
+9. lscpu
+10.

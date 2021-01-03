@@ -1,0 +1,4 @@
+1. create EKS cluster
+2. Create  worker node
+3. launch add ons
+4. launch workloads

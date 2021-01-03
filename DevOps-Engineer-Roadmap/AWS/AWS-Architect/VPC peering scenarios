@@ -1,0 +1,3 @@
+1. Peering two or more VPCs to provide full access to resources
+2. Peering to one VPC to access centralized resources
+3. Peering with ClassicLink

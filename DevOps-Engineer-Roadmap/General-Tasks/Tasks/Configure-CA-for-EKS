@@ -1,0 +1,30 @@
+Cluster Autoscaler will attempt to determine the CPU, memory, and GPU resources
+provided by an Auto Scaling Group based on the instance type specified in
+its Launch Configuration or Launch Template.
+
+You configure the size of your Auto Scaling group by setting the minimum, maximum,
+and desired capacity. When we created the cluster we set these settings to 3.
+
+aws autoscaling \
+    describe-auto-scaling-groups \
+    --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].[AutoScalingGroupName, MinSize, MaxSize,DesiredCapacity]" \
+    --output table
+
+    # we need the ASG name
+export ASG_NAME=$(aws autoscaling describe-auto-scaling-groups --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].AutoScalingGroupName" --output text)
+
+# increase max capacity up to 4
+aws autoscaling \
+    update-auto-scaling-group \
+    --auto-scaling-group-name ${ASG_NAME} \
+    --min-size 3 \
+    --desired-capacity 3 \
+    --max-size 4
+
+# Check new values
+aws autoscaling \
+    describe-auto-scaling-groups \
+    --query "AutoScalingGroups[? Tags[? (Key=='eks:cluster-name') && Value=='eksworkshop-eksctl']].[AutoScalingGroupName, MinSize, MaxSize,DesiredCapacity]" \
+    --output table
+
+    

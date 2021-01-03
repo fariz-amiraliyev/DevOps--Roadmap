@@ -1,0 +1,6 @@
+pip install boto3
+#WE may also install a specific version:
+pip install boto3==1.0.0
+
+
+Documentation: https://boto3.amazonaws.com/v1/documentation/api/latest/guide/ec2-example-managing-instances.html

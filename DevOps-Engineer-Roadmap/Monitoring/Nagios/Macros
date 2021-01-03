@@ -1,0 +1,4 @@
+Macros
+Nagios Core offers a straightforward macro system.
+In addition to providing literally hundreds of usable macros
+out of the box, Nagios also lets us define macros on-demand.

@@ -1,0 +1,220 @@
+11. A leading commercial bank has a hybrid cloud architecture and is using a Volume
+Gateway under the AWS Storage Gateway service to store their data via the Internet
+Small Computer Systems Interface (ISCSI). The security team has detected a series
+of replay attacks to your network, which is basically a form of network attack.
+As a Solutions Architect of the bank, how can you secure your AWS Storage Gateway from these types of attacks?
+
+In AWS Storage Gateway, your iSCSI initiators connect to your volumes as iSCSI targets.
+Storage Gateway uses Challenge-Handshake Authentication Protocol (CHAP) to authenticate
+iSCSI and initiator connections. CHAP provides protection against playback attacks by
+requiring authentication to access storage volume targets. For each volume target, you can
+define one or more CHAP credentials. You can view and edit these credentials for the different
+initiators in the Configure CHAP credentials dialog box.
+Option 2 is incorrect because replacing ISCSI with CIFS and SMB would be irrelevant since
+these two do not provide the required security mechanism in the scenario. It is best to use
+Challenge-Handshake Authentication Protocol (CHAP) instead.
+Option 3 is incorrect because ISCSI Virtual Tape Library Interface is primarily used for Tape
+ Gateways and not for Volume Gateways. Option 4 is incorrect because CHAP is primarily used to authenticate iSCSI and not NFS.
+
+
+12. A leading media company is building a collaborative news website which is expected
+to have over 5 million readers per month globally. Each article contains a cover image and has at least 200 words.
+Based on the trend of their other websites, the new articles are highly browsed
+in the first 2 months and the authors tend to frequently update the articles on
+the first month after its publication. The readership is also expected to drop on
+the 3rd month and the articles are usually rarely accessed after a year.
+The readers are also leaving a lot of comments within the first 3 months of publishing.
+In this scenario, which of the following items can you use to build a durable,
+highly available and scalable architecture for the news website? (Choose 2) ?
+
+In this scenario, the main objective is to provide a durable, highly-available and scalable architecture for the website.
+You can use CloudFront as a CDN, then Amazon RDS with Multi-AZ deployments and Read Replicas
+to provide scalability and high-availability for the millions of incoming traffic every month.
+Lastly, you can use an S3 bucket to durably store the images and other static media content of the website.
+Option 3 is incorrect because Oracle RAC is not supported in RDS. Option 4 is incorrect because Lambda is
+serverless and it does not have Auto-Healing since it does not have an underlying server.
+Option 5 is incorrect because EBS Volumes are not as durable and not as scalable compared with S3,
+even with a RAID 1 (mirroring) configuration.
+
+
+
+13. A leading mobile game company is planning to host their GraphQL API in AWS
+which will be heavily used for their massively multiplayer online role-playing games
+(MMORPGs) for 3 years or more. You are assigned to prepare the architecture of
+the entire system and to ensure consistent connection and faster loading times
+for their players across the globe. Which of the following is the most cost-effective
+solution that you can implement in this scenario?
+
+Explanation
+Reserved Instances are best to use for these scenarios:
+
+Applications that have been in use for years and that you plan to continue to use.
+Applications with steady state or predictable usage.
+Applications that require reserved capacity.
+Users who want to make upfront payments to further reduce their total computing costs.
+
+Since the game company is planning to use this application for 3 years or more,
+the best and the most cost-effective type of EC2 to use is a Reserved Instance.
+You cannot use a Spot instance here as you need to provide a consistent service
+to your users without any interruption. An On-Demand instance is a valid option
+but it costs more than Reserved instance which is why it is incorrect.
+
+14. A leading news company produces new high-definition video files every day in
+their on-premises network which is then compressed to a single file with a total
+size of around 200 GB. The generated file needs to be uploaded to an Amazon
+S3 bucket from 12 AM to 2 AM every midnight for storage. Current upload to a
+dedicated EC2 instance takes a few hours to complete, although 30% of the available
+bandwidth is only used in the connection.
+Which of the following is the best and most cost-effective option which will
+ensure that the file uploads are completed in the allotted time window?
+
+Explanation
+The Multipart upload API enables you to upload large objects in parts.
+You can use this API to upload new large objects or make a copy of an existing object.
+Multipart uploading is a three-step process:
+you initiate the upload,
+you upload the object parts,
+and after you have uploaded all the parts, you complete the multipart upload.
+Upon receiving the complete multipart upload request, Amazon S3 constructs the object
+from the uploaded parts, and you can then access the object just as you would any other object in your bucket.
+
+Option 1 is incorrect because increasing your network bandwidth is totally unnecessary
+considering that the scenario says you are only consuming 30% of your bandwidth.
+Option 3 is incorrect because although the solution will work, establishing a Direct Connect connection
+is costly and hence, not a cost-effective solution considering that you can use the Multipart Upload API instead.
+Option 4 is incorrect because the AWS Server Migration Service (SMS) only enables you
+to easily import virtual machine images from your existing environment to Amazon EC2 instances via AMIs.
+This service does not solve the issue of your slow upload time in S3.
+
+
+15. A leading online learning and teaching marketplace has a requirement to analyze the clickstreams on their portal.
+The collected data will be used to gain valuable insight on what courses and topics
+the students are searching for and to track other user behaviors.
+In this scenario, which of the following AWS services can you use to fulfill this requirement?
+Explanation
+Whenever you see the word "clickstream", always consider using Kinesis.
+You can use Kinesis Data Streams for rapid and continuous data intake and aggregation.
+The type of data used includes IT infrastructure log data, application logs, social media,
+market data feeds, and web clickstream data. Because the response time for the data i
+ntake and processing is in real time, the processing is typically lightweight.
+Option 1 is incorrect because Cognito is mainly used for authentication.
+Option 2 is incorrect because Redshift is used for OLAP applications as a fully managed, petabyte-scale data warehouse.
+Option 4 is incorrect because SQS is primarily used as a message queueing service.
+
+16: A leading telecommunications company has many on-premises data centers scattered
+across the United States and they want to implement a hybrid network architecture
+to integrate their VPCs located in AWS US East (N. Virginia) and US West (Oregon).
+In this scenario, how can you allow VPC resources like EC2 instances, RDS databases,
+and Lambda functions running in different AWS regions to communicate with each other using private IP addresses?
+Explanation
+Amazon EC2 now allows peering relationships to be established between Virtual Private Clouds (VPCs)
+across different AWS regions. Inter-Region VPC Peering allows VPC resources like EC2 instances, RDS databases,
+and Lambda functions running in different AWS regions to communicate with each other using private
+IP addresses, without requiring gateways, VPN connections or separate network appliances.
+Inter-Region VPC Peering provides a simple and cost-effective way to share resources between
+regions or replicate data for geographic redundancy. Built on the same horizontally scaled,
+redundant, and highly available technology that powers VPC today, Inter-Region
+VPC Peering encrypts inter-region traffic with no single point of failure or bandwidth bottleneck.
+Traffic using Inter-Region VPC Peering always stays on the global AWS backbone and never traverses
+the public Internet, thereby reducing threat vectors, such as common exploits and DDoS attacks.
+Option 1 is incorrect because an SSL VPN Connection only provides a secure VPN connection but doesn't
+establish a VPC to VPC peering connection.
+Option 3 is incorrect because an IPSec VPN Connection only provides a secure VPN
+connection but doesn't establish a VPC to VPC peering connection.
+
+17. A mobile game startup is building an immersive augmented reality (AR), massively multiplayer,
+first-person online shooter game. All of their servers, databases and resources are hosted in their
+cloud infrastructure in AWS. Upon testing the new game, it was noted that loading time of
+the game assets and data are quite sluggish including their static content.
+You recommended to add caching to the application to improve load times.
+In this scenario, which of the following cache services can you recommend for their gaming applications?
+Explanation
+In this scenario, the best option is to use a combination of CloudFront to distribute their static
+content and ElastiCache as an in-memory data store.
+Option 3 is incorrect because although Apache Ignite is an in-memory data store, only Redis and Memcached are supported in ElastiCache.
+Option 4 is incorrect because DynamoDB is a NoSQL database and hence, not suitable for caching and in using as an in-memory data store.
+
+18: A multinational insurance firm is running its web application on their corporate data center.
+They hired you to set up a disaster recovery infrastructure in AWS to ensure business continuity
+in the event of server failures in their on-premises network. Which of the following disaster
+recovery options provide a quick recovery time for the application in the most cost-effective manner?
+
+Explanation
+The term pilot light is often used to describe a DR scenario in which a minimal version of
+an environment is always running in the cloud. The idea of the pilot light is an analogy
+that comes from the gas heater. In a gas heater, a small flame that’s always on can quickly
+ignite the entire furnace to heat up a house.
+This scenario is similar to a backup-and-restore scenario. For example, with AWS,
+you can maintain a pilot light by configuring and running the most critical core elements
+of your system in AWS. When the time comes for recovery, you can rapidly provision a
+full-scale production environment around the critical core.
+Infrastructure elements for the pilot light itself typically include your database servers,
+which would replicate data to Amazon EC2 or Amazon RDS. Depending on the system,
+there might be other critical data outside of the database that needs to be replicated to AWS.
+This is the critical core of the system (the pilot light) around which all other infrastructure
+pieces in AWS (the rest of the furnace) can quickly be provisioned to restore the complete system.
+Option 1 is incorrect because although Backup & Restore strategy is the most cost-effective option,
+it takes a longer time to complete compared with Pilot Light.
+Option 3 is incorrect because although it provides a quicker recovery time than Pilot Light due to
+the fact that there are already resources running, the cost of setting up this system is much higher.
+Option 4 is incorrect because a multi-site solution runs in AWS as well as on your existing
+on-site infrastructure in an active-active configuration. The data replication method that you
+employ will be determined by the recovery point that you choose.
+
+19.A popular news website that uses an Oracle database is currently deployed
+in the company's on-premises network. Due to its growing number of readers,
+the company decided to move their infrastructure to AWS where they can further
+improve the performance of the website. The company earns from the advertisements
+placed in the website so you were instructed to ensure that the website remains
+available in case of database server failures. Their team of content writers
+constantly upload new articles everyday including the wee hours of the morning
+to cover breaking news. In this scenario, how can you implement a highly available
+I architecture to meet the requirement?
+
+ Explanation
+
+Amazon RDS Multi-AZ deployments provide enhanced availability and durability for
+Database (DB) Instances, making them a natural fit for production database workloads.
+When you provision a Multi-AZ DB Instance, Amazon RDS automatically creates a primary
+DB Instance and synchronously replicates the data to a standby instance in a
+different Availability Zone (AZ). Each AZ runs on its own physically distinct,
+independent infrastructure, and is engineered to be highly reliable.
+In case of an infrastructure failure, Amazon RDS performs an automatic failover
+to the standby (or to a read replica in the case of Amazon Aurora),
+so that you can resume database operations as soon as the failover is complete.
+Since the endpoint for your DB Instance remains the same after a failover, your
+application can resume database operation without the need for manual administrative intervention.
+
+In this scenario, the best RDS configuration to use is an Oracle database in
+RDS with Multi-AZ deployments to ensure high availability even if the primary
+database instance goes down. Hence, Option 2 is the correct answer.
+Options 1 and 3 are incorrect because Oracle RMAN and RAC are not supported in RDS.
+Option 4 is incorrect because the content writers won't be able to upload their articles
+to the Read Replicas in the event that the primary database goes down.
+
+
+20. A software development company has a hybrid cloud architecture in which its
+on-premises data center is connected to AWS Cloud. The company already has an
+IPsec VPN connection from their on-premises network to their VPC but they noticed
+that the connection is unstable and usually can’t support data transfer rates of
+above 4 Gbps. They are looking to have a dedicated network connection to supplement
+their current network architecture. Which of the following would fulfill the company's requirement?
+Explanation
+
+Using AWS Direct Connect, you can establish private connectivity between AWS and
+your datacenter, office, or colocation environment, which in many cases can
+reduce your network costs, increase bandwidth throughput, and provide a more
+consistent network experience than Internet-based connections.
+AWS Direct Connect lets you establish a dedicated network connection between your
+network and one of the AWS Direct Connect locations. Using industry standard 802.1q VLANs,
+this dedicated connection can be partitioned into multiple virtual interfaces.
+This allows you to use the same connection to access public resources such as
+objects stored in Amazon S3 using public IP address space, and private resources
+such as Amazon EC2 instances running within an Amazon Virtual Private Cloud (VPC)
+using private IP space, while maintaining network separation between the public and private environments.
+Virtual interfaces can be reconfigured at any time to meet your changing needs.
+
+Option 1 is incorrect because provisioning another IPSec VPN connection would not
+provide the company a dedicated network connection.
+3 and 4 are incorrect because using either software-based or hardware-based VPN
+would not achieve the required dedicated network connection that the company is requesting.

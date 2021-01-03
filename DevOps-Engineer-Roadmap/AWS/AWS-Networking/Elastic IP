@@ -1,0 +1,26 @@
+An Elastic IP address is a static, public IPv4 address designed for dynamic cloud computing.
+An Elastic IP address can associate be with any instance or network interface
+in any VPC in your account. With an Elastic IP address, you can mask the failure
+of an instance by rapidly remapping the address to another instance in your VPC.
+
+
+An Elastic IP address is a property of a network interface. We can associate an
+Elastic IP address with an instance by updating
+the network interface attached to the instance.
+
+
+An Elastic IP address can be associated with a single instance or network interface at a time.
+
+You can move an Elastic IP address from one instance or network interface to another.
+If you associate an Elastic IP address with the eth0 network interface of your instance,
+its current public IPv4 address (if it had one) is released to the EC2-VPC public IP address pool.
+If you disassociate the Elastic IP address, the eth0 network interface is automatically
+assigned a new public IPv4 address within a few minutes. This doesn't apply
+if you've attached a second network interface to your instance.
+
+You're limited to five Elastic IP addresses.
+
+An Elastic IP address is accessed through the internet gateway of a VPC.
+If you have set up an AWS Site-to-Site VPN connection between your VPC and your network,
+the VPN traffic traverses a virtual private gateway, not an internet gateway,
+and therefore cannot access the Elastic IP address.

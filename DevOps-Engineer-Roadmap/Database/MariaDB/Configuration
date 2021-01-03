@@ -1,0 +1,47 @@
+Configuring the DB Host and MariaDB
+
+Getting Started: Configuring the DB Host and MariaDB
+Spin up a new server in server labs.
+Log in to the new server. Remember you will be required to change your password, and that the server may disconnect afterward. If that happens, simply log in again using your new password. `sudo su` to root and change the root password.
+Make the configuration changes to the new server as specified in "Getting Started" section of the Study Guide.
+DO NOT enable the Nagios service on the new server.
+Follow the steps to compile and install the NRPE as found in the Study Guide under "Installing the Nagios Remote Plugin Executor."
+On the new server, search for and install MariaDB:
+yum search mariadb
+yum install mariadb-server mariadb-devel mariadb-bench
+Once MariaDB is installed, add the following directives to the "[mysqld]" section of "/etc/my.cnf.d/server.cnf":
+connect_timeout=30
+expire_logs_days=30
+innodb_buffer_pool_size=67108864
+join_buffer_size=16384
+join_buffer_space_limit=2097152
+max_connections=25
+query_cache_size=0
+query_cache_type=OFF
+read_buffer_size=262144
+read_rnd_buffer_size=8196
+skip_external_locking=ON
+skip_name_resolve=ON
+skip_networking=OFF
+thread_handling=pool-of-threads
+thread_pool_max_threads=100
+thread_pool_size=2
+Save and exit the file.
+Check the status of the MariaDB service: systemctl list-unit-files | grep maria
+Enable and start the MariaDB service:
+systemctl enable mariadb.service
+systemctl start mariadb.service
+Change into "/usr" and execute:/usr/bin/mysql_secure_installation:
+When prompted for the MariaDB root password, hit enter (it hasn't been set yet).
+Provide a new MariaDB root password
+Remove anonymous access
+DO NOT diallow remote root login
+DO NOT remove the test database
+Reload the privilege tables
+You should now be able to login to the MariaDB server using the following command, providing the password for the MaraiDB root user when prompted: mysql -u root -p
+Now we need to create a user for monitoring purposes. Log in to MariaDB as the root user using the mysql command: mysql -u root -p
+Issue the following commands, replacing the string "somePassword" with an appropriate password:
+create user 'nagios'@'localhost' identified by 'somePassword';
+grant all on *.* to 'nagios'@'localhost' identified by 'somePassword';
+flush privileges;
+exit

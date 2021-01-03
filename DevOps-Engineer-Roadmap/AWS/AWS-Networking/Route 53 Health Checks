@@ -1,0 +1,54 @@
+1. Monitoring endpoint ?
+2. Monitoring other health checks ?
+3. Monitoring CloudWatch alarm ?
+How domain registration works
+How internet traffic is routed to your website or web application
+How Amazon Route 53 checks the health of your resources
+How to get started with Amazon Route 53
+Related services
+Accessing Amazon Route 53
+AWS Identity and Access Management
+Amazon Route 53 pricing and billing
+
+
+Domain registration, DNS routing, and Health Checking
+
+You register the domain name that you want your users to use to access your content.
+For an overview, see How domain registration works.
+
+After you register your domain name, Route 53 automatically creates a public
+hosted zone that has the same name as the domain. For more information, see
+Working with public hosted zones.
+
+To route traffic to your resources, you create records, also known as resource
+record sets, in your hosted zone. Each record includes information about how you
+want to route traffic for your domain, such as the following:
+
+You can also create special Route 53 records, called alias records,
+that route traffic to Amazon S3 buckets, Amazon CloudFront distributions,
+and other AWS resources.
+
+How Amazon Route 53 routes traffic for your domain ?
+
+A user opens a web browser, enters www.example.com in the address bar, and presses Enter.
+
+The request for www.example.com is routed to a DNS resolver, which is typically managed by the user's internet service provider (ISP), such as a cable internet provider, a DSL broadband provider, or a corporate network.
+
+The DNS resolver for the ISP forwards the request for www.example.com to a DNS root name server.
+
+The DNS resolver forwards the request for www.example.com again, this time to one of the TLD name servers for .com domains. The name server for .com domains responds to the request with the names of the four Route 53 name servers that are associated with the example.com domain.
+
+The DNS resolver caches (stores) the four Route 53 name servers. The next time someone browses to example.com, the resolver skips steps 3 and 4 because it already has the name servers for example.com. The name servers are typically cached for two days.
+
+The DNS resolver chooses a Route 53 name server and forwards the request for www.example.com to that name server.
+
+The Route 53 name server looks in the example.com hosted zone for the www.example.com record, gets the associated value, such as the IP address for a web server, 192.0.2.44, and returns the IP address to the DNS resolver.
+
+The DNS resolver finally has the IP address that the user needs. The resolver returns that value to the web browser.
+
+Note
+The DNS resolver also caches the IP address for example.com for an amount of time that you specify so that it can respond more quickly the next time someone browses to example.com. For more information, see time to live (TTL).
+
+The web browser sends a request for www.example.com to the IP address that it got from the DNS resolver. This is where your content is, for example, a web server running on an Amazon EC2 instance or an Amazon S3 bucket that's configured as a website endpoint.
+
+The web server or other resource at 192.0.2.44 returns the web page for www.example.com to the web browser, and the web browser displays the page.

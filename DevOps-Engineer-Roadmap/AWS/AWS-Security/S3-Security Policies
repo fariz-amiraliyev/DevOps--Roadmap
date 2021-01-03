@@ -1,0 +1,21 @@
+When to use IAM policies vs. S3 policies
+Use IAM policies if:
+
+You need to control access to AWS services other than S3. IAM policies will be easier to manage
+since you can centrally manage all of your permissions in IAM, instead of spreading them between IAM and S3.
+ You have numerous S3 buckets each with different permissions requirements. IAM policies will be
+ easier to manage since you don’t have to define a large number of S3 bucket policies and can
+ instead rely on fewer, more detailed IAM policies.
+You prefer to keep access control policies in the IAM environment.
+Use S3 bucket policies if:
+
+You want a simple way to grant cross-account access to your S3 environment, without using IAM roles.
+Your IAM policies bump up against the size limit (up to 2 kb for users, 5 kb for groups, and 10 kb for roles).
+S3 supports bucket policies of up 20 kb.
+You prefer to keep access control policies in the S3 environment.
+If you’re still unsure of which to use, consider which audit question is most important to you:
+
+If you’re more interested in “What can this user do in AWS?” then IAM policies are probably the way to go.
+You can easily answer this by looking up an IAM user and then examining their IAM policies to see what rights they have.
+If you’re more interested in “Who can access this S3 bucket?” then S3 bucket policies will likely suit you better.
+You can easily answer this by looking up a bucket and examining the bucket policy.

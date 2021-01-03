@@ -1,0 +1,8 @@
+AWS:     Security of the cloud.
+         Compute, Storage, Network, Database,
+         Hardware, REGIONS, Edge locations, AZs
+
+Client:  Security in the Cloud.
+         Customer data, Platform, Application, IAM managment.
+         Operating System, firewall, Network Configuration,
+         Encryption at rest and in transit, Network Protection

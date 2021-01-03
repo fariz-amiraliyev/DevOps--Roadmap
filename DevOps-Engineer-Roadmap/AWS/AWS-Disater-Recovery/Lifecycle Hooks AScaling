@@ -1,0 +1,8 @@
+1. Create launch configuration
+2. create auto scaling group
+3. ssh to server
+4. configure aws cli
+5. add lifescale hook
+6. Create ec2
+7. manitor lifescale health check
+8. 

@@ -1,0 +1,6 @@
+Identity federation needs to be understood for us to administer our 
+applications on AWS. STS affects both customers and employees. For users,
+they often need to authenticate into our applications with third-party
+providers. For employees, they can use their domain credentials from
+on-premises services such as Active Directory to authenticate into and use
+AWS services.

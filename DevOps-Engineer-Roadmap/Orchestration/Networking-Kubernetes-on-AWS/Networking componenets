@@ -1,0 +1,15 @@
+1. Node
+2. Cgroups
+3. Linux namespaces process isolation
+4. Network namespaces
+5. virtiual ethernet
+6. bridge interface
+7. pause container
+8. KubeNet CNI plugin
+
+1.Each container in the node share same network namespace.
+2. Pods inside node connect over virtual bridge.
+3. Kubenet is a simple CNI plugin wich manage network componenets.
+4. what is pause container ? it looks virtual ENI
+5. KubeNet create network brdige ?
+6.

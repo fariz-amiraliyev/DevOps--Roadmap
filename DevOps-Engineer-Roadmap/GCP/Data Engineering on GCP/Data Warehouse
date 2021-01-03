@@ -1,0 +1,16 @@
+The modern data warehouse.
+Intro to BigQuery.
+Demo: Query TB+ of data in seconds.
+Getting Started.
+Loading Data.
+Video Demo: Querying Cloud SQL from BigQuery.
+Lab: Loading Data into BigQuery.
+Exploring Schemas.
+Demo: Exploring BigQuery Public Datasets with SQL using INFORMATION_SCHEMA.
+Schema Design.
+Nested and Repeated Fields.
+Demo: Nested and repeated fields in BigQuery.
+Lab: Working with JSON and Array data in BigQuery.
+Optimizing with Partitioning and Clustering.
+Demo: Partitioned and Clustered Tables in BigQuery.
+Preview: Transforming Batch and Streaming Data.

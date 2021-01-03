@@ -1,0 +1,19 @@
+Regardless of your workload or architecture, there are five cost optimization pillars that apply across nearly all environments. The pillars of cost optimization are:
+
+Right size – Ensure that what you provision matches what you need. For example, for compute, you provision for CPU, memory, storage, and network throughput.
+
+Increase elasticity – Traditional IT costs and hardware requirements are tailored for peak usage and are rarely turned off. In the cloud, you can optimize cost to meet dynamic needs and turn resources off when they are not needed. For example, you can usually turn off non-production instances for 70% or more of any given week.
+
+Leverage the right pricing model – AWS provides a range of pricing models (On-Demand and Spot Instances for variable workloads and Reserved Instances for predictable workloads). Choose the right pricing model to optimize costs based on the nature of your workload.
+
+Optimize storage – AWS provides multiple storage tiers at prices designed to meet performance. By identifying the most appropriate destination for specific types of data, you can reduce Amazon Elastic Block Store (Amazon EBS) and Amazon Simple Storage Service (Amazon S3) while maintaining the required performance and availability. For example, where performance requirements are lower, using Amazon EBS Throughput Optimized HDD (st1) storage typically costs half as much as the default General Purpose SSD (gp2) storage option.
+
+Measure, monitor, and improve – To ensure that you extract the full economic potential of the AWS Cloud at any scale, you want to:
+
+Define and enforce cost allocation tagging.
+
+Define metrics, set targets, and review at a reasonable cadence.
+
+Enable teams to architect for cost via training, visualization of progress goals, and a balance of incentives.
+
+Assign optimization responsibility to an individual or to a team.

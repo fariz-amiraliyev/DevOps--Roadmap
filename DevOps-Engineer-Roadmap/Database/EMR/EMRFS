@@ -1,0 +1,5 @@
+EMR File System (EMRFS)
+Using the EMR File System (EMRFS), Amazon EMR extends Hadoop to add the ability
+to directly access data stored in Amazon S3 as if it were a file system like HDFS.
+You can use either HDFS or Amazon S3 as the file system in your cluster. Most often,
+Amazon S3 is used to store input and output data and intermediate results are stored in HDFS.

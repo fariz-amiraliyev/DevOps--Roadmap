@@ -1,0 +1,10 @@
+1. What is the Jenkins master-slave architecture ?
+2. How we can set up Jenkins nodes ?
+3. How can we set docker slave nodes on Jenkins ?
+4. What is pipeline ?
+5. What is the difference stage and step ?
+6. What is the post section in jenkins pipeline ?
+7. What are the three stage of commit pipeline ?
+8. What is the difference External and polling SCM triggers ?
+9. What is the three most common development workflows ?
+10. What is the feature toggle ?

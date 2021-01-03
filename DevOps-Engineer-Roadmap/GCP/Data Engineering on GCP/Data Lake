@@ -1,0 +1,9 @@
+Introduction to Data Lakes.
+Data Storage and ETL options on GCP.
+Building a Data Lake using Cloud Storage.
+Optional Demo: Optimizing cost with Google Cloud Storage classes and Cloud Functions.
+Securing Cloud Storage.
+Storing All Sorts of Data Types.
+Video Demo: Running federated queries on Parquet and ORC files in BigQuery.
+Cloud SQL as a relational Data Lake.
+Lab: Loading Taxi Data into Cloud SQL.

@@ -1,0 +1,55 @@
+
+
+ Part 1. Configure the regular backup job.
+
+ Step 1. Create a new Jenkins Job.
+You should choose Freestyle project.
+
+Step 2. Mark “None” for Source Control Management.
+
+Step 3. Let’s add a job which will completely backup Jenkins including all jobs, playbooks, whatever else you have there.
+It will backup everything located at /var/lib/jenkins. Select the “Build Periodically” build trigger and configure
+to run as frequently as you like
+Image for post
+
+For example, 25 12 * * * will run a backup job every day at 12.25 pm UTC.
+Step 4. Add a new “Execute Shell” build step and add the content of this file as the command.
+
+
+#!/bin/bash
+# Jenkins Configuraitons Directory
+cd $JENKINS_HOME
+
+# Add general configurations, job configurations, and user content
+git add -- *.xml jobs/*/*.xml userContent/* ansible/*
+
+# only add user configurations if they exist
+if [ -d users ]; then
+    user_configs=`ls users/*/config.xml`
+
+    if [ -n "$user_configs" ]; then
+        git add $user_configs
+    fi
+fi
+
+# mark as deleted anything that's been, well, deleted
+to_remove=`git status | grep "deleted" | awk '{print $3}'`
+
+if [ -n "$to_remove" ]; then
+    git rm --ignore-unmatch $to_remove
+fi
+
+git commit -m "Automated Jenkins commit"
+
+git push -q -u origin master
+
+
+Step 5. Save all changes
+
+
+Step 6. As the linux user jenkins go to the directory /var/lib/jenkins and initiate a new git repository.
+jenkins@jenkins-vm cd /var/lib/jenkins && git init
+Step 7. Connect your local repository to GitHub.
+$ git remote add origin git@github.com:username/new_repo
+Step 8. Test your Jenkins backup job
+Click “Build now” button. If successful, you should see something like this:

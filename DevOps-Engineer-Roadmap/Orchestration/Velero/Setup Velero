@@ -1,0 +1,48 @@
+Before we can do anything, we need to install the velero client on our workstation.
+ Much like we installed the kubectl client, we need a client for velero as well.
+ Download the binaries and place them in your system path.
+
+Velero can be installed either via a helm chart or via the Velero CLI, my preferred
+method is to use the helm chart as it means I can store the configuration in a yaml
+file and deploy it repeatably without having to memorise commands.
+
+helm install stable/velero --name velero --namespace velero -f velero.yaml
+
+
+
+Once the client has been installed, we need to run the setup, which does things
+like deploy a new namespace named velero and a pod. We’ll also configure our
+authentication to AWS so we can use a pre-created S3 bucket for storing our backups.
+
+
+
+velero install \
+     --provider aws \
+     --bucket theithollowvelero \
+     --secret-file ~/.aws/credentials \
+     --backup-location-config region=us-east-1
+
+Backup Pod:
+velero backup create [backup job name] --include-namespaces [namespace to backup]
+
+
+To do a restore of our pods and namespace, we’ll run:
+
+velero restore create --from-backup [backup name]
+
+velero restore create --from-backup [backup name]
+
+velero backup get
+
+
+Set up a Velero Schedule:
+
+velero schedule create hourly --schedule=&quot;@every 1h&quot; --ttl 24h0m0s
+velero schedule create daily --schedule=&quot;@every 24h&quot; --ttl 168h0m0s
+velero get schedules
+velero get backups
+velero backup create before-disaster --include-namespaces rocketchat
+velero backup describe before-disaster --details
+velero restore create --from-backup before-disaster --include-namespaces rocketchat
+velero restore describe before-disaster-20191003181320 --details
+velero restore logs before-disaster-20191003181320

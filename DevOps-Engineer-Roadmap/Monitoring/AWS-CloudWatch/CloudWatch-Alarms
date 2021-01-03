@@ -1,0 +1,13 @@
+
+CloudWatch alarms are used to automatically initiate actions on behalf.
+ An alarm watches a single metric over a specified timeframe and performs one or
+ more specified actions, based on the value of the metric relative to a threshold
+ over time. The action is a notification sent to an SNS topic or an Auto
+ Scaling policy.
+OK
+Alarms
+Incufficient Data
+Metric
+threshold
+period
+actions

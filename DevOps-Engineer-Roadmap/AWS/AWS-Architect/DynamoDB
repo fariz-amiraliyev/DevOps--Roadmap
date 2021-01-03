@@ -1,0 +1,9 @@
+Amazon DynamoDB is a fully managed NoSQL database service.
+With DynamoDB, we can create database tables that can store and retrieve any
+amount of data and serve any level of request traffic. DynamoDB provides on-demand
+backup capability.
+It allows to create full backups of tables for long-term retention and archival for
+regulatory compliance needs.
+High Availability and Durability DynamoDB automatically spreads the data and traffic
+for tables over a sufficient number of servers to handle throughput and storage
+requirements, while  maintaining consistent and fast performance.

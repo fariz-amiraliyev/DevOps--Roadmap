@@ -1,0 +1,5 @@
+1. copy-db-parameter-group
+aws rds copy-db-parameter-group \
+    --source-db-parameter-group-identifier mydbpg \
+    --target-db-parameter-group-identifier mydbpgcopy \
+    --target-db-parameter-group-description "Copy of mydbpg parameter group"

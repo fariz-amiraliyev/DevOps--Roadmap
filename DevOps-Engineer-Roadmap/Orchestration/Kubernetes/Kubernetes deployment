@@ -1,0 +1,18 @@
+A Kubernetes deployment is a resource object in Kubernetes that provides declarative
+updates to applications. A deployment allows you to describe an application’s life
+cycle, such as which images to use for the app, the number of pods there should be,
+and the way in which they should be updated.
+
+
+A Kubernetes object is a way to tell the Kubernetes system how you want your
+cluster’s workload to look. After an object has been created, the cluster works
+to ensure that the object exists, maintaining the desired state of your
+Kubernetes cluster.
+
+The Kubernetes deployment object lets you:
+
+Deploy a replica set or pod
+Update pods and replica sets
+Rollback to previous deployment versions
+Scale a deployment
+Pause or continue a deployment

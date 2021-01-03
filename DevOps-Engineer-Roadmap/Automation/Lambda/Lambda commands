@@ -1,0 +1,10 @@
+aws lambda add-permission --function-name CreateSQSQueue --statement-id DevAccountAccess --action 'lambda:InvokeFunction' --principal 'arn:aws:iam::__DEVELOPMENT_ACCOUNT_NUMBER__:user/devadmin' --region us-east-2 --profile prodadmin
+To view the policy:
+
+aws lambda get-policy --function-name CreateSQSQueue --region us-east-2 --profile prodadmin
+To remove the policy:
+
+aws lambda remove-permission --function-name CreateSQSQueue --statement-id DevAccountAccess --region us-east-2 --profile prodadmin
+
+Invoke the Production Lambda Function from the Development Account
+aws lambda invoke --function-name '__LAMBDA_FUNCTION_ARN__' --payload '{"QueueName": "MyQueue" }' --invocation-type RequestResponse --profile devadmin --region us-east-2 output.txt

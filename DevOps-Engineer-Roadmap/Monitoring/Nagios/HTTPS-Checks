@@ -1,0 +1,101 @@
+From the get-go, we've had errors checking the WebUI on the Core Host. There are a couple of reasons for this:
+
+If you examine the help for the "check_http" plugin, you'll see there isn't an option for checking HTTPS.
+We're not passing credentials to the plugin to log in to the WebUI.
+The "check_http" plugin throws an error if it encounters anything but an HTTP 200 response (by default – it can be configured otherwise). This wouldn't normally be difficult to configure, but since Apache is ONLY serving the default site over port 80 (which returns a 304 Header), the plugin throws an error.
+We have two options here. The first is to "fix" the Apache configuration so that it either serves out content or doesn't listen on Port 80. The second is to remove the HTTP service from the Nagios Core Host.
+
+In the real world, it would be wise to disable Apache's listening on Port 80, since we're not using it. Since this IS a course about Nagios Core, however, we're going do disable the HTTP service.
+
+In the WebUI, look at the service groups.
+You'll see that the HTTP check is in our "localhost-services" group.
+Because we've maintained a well-organized configuration, this makes it easy to determine the location of the service definition.
+Find the file in which the service is defined, and remove the HTTP service.
+Verify your configuration.
+Re-check the WebUI to make sure the error has been resolved. (Hint: it should just "disappear" at the next check.)
+
+
+We've maintained a well-organized configuration througout the course. Because the HTTP service on the Nagios Core Host is part of the localhost-services service group, we know that the definition for this service will be in the /opt/nagios/etc/object/services/local-services.cfg file.
+
+Deleting the HTTP service definition will remove the HTTP service from the localhost, and keep the error from being generated, since a check against HTTP won't be performed. Once the file is amended, the configuring should be re-checked using /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg.
+
+That file should look like this:
+
+# services for the localhost -- the Nagios Core Host
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             PING
+        servicegroups                   localhost-services
+        check_command                   check_ping!100.0,20%!500.0,60%
+        }
+
+# Define a service to check the disk space of the root partition
+# on the local machine.  Warning if < 20% free, critical if
+# < 10% free space on partition.
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             Root Partition
+        servicegroups                   localhost-services
+        check_command                   check_local_disk!20%!10%!/
+        }
+
+# Define a service to check the number of currently logged in
+# users on the local machine.  Warning if > 20 users, critical
+# if > 50 users.
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             Current Users
+        servicegroups                   localhost-services
+        check_command                   check_local_users!20!50
+        }
+
+# Define a service to check the number of currently running procs
+# on the local machine.  Warning if > 250 processes, critical if
+# > 400 processes.
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             Total Processes
+        servicegroups                   localhost-services
+        check_command                   check_local_procs!250!400!RSZDT
+        }
+
+# Define a service to check the load on the local machine.
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             Current Load
+        servicegroups                   localhost-services
+        check_command                   check_local_load!5.0,4.0,3.0!10.0,6.0,4.0
+        }
+
+# Define a service to check the swap usage the local machine.
+# Critical if less than 10% of swap is free, warning if less than 20% is free
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             Swap Usage
+        servicegroups                   localhost-services
+        check_command                   check_local_swap!20!10
+    }
+
+# Define a service to check SSH on the local machine.
+# Disable notifications for this service by default, as not all users may have SSH enabled.
+
+define service{
+        use                             local-service         ; Name of service template to use
+        host_name                       localhost
+        service_description             SSH
+        servicegroups                   localhost-services
+        check_command                   check_ssh
+        notifications_enabled           0
+        }

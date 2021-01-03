@@ -1,0 +1,8 @@
+Adding a remote host to the Nagios Core Server configuration
+isn't difficult, but we have some considerations to make in terms
+of the necessary contact information, contact groups, and host
+group membership. Once we've determined these, we add our new
+host and see how the changes are reflected in the WebUI
+1. Create host_groups
+2. Create service host_groups
+3. Create host configuration file

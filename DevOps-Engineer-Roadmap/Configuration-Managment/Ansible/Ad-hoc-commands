@@ -1,0 +1,14 @@
+Query package version
+ansible all -m command -a'/usr/bin/rpm -qi <PACKAGE NAME>' | grep 'SUCCESS\|Version'
+
+
+
+Query running kernel version
+ansible all -m command -a'/usr/bin/cat /etc/os-release'
+
+Query OS-Release
+ansible all -m command -a'/usr/bin/uname -r'
+
+
+Query DNS servers in use by nodes
+ansible all -m command -a'/usr/bin/cat /etc/resolv.conf' | grep 'SUCCESS\|nameserver'

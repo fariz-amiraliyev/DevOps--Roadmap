@@ -1,0 +1,11 @@
+https://learn.hashicorp.com/tutorials/vault/kubernetes-minikube?in=vault/kubernetes
+
+
+Consul is a service mesh solution that launches with a key-value store. Vault requires a
+storage backend like Consul to manage its configuration and secrets when it is run in high-availability.
+
+The recommended way to run Consul on Kubernetes is via the Helm chart. Helm is a
+package manager that installs and configures all the necessary components to run
+Consul in several different modes. A Helm chart includes templates that enable conditional
+and parameterized execution. These parameters can be set through command-line arguments
+or defined in YAML.

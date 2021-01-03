@@ -1,0 +1,24 @@
+AWS Config
+Evaluate aws resources configurations with AWS Config rules.
+1. Set up AWS config
+2. From setting turned on AWS config
+3. Delivery changes to S3 bucket.
+4. create AWS Config rules
+5. Create Lambda function
+Create a Lambda Function
+Create a role called "LambdaCheckInstanceTypeRole" and specify AWS Config Rules permissions as the policy template.
+
+Create the Lambda function CheckInstanceType. Note the ARN for the next steps.
+Create an AWS Config Rule
+In the AWS Config console, select Rules, then click the Add rule button.
+Next, click Add custom rule.
+Name: DesiredInstanceTypes.
+Description: Checks that all EC2 instances are of the type specified.
+AWS Lambda function ARN: (Copy and paste from the Lambda Console. It should look something like this: arn:aws:lambda:us-east-1:123456789012:function:CheckInstanceType)
+Trigger type: Configuration changes
+Scope of changes: Resources
+Resources: EC2: Instance
+Rule parameters:
+Key: desiredInstanceType
+Value: t2.micro, or a comma-separated list (e.g, t2.micro,t3.micro). Note: Any values not in this list will evaluate to noncompliant.
+Click Save.

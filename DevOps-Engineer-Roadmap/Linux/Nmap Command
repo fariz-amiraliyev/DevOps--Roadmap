@@ -1,0 +1,119 @@
+Nmap is Linux command-line tool for network exploration and security auditing.
+This tool is generally used by hackers and cybersecurity enthusiasts and even
+by network and system administrators. It is used for the following purposes:
+
+Real time information of a network
+Detailed information of all the IPs activated on your network
+Number of ports open in a network
+Provide the list of live hosts
+Port, OS and Host scaning
+
+
+It was originally written by Gordon Lyon and it can answer the following questions easily:
+
+Find running computers on the local network
+What IP addresses did you find running on the local network?
+Discover the operating system of your target machine
+Find out what ports are open on the machine that you just scanned?
+See if the system is infected with malware or virus.
+Search for unauthorized servers or network service on your network.
+Locate and remove computers which don’t meet the organization’s minimum level of security.
+
+In case of Debian/Ubuntu
+sudo apt-get install nmap
+In case of CentOS/RedHat
+yum install nmap
+
+To scan multile hosts
+nmap 103.76.228.244 157.240.198.35 172.217.27.174
+
+To scan whole subnet
+nmap 103.76.228.*
+
+
+To scan to detect firewall settings.
+sudo nmap -sA 103.76.228.244
+
+To identify HostnamesTo scan from a file
+sudo nmap -sL  103.76.228.244
+
+To scan from a file
+nmap -iL input.txt
+
+4. Excluding hosts/networks (IPv4) from nmap scan examples:
+nmap 192.168.1.0/24 --exclude 192.168.1.5
+nmap 192.168.1.0/24 --exclude 192.168.1.5,192.168.1.254
+OR exclude list from a file called /tmp/exclude.txt
+nmap -iL /tmp/scanlist.txt --excludefile /tmp/exclude.txt
+
+5. 5. Turn on OS and version detection scanning script (IPv4) with nmap
+nmap -A 192.168.1.254
+nmap -v -A 192.168.1.1
+nmap -A -iL /tmp/scanlist.txt
+
+6. 6. Find out if a host/network is protected by a firewall using namp command
+## nmap command examples for your host ##
+nmap -sA 192.168.1.254
+nmap -sA server1.cyberciti.biz
+
+7. 7. Scan a host when protected by the firewall
+In this Nmap command examples we are going to scan a router/wifi device having 192.168.1.1 as IP:
+
+nmap -PN 192.168.1.1
+nmap -PN server1.cyberciti.biz
+
+8. 9. Scan a network and find out which servers and devices are up and running
+This is known as host discovery or ping scan:
+
+nmap -sP 192.168.1.0/24
+
+9. 10. How do I perform a fast scan using the namp?
+nmap -F 192.168.1.1
+nmap -6 -F IPv6_Address_Here
+
+10.11. Display the reason a port is in a particular state
+nmap --reason 192.168.1.1
+nmap --reason server1.cyberciti.biz
+
+11. 12. Only show open (or possibly open) ports using nmap command in Linux
+Run:
+
+nmap --open 192.168.1.1
+nmap --open server1.cyberciti.biz
+nmap --open 192.168.2.18
+
+12.16: The fastest way to scan all your devices/computers for open ports ever
+nmap -T5 192.168.1.0/24
+nmap -T5 {sub/net}
+
+13. 19. Scan a host using TCP ACK (PA) and TCP Syn (PS) ping
+If firewall is blocking standard ICMP pings, try the following host discovery methods:
+
+nmap -PS 192.168.1.1
+nmap -PS 80,21,443 192.168.1.1
+nmap -PA 192.168.1.1
+nmap -PA 80,21,200-512 192.168.1.1
+20. Scan a host using IP protocol ping
+nmap -PO 192.168.1.1
+21. Scan a host using UDP ping
+This scan bypasses firewalls and filters that only screen TCP:
+
+nmap -PU 192.168.1.1
+nmap -PU 2000.2001 192.168.1.1
+22. Find out the most commonly used TCP ports using TCP SYN Scan
+### Stealthy scan ###
+nmap -sS 192.168.1.1
+
+### Find out the most commonly used TCP ports using  TCP connect scan (warning: no stealth scan)
+###  OS Fingerprinting ###
+nmap -sT 192.168.1.1
+
+### Find out the most commonly used TCP ports using TCP ACK scan
+nmap -sA 192.168.1.1
+
+### Find out the most commonly used TCP ports using TCP Window scan
+nmap -sW 192.168.1.1
+
+### Find out the most commonly used TCP ports using TCP Maimon scan
+nmap -sM 192.168.1.1
+23. Scan a host for UDP services (UDP scan)

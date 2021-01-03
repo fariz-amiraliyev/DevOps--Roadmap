@@ -1,0 +1,10 @@
+1. How to deploy the Cluster Autoscaler to your Amazon EKS cluster
+and how to configure it to modify your Amazon EC2 Auto Scaling groups.
+
+
+we can create 2 type of clusters:
+
+1. single cluster spans in multiple AZ and multipel node groups in one AZ
+
+2. [ To create a cluster with a single managed group that spans multiple Availability Zones ]
+3.[ To create a cluster with a dedicated managed node group for each Availability Zone ]

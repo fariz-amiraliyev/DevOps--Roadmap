@@ -1,0 +1,12 @@
+https://docs.aws.amazon.com/whitepapers/latest/aws-overview/aws-overview.pdf#global-infrastructure
+
+The AWS Cloud infrastructure is built around AWS Regions and Availability Zones.
+An AWS Region is a physical location in the world where we have multiple Availability Zones.
+Availability Zones consist of one or more discrete data centers, each with redundant power, networking, and connectivity, housed
+in separate facilities.
+These Availability Zones offer you the ability to operate production applications
+and databases that are more highly available, fault tolerant, and scalable than would be possible from
+a single data center.
+
+The AWS Cloud operates in over 60 Availability Zones within over 20 geographic
+Regions around the world, with announced plans for more Availability Zones and Regions.

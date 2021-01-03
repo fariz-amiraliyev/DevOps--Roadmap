@@ -1,0 +1,21 @@
+When you create a group or an IAM user in your AWS account,
+you can associate an IAM policy with that group or user, which
+specifies the permissions that you want to grant. For example, imagine you
+have a group of entry-level developers. You can create a Junior application
+developers group that includes all entry-level developers. Then, you associate
+a policy with that group that allows users to only view AWS CloudFormation stacks.
+In this scenario, you might have a policy such as the following sample:
+
+{
+    "Version":"2012-10-17",
+    "Statement":[{
+        "Effect":"Allow",
+        "Action":[
+            "cloudformation:DescribeStacks",
+            "cloudformation:DescribeStackEvents",
+            "cloudformation:DescribeStackResource",
+            "cloudformation:DescribeStackResources"
+        ],
+        "Resource":"*"
+    }]
+}

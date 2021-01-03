@@ -1,0 +1,7 @@
+Hadoop MapReduce is an open-source programming model for distributed computing.
+It simplifies the process of writing parallel distributed applications by handling
+all of the logic, while you provide the Map and Reduce functions. The Map function
+maps data to sets of key-value pairs called intermediate results. The Reduce function
+combines the intermediate results, applies additional algorithms, and produces the final output.
+There are multiple frameworks available for MapReduce, such as Hive, which automatically generates
+Map and Reduce programs.

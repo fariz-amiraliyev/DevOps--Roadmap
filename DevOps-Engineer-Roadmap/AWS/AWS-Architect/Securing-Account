@@ -1,0 +1,31 @@
+
+Securing Your Account — Creating an IAM User and Setting Up the CLI:
+Adding an IAM user
+Adding MFA to that IAM user
+Creating an access key pair
+Installing the CLI tools on Windows, Linux, and MacOS
+
+Windows Tools Install
+Visit: AWS Command Line Interface.
+Download and run the 64-Bit installer, accepting all defaults.
+Open the command prompt, and verify tools are installed using aws.
+Run aws configure and enter the access key ID and secret access key you
+noted down earlier in the lesson, with us-east-1 as the region and json as
+the default output format.
+
+Linux Install (Tested on CentOS)
+sudo yum install epel-release
+sudo yum install python-pip
+sudo pip install awscli
+Run aws configure and enter the access key ID and secret access key you
+noted down earlier in the lesson, with us-east-1 as the region and json as
+the default output format.
+
+MacOS
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew install awscli
+Run aws configure and enter the access key ID and secret access key you noted down earlier
+in the lesson, with us-east-1 as the region and json as the default output format.
+
+Testing
+aws s3 ls

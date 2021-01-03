@@ -1,0 +1,713 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "Stage": {
+            "Type": "String",
+            "Description": "Stage of the architecture "
+        },
+        "CognitoBackEndLambda": {
+            "Type": "String",
+            "Description": "DynamoDb lambda"
+        },
+        "CloudWatchRule": {
+            "Type": "String",
+            "Description": "Cloud watch rule name"
+        },
+        "S3BucketName": {
+            "Type": "String",
+            "Description": "S3 Bucket Name"
+        },
+        "DomainName": {
+            "Type": "String",
+            "Description": "Domain Name"
+        },
+        "ApiGateWayLambda": {
+            "Type": "String",
+            "Description": "API Gateway lambda"
+        },
+        "AuroraEndPoint": {
+            "Type": "String",
+            "Description": "Aurora End Point"
+        },
+        "NetforumEndpoint": {
+            "Type": "String",
+            "Description": "Netforum End Point"
+        },
+        "CognitoUserPoolName": {
+            "Type": "String",
+            "Description": "Cognito User pool name"
+        },
+        "CognitoClientName": {
+            "Type": "String",
+            "Description": "Cognito Client name"
+        },
+        "SesEmail" :{
+            "Type": "String",
+            "Description": "SES Email for cognito to send mails"
+        },
+        "SesRegion" :{
+            "Type" :  "String",
+            "Description": "SES Region"
+        }
+    },
+    "Resources": {
+        "UniversalLoginUserLoginAttempts": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "userId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "userId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": "1",
+                    "WriteCapacityUnits": "1"
+                },
+                "TableName": "Universal-Login-User-Login-Attempts",
+                "StreamSpecification": {
+                    "StreamViewType": "NEW_IMAGE"
+                }
+            }
+        },
+        "UniversalLoginSyncCognitotoNetforum": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "userId",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema": [
+                    {
+                        "AttributeName": "userId",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": "1",
+                    "WriteCapacityUnits": "1"
+                },
+                "TableName": "Universal-Login-Sync-Cognito-to-Netforum"
+            }
+        },
+        "EventSourceMapping": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "Properties": {
+                "BatchSize": 10,
+                "EventSourceArn": {
+                    "Fn::GetAtt": [
+                        "UniversalLoginUserLoginAttempts",
+                        "StreamArn"
+                    ]
+                },
+                "FunctionName": {
+                    "Ref": "CognitoBackEndLambda"
+                },
+                "StartingPosition": "LATEST"
+            }
+        },
+        "ScheduledRule": {
+            "Type": "AWS::Events::Rule",
+            "Properties": {
+                "Description": "ScheduledRule",
+                "ScheduleExpression": "rate(1 minute)",
+                "State": "ENABLED",
+                "Name": {
+                    "Ref": "CloudWatchRule"
+                },
+                "Targets": [
+                    {
+                        "Arn": {
+                            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                        },
+                        "Id": "TargetFunctionV1"
+                    }
+                ]
+            }
+        },
+        "PermissionForEventsToInvokeLambda": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "FunctionName": {
+                    "Ref": "CognitoBackEndLambda"
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "events.amazonaws.com",
+                "SourceArn": {
+                    "Fn::GetAtt": [
+                        "ScheduledRule",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "cloudfrontoriginaccessidentity": {
+            "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+            "Properties": {
+                "CloudFrontOriginAccessIdentityConfig": {
+                    "Comment": "OAIForUniversalLoginApp"
+                }
+            }
+        },
+        "UniveralLoginBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": {
+                    "Ref": "S3BucketName"
+                },
+                "WebsiteConfiguration": {
+                    "IndexDocument": "index.html",
+                    "ErrorDocument": "index.html"
+                }
+            }
+        },
+        "UniveralLoginBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "S3BucketName"
+                },
+                "PolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Effect": "Allow",
+                            "Resource": {
+                                "Fn::Join": [
+                                    "",
+                                    [
+                                        "arn:aws:s3:::",
+                                        {
+                                            "Ref": "S3BucketName"
+                                        },
+                                        "/*"
+                                    ]
+                                ]
+                            },
+                            "Principal": {
+                                "AWS": {
+                                    "Fn::Sub": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${cloudfrontoriginaccessidentity}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "KmsKey": {
+            "Type": "AWS::KMS::Key",
+            "Properties": {
+                "KeyPolicy": {
+                    "Version": "2012-10-17",
+                    "Id": "key-default-1",
+                    "Statement": [
+                        {
+                            "Sid": "Enable IAM User Permissions",
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "arn:aws:iam::",
+                                            {
+                                                "Ref": "AWS::AccountId"
+                                            },
+                                            ":root"
+                                        ]
+                                    ]
+                                }
+                            },
+                            "Action": "kms:*",
+                            "Resource": "*"
+                        }
+                    ]
+                }
+            }
+        },
+        "KmsAlias": {
+            "Type": "AWS::KMS::Alias",
+            "Properties": {
+                "AliasName": "alias/universal-login-key",
+                "TargetKeyId": {
+                    "Ref": "KmsKey"
+                }
+            }
+        },
+        "AuroraEndPointSsmParameter": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+                "Name": {
+                    "Fn::Sub": "/${Stage}/auroraendpoint"
+                },
+                "Type": "String",
+                "Value": {
+                    "Ref": "AuroraEndPoint"
+                }
+            }
+        },
+        "NetforumEndpointSsmParameter": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+                "Name": {
+                    "Fn::Sub": "/${Stage}/netforumendpoint"
+                },
+                "Type": "String",
+                "Value": {
+                    "Ref": "NetforumEndpoint"
+                }
+            }
+        },
+        "CognitoUserPool": {
+            "Type": "AWS::Cognito::UserPool",
+            "Properties": {
+                "UserPoolName": {
+                    "Ref": "CognitoUserPoolName"
+                },
+                "AdminCreateUserConfig": {
+                    "AllowAdminCreateUserOnly": "false",
+                    "UnusedAccountValidityDays": 7,
+                    "InviteMessageTemplate": {
+                        "EmailMessage": "Your username is {username} and temporary password is {####}.",
+                        "EmailSubject": "Your temporary password",
+                        "SMSMessage": "Your username is {username} and temporary password is {####}."
+                    }
+                },
+                "UsernameAttributes": [
+                    "email"
+                ],
+                "AutoVerifiedAttributes": [
+                    "email"
+                ],
+                "LambdaConfig": {
+                    "CustomMessage": {
+                        "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                    },
+                    "PostAuthentication": {
+                        "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                    },
+                    "PostConfirmation": {
+                        "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                    },
+                    "PreAuthentication": {
+                        "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                    },
+                    "PreSignUp": {
+                        "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CognitoBackEndLambda}"
+                    }
+                },
+                "Schema": [
+                    {
+                        "AttributeDataType": "String",
+                        "Name": "email",
+                        "Required" : "true"
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "ces_provider_roles",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "uuid",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "member_id",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "membership_details",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "content_roles",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "organization_roles",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "committee_roles",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "chp_officer_roles",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "member_flag",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "last_login_app",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "last_login_ip",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    },
+                    {
+                        "AttributeDataType": "String",
+                        "Mutable": "true",
+                        "Name": "last_login_time",
+                        "StringAttributeConstraints": {
+                            "MaxLength": "2048",
+                            "MinLength": "1"
+                        }
+                    }
+                ],
+                "Policies": {
+                    "PasswordPolicy": {
+                        "MinimumLength": 8,
+                        "RequireNumbers": "true"
+                    }
+                },
+                "EmailConfiguration" : {
+                    "SourceArn" : {
+                        "Fn::Sub": "arn:aws:ses:${SesRegion}:${AWS::AccountId}:identity:${SesEmail}"                       
+                    }
+                },
+                "EmailVerificationMessage": "Your verification code is {####}.",
+                "EmailVerificationSubject": "Your verification code",
+                "UserPoolTags": {
+                    "environment": {
+                        "Ref": "Stage"
+                    }
+                }
+            }
+        },
+        "CognitoUserPoolClient": {
+            "Type": "AWS::Cognito::UserPoolClient",
+            "Properties": {
+                "ClientName": {
+                    "Ref": "CognitoClientName"
+                },
+                "UserPoolId": {
+                    "Ref": "CognitoUserPool"
+                },
+                "ExplicitAuthFlows": [
+                    "ADMIN_NO_SRP_AUTH",
+                    "USER_PASSWORD_AUTH"
+                ]
+            }
+        },
+        "UniversalLoginRestApi": {
+            "Type": "AWS::ApiGateway::RestApi",
+            "Properties": {
+                "Name": "universal_login",
+                "Description": "API used for Greeting requests",
+                "FailOnWarnings": true
+            }
+        },
+        "PermissionForApiToInvokeLambda": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "Action": "lambda:InvokeFunction",
+                "FunctionName": {
+                    "Ref": "ApiGateWayLambda"
+                },
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                    "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:${AWS::AccountId}:${UniversalLoginRestApi}/*"
+                }
+            }
+        },
+        "UniversalLoginApiStage": {
+            "DependsOn": [
+                "ApiGatewayAccount"
+            ],
+            "Type": "AWS::ApiGateway::Stage",
+            "Properties": {
+                "DeploymentId": {
+                    "Ref": "ApiDeployment"
+                },
+                "MethodSettings": [
+                    {
+                        "DataTraceEnabled": "true",
+                        "HttpMethod": "*",
+                        "LoggingLevel": "INFO",
+                        "ResourcePath": "/{proxy+}"
+                    }
+                ],
+                "RestApiId": {
+                    "Ref": "UniversalLoginRestApi"
+                },
+                "StageName": "api-v1"
+            }
+        },
+        "ApiGatewayCloudWatchLogsRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "apigateway.amazonaws.com"
+                                ]
+                            },
+                            "Action": [
+                                "sts:AssumeRole"
+                            ]
+                        }
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyName": "ApiGatewayLogsPolicy",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "logs:CreateLogGroup",
+                                        "logs:CreateLogStream",
+                                        "logs:DescribeLogGroups",
+                                        "logs:DescribeLogStreams",
+                                        "logs:PutLogEvents",
+                                        "logs:GetLogEvents",
+                                        "logs:FilterLogEvents"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "ApiGatewayAccount": {
+            "Type": "AWS::ApiGateway::Account",
+            "Properties": {
+                "CloudWatchRoleArn": {
+                    "Fn::GetAtt": [
+                        "ApiGatewayCloudWatchLogsRole",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "ApiDeployment": {
+            "Type": "AWS::ApiGateway::Deployment",
+            "DependsOn": [
+                "SystemProxyResourceAny"
+            ],
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "UniversalLoginRestApi"
+                }
+            }
+        },
+        "ApiGatewayAuthorizer": {
+            "Type": "AWS::ApiGateway::Authorizer",
+            "Properties": {
+                "Type": "COGNITO_USER_POOLS",
+                "IdentitySource": "method.request.header.x-id-token",
+                "Name": {
+                    "Ref": "CognitoUserPoolName"
+                },
+                "ProviderARNs": [
+                    {
+                        "Fn::Sub": "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${CognitoUserPool}"
+                    }
+                ],
+                "RestApiId": {
+                    "Ref": "UniversalLoginRestApi"
+                }
+            }
+        },
+        "SystemProxyResource": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+                "RestApiId": {
+                    "Ref": "UniversalLoginRestApi"
+                },
+                "ParentId": {
+                    "Fn::GetAtt": [
+                        "UniversalLoginRestApi",
+                        "RootResourceId"
+                    ]
+                },
+                "PathPart": "{proxy+}"
+            }
+        },
+        "SystemProxyResourceAny": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+                "HttpMethod": "POST",
+                "AuthorizationType": "COGNITO_USER_POOLS",
+                "AuthorizerId": {
+                    "Ref": "ApiGatewayAuthorizer"
+                },
+                "Integration": {
+                    "Type": "AWS_PROXY",
+                    "IntegrationHttpMethod": "POST",
+                    "Uri": {
+                        "Fn::Sub": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ApiGateWayLambda}/invocations"
+                    }
+                },
+                "ResourceId": {
+                    "Ref": "SystemProxyResource"
+                },
+                "RestApiId": {
+                    "Ref": "UniversalLoginRestApi"
+                }
+            }
+        },
+        "CloudfrontDistribution": {
+            "Type": "AWS::CloudFront::Distribution",
+            "Properties": {
+                "DistributionConfig": {
+                    "Aliases": [
+                        {
+                            "Ref": "S3BucketName"
+                        }
+                    ],
+                    "Origins": [
+                        {
+                            "DomainName": {
+                                "Fn::Sub": "${S3BucketName}.s3.amazonaws.com"
+                            },
+                            "Id": {
+                                "Fn::Sub": "S3-${S3BucketName}"
+                            },
+                            "S3OriginConfig": {
+                                "OriginAccessIdentity": {
+                                    "Fn::Sub": "origin-access-identity/cloudfront/${cloudfrontoriginaccessidentity}"
+                                }
+                            }
+                        },
+                        {
+                            "DomainName": {
+                                "Fn::Sub": "${UniversalLoginRestApi}.execute-api.${AWS::Region}.amazonaws.com"
+                            },
+                            "Id": "MyApiGateWayOrigin",
+                            "CustomOriginConfig": {
+                                "OriginProtocolPolicy": "http-only"
+                            }
+                        }
+                    ],
+                    "DefaultCacheBehavior": {
+                        "AllowedMethods": [
+                            "GET",
+                            "HEAD"
+                        ],
+                        "TargetOriginId": {
+                            "Fn::Sub": "S3-${S3BucketName}"
+                        },
+                        "Compress": "true",
+                        "ForwardedValues": {
+                            "QueryString": "false",
+                            "Cookies": {
+                                "Forward": "none"
+                            }
+                        },
+                        "ViewerProtocolPolicy": "redirect-to-https"
+                    },
+                    "CacheBehaviors": [
+                        {
+                            "AllowedMethods": [
+                                "GET",
+                                "HEAD",
+                                "OPTIONS",
+                                "PUT",
+                                "POST",
+                                "PATCH",
+                                "DELETE"
+                            ],
+                            "CachedMethods": [
+                                "GET",
+                                "HEAD",
+                                "OPTIONS"
+                            ],
+                            "PathPattern": "api-*",
+                            "TargetOriginId": "MyApiGateWayOrigin",
+                            "Compress": "true",
+                            "ForwardedValues": {
+                                "QueryString": "false",
+                                "Cookies": {
+                                    "Forward": "none"
+                                },
+                                "Headers": [
+                                    "x-id-token"
+                                ]
+                            },
+                            "ViewerProtocolPolicy": "https-only"
+                        }
+                    ],
+                    "DefaultRootObject": "index.html",
+                    "IPV6Enabled": "true",
+                    "Enabled": "true"
+                }
+            }
+        }
+    }
+}
